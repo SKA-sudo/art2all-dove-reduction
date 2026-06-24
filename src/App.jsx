@@ -1,13 +1,40 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Billboard, Image } from "@react-three/drei";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useTexture } from "@react-three/drei";
 import { Points, PointMaterial } from "@react-three/drei";
+import { useGLTF, useAnimations } from "@react-three/drei";
 
 
 
+/* -------------------- TAUBE -------------------- */
+function DoveModel({ flapRef }) {
+  const group = useRef();
+
+  const { scene, animations } = useGLTF("/models/peace_dove.glb");
+  const { actions } = useAnimations(animations, group);
+
+  useEffect(() => {
+    const action = Object.values(actions || {})[0];
+    if (action) action.reset().play();
+  }, [actions]);
+
+  useFrame(() => {
+    const action = Object.values(actions || {})[0];
+    if (!action) return;
+
+    flapRef.current =
+      Math.sin(action.time * 6) * 0.5 + 0.5;
+  });
+
+  return (
+    <group ref={group} scale={20} position={[0, 6, 0]}>
+      <primitive object={scene} />
+    </group>
+  );
+}
 /* -------------------- LIGHT RAYS -------------------- */
 function LightRays() {
   const ref = useRef();
@@ -91,42 +118,69 @@ function useDoveShape(items) {
   return useMemo(() => {
     const pts = [];
 
-    const core = items.filter(i => i.zone === "core");
+   const head = items.filter(i => i.zone === "head");
+    const body = items.filter(i => i.zone === "body");
     const left = items.filter(i => i.zone === "leftWing");
     const right = items.filter(i => i.zone === "rightWing");
     const tail = items.filter(i => i.zone === "tail");
 
-    let ci = 0, li = 0, ri = 0, ti = 0;
+    let hi = 0;
+    let bi = 0;
+    let li = 0;
+    let ri = 0;
+    let ti = 0;
 
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
 
       let x = 0, y = 0, z = 0;
 
-      if (item.zone === "core") {
-        const t = core.length ? ci++ / core.length : 0;
-        x = Math.sin(t * Math.PI) * 0.25;
-        y = t * 10;
-        z = Math.cos(t * Math.PI * 0.4) * 1.2;
-      } else if (item.zone === "leftWing") {
-        const t = left.length ? li++ / left.length : 0;
-        const c = Math.sin(t * Math.PI);
-        x = -c * 20;
-        y = 6 + c * 7;
-        z = Math.sin(t * 1.5) * 2;
-      } else if (item.zone === "rightWing") {
-        const t = right.length ? ri++ / right.length : 0;
-        const c = Math.sin(t * Math.PI);
-        x = c * 20;
-        y = 6 + c * 7;
-        z = Math.sin(t * 1.5) * 2;
-      } else {
-        const t = tail.length ? ti++ / tail.length : 0;
-        x = (Math.random() - 0.5) * 1.2;
-        y = -t * 10;
-        z = -t * 14;
-      }
+     if (item.zone === "head") {
+      const t = head.length ? hi++ / head.length : 0;
 
+      x = 5 + Math.sin(t * Math.PI * 2) * 1.2;
+      y = 6.5 + Math.cos(t * Math.PI * 2) * 1.2;
+      z = 3;
+    } else if (item.zone === "body") {
+        const t = body.length ? bi++ / body.length : 0;
+
+        const row = Math.floor(t * 10);
+        const col = (t * 8 - row);
+
+        const width = 8 - Math.abs(row - 5) * 0.7;
+
+        x = (col - 0.5) * width * 3.2;
+        y = 6 - row * 1.6;
+        z = Math.cos(col * Math.PI) * 1.5;
+      
+    } else if (item.zone === "leftWing") {
+  
+        const t = left.length ? li++ / left.length : 0;
+
+        const row = Math.floor(t * 5);
+        const col = (t * 5 - row);
+
+        x = -4 - col * 18;
+        y = 4 + Math.sin(col * Math.PI) * 3 - row * 1.4;
+        z = row * 0.8;
+
+   } else if (item.zone === "rightWing") {
+      const t = right.length ? ri++ / right.length : 0;
+
+      const row = Math.floor(t * 5);
+      const col = (t * 5 - row);
+
+      x = 4 + col * 18;
+      y = 6 + Math.sin(col * Math.PI) * 4 - row * 1.4;
+      z = row * 0.8;
+
+    } else {
+      const t = tail.length ? ti++ / tail.length : 0;
+
+      x = (Math.random() - 0.5) * 4;
+      y = -7 - t * 4;
+      z = -4 - t * 5;
+    }
       pts.push({
         pos: [x, y, z],
         zone: item.zone,
@@ -144,7 +198,8 @@ function DoveFromDrawings({ textures, energyRef }) {
   const shape = useDoveShape(textures);
 
   const zoneConfig = {
-    core: { scale: 1.6, drift: 0.003 },
+    head: { scale: 2.0, drift: 0.002 },
+    body: { scale: 1.7, drift: 0.003 },
     leftWing: { scale: 1.25, drift: 0.008 },
     rightWing: { scale: 1.25, drift: 0.008 },
     tail: { scale: 0.9, drift: 0.002 },
@@ -313,20 +368,52 @@ function Clouds() {
 }
 
 /* -------------------- SCENE -------------------- */
+
+  
+
 function Scene() {
   const energyRef = useRef(0);
+  const flapRef = useRef(0);
 
-  const drawings = [
-    { src: "/drawings/demo/baum.png", zone: "core" },
-    { src: "/drawings/demo/blume.png", zone: "core" },
-    { src: "/drawings/demo/familie.png", zone: "core" },
-    { src: "/drawings/demo/haus.png", zone: "leftWing" },
-    { src: "/drawings/demo/herz.png", zone: "leftWing" },
-    { src: "/drawings/demo/regenbogen.png", zone: "rightWing" },
-    { src: "/drawings/demo/sonne.png", zone: "rightWing" },
-    { src: "/drawings/demo/welt.png", zone: "tail" },
-    { src: "/drawings/demo/peace.png", zone: "tail" },
-  ];
+
+  const drawings = useMemo(() => {
+  const base = [
+  { src: "/drawings/demo/baum.png", zone: "body" },
+  { src: "/drawings/demo/blume.png", zone: "body" },
+  { src: "/drawings/demo/familie.png", zone: "body" },
+
+  { src: "/drawings/demo/haus.png", zone: "leftWing" },
+  { src: "/drawings/demo/herz.png", zone: "leftWing" },
+
+  { src: "/drawings/demo/regenbogen.png", zone: "rightWing" },
+  { src: "/drawings/demo/sonne.png", zone: "rightWing" },
+
+  { src: "/drawings/demo/welt.png", zone: "tail" },
+
+  { src: "/drawings/demo/peace.png", zone: "head" },
+];
+
+  const result = [];
+
+for (let i = 0; i < 120; i++) {
+  const img = base[Math.floor(Math.random() * base.length)];
+  let zone;
+
+  if (i < 10) zone = "head";
+  else if (i < 45) zone = "body";
+  else if (i < 80) zone = "leftWing";
+  else if (i < 115) zone = "rightWing";
+  else zone = "tail";
+
+  result.push({
+    src: img.src,
+    zone,
+    weight: 0.8 + Math.random() * 0.4,
+  });
+}
+
+  return result;
+}, []);
 
   return (
     <>
@@ -340,7 +427,10 @@ function Scene() {
         <LightRays position={[0, 12, -50]} />
         <GlowParticles />
 
-      <DoveFromDrawings textures={drawings} energyRef={energyRef} />
+      {/* Taube */}
+      
+      <DoveModel flapRef={flapRef} />
+      
     </>
   );
 }
@@ -349,7 +439,7 @@ function Scene() {
 export default function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
-      <Canvas camera={{ position: [0, 5, 40], fov: 55 }}>
+      <Canvas camera={{ position: [0, 10, 90], fov: 45 }}>
         <Scene />
         <EffectComposer>
           <Bloom intensity={1.2} luminanceThreshold={0.15} luminanceSmoothing={0.9} />
