@@ -1,19 +1,38 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, useAnimations } from "@react-three/drei";
 
-export default function Dove() {
+
+/* -------------------- TAUBE -------------------- */
+export default function DoveModel({ flapRef }) {
   const group = useRef();
-  const { scene } = useGLTF("/models/peace_dove.glb");
 
-  useFrame(({ clock }) => {
-  const t = clock.getElapsedTime();
+  const { scene, animations } = useGLTF("/models/peace_dove.glb");
+  const { actions } = useAnimations(animations, group);
 
-  const flap = Math.sin(t * 4) * 0.2;
 
-  group.current.rotation.y = t * 0.2; // ruhige Drehung
-  group.current.rotation.x = flap;    // leichte Atmung
-});
+useEffect(() => {
+  scene.traverse((child) => {
+    if (child.isMesh) {
+      console.log("Mesh gefunden:", child.name);
+      console.log("Vertices:", child.geometry.attributes.position.count);
+    }
+  });
+}, [scene]);
+
+
+  useEffect(() => {
+    const action = Object.values(actions || {})[0];
+    if (action) action.reset().play();
+  }, [actions]);
+
+  useFrame(() => {
+    const action = Object.values(actions || {})[0];
+    if (!action) return;
+
+    flapRef.current =
+      Math.sin(action.time * 6) * 0.5 + 0.5;
+  });
 
   return (
     <group ref={group} scale={20} position={[0, 6, 0]}>
@@ -21,3 +40,5 @@ export default function Dove() {
     </group>
   );
 }
+
+
