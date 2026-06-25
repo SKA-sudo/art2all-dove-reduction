@@ -1,8 +1,9 @@
 import { useMemo } from "react";
-import { Billboard, Image } from "@react-three/drei";
+import Paper from "./Paper";
 import { extractFaces } from "../utils/FaceExtractor";
 import { filterFaces } from "../utils/FaceFilter";
 import { createPlacementData } from "../utils/PlacementEngine";
+
 
 const drawings = [
   "/drawings/demo/Baum.png",
@@ -47,21 +48,18 @@ export default function DoveSurface({ mesh }) {
 }, [mesh]);
 
    return (
-    <>
-      {placements.map((item, i) => (
-        <Billboard
-          key={i}
-          position={item.position}
-          rotation={[0, 0, item.rotation]}
-        >
-          <Image
-            url={item.image}
-            transparent
-            toneMapped={false}
-            scale={[item.scale, item.scale]}
-          />
-        </Billboard>
-      ))}
-    </>
-  );
+  <>
+    {placements.map((item, i) => (
+      <Paper
+        key={i}
+        position={item.position}
+        normal={item.normal}
+        rotation={item.rotation}
+        image={item.image}
+        scale={item.scale}
+      />
+    ))}
+  </>
+);
+
 }
