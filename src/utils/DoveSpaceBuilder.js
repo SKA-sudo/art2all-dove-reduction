@@ -27,10 +27,13 @@ export function findPrimaryDoveAxis(faces) {
     "right"
   );
 
+  
+
   return {
     leftWingTip,
     leftShoulder: leftTransition.point,
     leftTransitionRegion: leftTransition.region,
+
 
     bodyCenter,
 
@@ -151,4 +154,35 @@ function transitionScore(face, body, tip) {
     distanceToAxis * 0.18 +
     bodyDistance * 0.03
   );
+}
+function createLocalWingSpace(shoulder, wingTip) {
+  if (!shoulder || !wingTip) return null;
+
+  const start = shoulder.center;
+  const end = wingTip.center;
+
+  const axis = {
+    x: end.x - start.x,
+    y: end.y - start.y,
+    z: end.z - start.z,
+  };
+
+  const length = Math.sqrt(
+    axis.x * axis.x +
+    axis.y * axis.y +
+    axis.z * axis.z
+  );
+
+  if (length === 0) return null;
+
+  return {
+    shoulder,
+    wingTip,
+    axis: {
+      x: axis.x / length,
+      y: axis.y / length,
+      z: axis.z / length,
+    },
+    length,
+  };
 }
