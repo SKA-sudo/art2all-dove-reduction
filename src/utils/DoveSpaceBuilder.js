@@ -27,9 +27,8 @@ export function findPrimaryDoveAxis(faces) {
     "right"
   );
 
-    return {
+  return {
     leftWingTip,
-
     leftShoulder: leftTransition.point,
     leftTransitionRegion: leftTransition.region,
 
@@ -37,26 +36,55 @@ export function findPrimaryDoveAxis(faces) {
 
     rightShoulder: rightTransition.point,
     rightTransitionRegion: rightTransition.region,
-
     rightWingTip,
-    };
+  };
 }
 
 function findTransitionZonePoint(faces, bodyCenter, wingTip, side) {
   const body = bodyCenter.center;
   const tip = wingTip.center;
 
-  const minX = Math.min(body.x, tip.x);
-  const maxX = Math.max(body.x, tip.x);
+  const axis = {
+    x: tip.x - body.x,
+    y: tip.y - body.y,
+    z: tip.z - body.z,
+  };
+
+  const axisLengthSq =
+    axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
+
+  if (axisLengthSq === 0) {
+    return { point: bodyCenter, region: [] };
+  }
 
   const candidates = faces.filter((face) => {
-    const x = face.center.x;
+    const p = face.center;
 
-    if (x < minX || x > maxX) return false;
+    const rel = {
+      x: p.x - body.x,
+      y: p.y - body.y,
+      z: p.z - body.z,
+    };
 
-    const t = Math.abs((x - body.x) / (tip.x - body.x));
+    const t =
+      (rel.x * axis.x + rel.y * axis.y + rel.z * axis.z) /
+      axisLengthSq;
 
-    return t > 0.18 && t < 0.42;
+    if (t < 0.18 || t > 0.46) return false;
+
+    const projected = {
+      x: body.x + axis.x * t,
+      y: body.y + axis.y * t,
+      z: body.z + axis.z * t,
+    };
+
+    const dx = p.x - projected.x;
+    const dy = p.y - projected.y;
+    const dz = p.z - projected.z;
+
+    const distanceToAxis = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+    return distanceToAxis < 3.8;
   });
 
   if (!candidates.length) {
@@ -78,17 +106,49 @@ function findTransitionZonePoint(faces, bodyCenter, wingTip, side) {
     region: candidates,
   };
 }
+
 function transitionScore(face, body, tip) {
   const p = face.center;
 
-  // Position zwischen Body und WingTip
-  const t = Math.abs((p.x - body.x) / (tip.x - body.x));
+  const axis = {
+    x: tip.x - body.x,
+    y: tip.y - body.y,
+    z: tip.z - body.z,
+  };
 
-  // Idealer Bereich ca. 30 % vom Körper Richtung Flügel
-  const targetT = 0.30;
+  const rel = {
+    x: p.x - body.x,
+    y: p.y - body.y,
+    z: p.z - body.z,
+  };
 
-  // Schulter liegt meist etwas oberhalb der Körpermitte
-  const yPreference = Math.abs(p.y - body.y) * 0.15;
+  const axisLengthSq =
+    axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
 
-  return Math.abs(t - targetT) + yPreference;
+  const t =
+    axisLengthSq === 0
+      ? 0
+      : (rel.x * axis.x + rel.y * axis.y + rel.z * axis.z) /
+        axisLengthSq;
+
+  const targetT = 0.32;
+
+  const projected = {
+    x: body.x + axis.x * t,
+    y: body.y + axis.y * t,
+    z: body.z + axis.z * t,
+  };
+
+  const dx = p.x - projected.x;
+  const dy = p.y - projected.y;
+  const dz = p.z - projected.z;
+
+  const distanceToAxis = Math.sqrt(dx * dx + dy * dy + dz * dz);
+  const bodyDistance = Math.abs(p.x - body.x);
+
+  return (
+    Math.abs(t - targetT) * 2.0 +
+    distanceToAxis * 0.18 +
+    bodyDistance * 0.03
+  );
 }
