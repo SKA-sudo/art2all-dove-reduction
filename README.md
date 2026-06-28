@@ -7,7 +7,7 @@ Version: 1.0
 
 Status: Living Document
 
-Letzte Aktualisierung: 25.06.2026
+Letzte Aktualisierung: 29.06.2026
 
 Autor:
 Stephan Kästner
@@ -17,6 +17,12 @@ mit Unterstützung von ChatGPT
 ################################################################
 ################################################################
 
+## 🤖 AI / Entwickler Einstieg
+
+Vor jeder Arbeit am Projekt bitte in dieser Reihenfolge lesen:
+
+docs/FOUNDATION.md
+docs/SESSION.md
 
 # Art2all
 
