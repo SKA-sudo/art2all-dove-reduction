@@ -332,3 +332,19 @@ Die Papierflächen besitzen keine einheitliche Größe.
 Sie wachsen kontinuierlich von innen nach außen.
 
 Diese Größenprogression trägt wesentlich dazu bei, dass das Gehirn die Fläche als Flügel interpretiert.
+
+Architektur:
+
+Art2all Architecture Principle – Feather Band Engine
+Die grundlegende Organisation eines Flügels erfolgt nicht durch ein globales Flow Field, sondern durch hierarchische Feather Bands. Jede Feather Band definiert ihre eigene Kurve, Breite, Dichte und Endposition. Der Flow einzelner Paper entsteht erst innerhalb dieser Band. Dadurch wird die visuelle Wahrnehmung des Zielbildes reproduziert, anstatt lediglich Papier entlang von Mesh-Normalen oder einem globalen Vektorfeld auszurichten.
+
+
+Architecture Hypothesis – Wing Finger Skeleton
+
+Die Organisation des Flügels erfolgt nicht direkt durch einzelne Paper oder ein globales Flow Field. Zwischen dem Local Wing Space und den Feather Bands existiert eine kinematische Struktur – das Wing Finger Skeleton.
+
+Das Wing Finger Skeleton ist keine anatomische Nachbildung eines Vogels, sondern ein abstraktes Bewegungsmodell. Es beschreibt den Flügel als eine kleine Anzahl semantischer Träger ("Finger"), die sich von einer gemeinsamen Flügelwurzel aus öffnen und schließen können – ähnlich einer menschlichen Hand.
+
+Jede Feather Band ist einem Wing Finger zugeordnet und übernimmt dessen Orientierung, Krümmung und Spreizwinkel. Die einzelnen Paper werden nicht unabhängig animiert, sondern folgen ihrer Feather Band.
+
+Dadurch entstehen Flügelbewegung, Silhouette, Überlappung und Paper-Orientierung aus derselben hierarchischen Struktur.

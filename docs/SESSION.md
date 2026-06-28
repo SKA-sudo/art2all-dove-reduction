@@ -97,37 +97,26 @@ Erst danach wird Code geschrieben.
 
 # SESSION
 
-CURRENT_TASK
+PoC 06 – Ergebnis
 
-PoC 06 – Wing Surface Grid
+✔ Feather Bands sind die primäre visuelle Organisation des Flügels.
 
-WICHTIGSTE ERKENNTNIS
+Neue Architektur-Hypothese:
 
-Die Analyse des Zielbildes zeigte, dass der Flügel nicht primär durch Flow-Linien oder Federrotation organisiert wird.
+Wing Finger Skeleton
 
-Die visuelle Wirkung entsteht durch ein unregelmäßiges Raster aus überlappenden Papierflächen.
+Local Wing Space
+        │
+        ▼
+Wing Finger Skeleton
+        │
+        ▼
+Feather Bands
+        │
+        ▼
+Paper Flow
+        │
+        ▼
+Paper Placement
 
-Wesentliche Wahrnehmungsmerkmale:
-
-hohe Überlagerungsdichte im Flügelinneren,
-kontinuierlich abnehmende Dichte zur Flügelkante,
-kontinuierliche Größenzunahme der Papierflächen von innen nach außen,
-Federwirkung entsteht erst an der äußeren Flügelkante,
-die räumliche Wirkung wird hauptsächlich durch die Oberflächenwölbung erzeugt.
-CURRENT_HYPOTHESIS
-
-Vor einem Wing Flow Field muss zunächst das Wing Surface Grid verstanden werden.
-
-Das Raster bildet die Organisationsstruktur des Flügels.
-
-Flow, Orientierung und Papierrotation werden später aus diesem Raster abgeleitet.
-
-NEXT_ACTION
-
-Analyse der Wachstumsregel des Wing Surface Grid.
-
-Frage:
-
-Nach welchen Wahrnehmungsregeln wachsen Rasterdichte, Papiergröße und Überlagerung vom Flügelinneren zur Flügelkante?
-
-Erst danach wird ein minimaler Algorithmus beschrieben.
+Die Feather Bands folgen nicht direkt einem globalen Flow Field, sondern werden durch wenige semantische Wing Fingers organisiert, die sich wie die Finger einer Hand spreizen und schließen können. Dieses Modell soll im nächsten PoC validiert werden.
