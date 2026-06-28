@@ -9,6 +9,9 @@ Lies zuerst vollständig:
 
 Diese Dokumente haben Vorrang vor allen neuen Ideen.
 
+Hallo CHATGPT Wir machen ein supercooles Projekt
+
+
 ---
 
 ## 2. Zielbild analysieren
@@ -96,11 +99,11 @@ Erst danach wird Code geschrieben.
 
 # SESSION
 
-## CURRENT_TASK
+CURRENT_TASK
 
-PoC 05 – Local Wing Space (Vorbereitung)
+PoC 06 – Wing Flow Field (Analyse)
 
-## STATUS
+STATUS
 
 ✅ GeometryInspector abgeschlossen.
 
@@ -116,49 +119,43 @@ PoC 05 – Local Wing Space (Vorbereitung)
 
 ✅ Transition Region Quality abgeschlossen.
 
-Heute wurde noch kein Local Wing Space implementiert.
+✅ PoC 05 – Local Wing Space abgeschlossen.
 
-Stattdessen wurde der Entwicklungsprozess der Engine grundlegend präzisiert.
+WICHTIGSTE ERKENNTNIS
 
----
+PoC 05 konnte erfolgreich validieren, dass jede Face eine lokale Orientierung besitzt und der Datenfluss der Engine korrekt funktioniert.
 
-## WICHTIGSTE ERKENNTNIS
+Die Debug-Visualisierung zeigte jedoch eine entscheidende Wahrnehmung:
 
-Die Art2all-Engine wird nicht von der Geometrie aus entwickelt.
+Der Flügel wird vom Betrachter nicht als einzelne Achse wahrgenommen.
 
-Sie wird vom **kanonischen Zielbild** aus entwickelt.
+Stattdessen entsteht der visuelle Eindruck eines zusammenhängenden Strömungsfeldes.
 
-Das Zielbild ist die Spezifikation der Engine.
+Der bisherige Local Wing Space beschreibt lediglich lokale Richtungen.
 
-Jeder neue PoC beschreibt genau **eine Wahrnehmungsregel** dieses Zielbildes.
+Er beschreibt noch nicht die gemeinsame Organisation des gesamten Flügels.
 
-Erst danach werden Algorithmus, PoC und Code entwickelt.
+CURRENT_HYPOTHESIS
 
----
+Der nächste Schritt besteht nicht darin, den Local Wing Space weiter zu verfeinern.
 
-## CURRENT_HYPOTHESIS
+Stattdessen muss untersucht werden, wie ein kontinuierliches Wing Flow Field beschrieben werden kann.
 
-Der Local Wing Space soll nicht einfach eine mathematische Flügelachse beschreiben.
+Dieses Flow Field soll die visuelle Organisation der Papierflächen bestimmen.
 
-Er soll eine Wahrnehmungsregel des Zielbildes abbilden.
+Jede Face erhält ihre Richtung aus diesem gemeinsamen Feld und nicht ausschließlich aus einer lokalen Achse.
 
-Vor der Implementierung wird daher zuerst analysiert, welche visuelle Eigenschaft des Flügels algorithmisch beschrieben werden soll.
+NEXT_ACTION
 
----
-
-## NEXT_ACTION
-
-Analyse des Zielbildes.
+Analyse des kanonischen Zielbildes.
 
 Frage:
 
-**Welche Wahrnehmungsregel des Flügels beschreibt der Local Wing Space?**
+Welche Wahrnehmungsregel beschreibt das kontinuierliche Strömungsfeld eines Flügels?
 
-Erst danach beginnt die Implementierung.
+Erst danach wird ein Algorithmus entwickelt.
 
----
-
-## CURRENT_PIPELINE
+CURRENT_PIPELINE
 
 GLB
 
@@ -188,44 +185,33 @@ Transition Region
 
 ↓
 
-PoC 05 – Local Wing Space (Analyse)
+Local Wing Space
 
----
+↓
 
-## FILES
+PoC 06 – Wing Flow Field (Analyse)
 
-* DoveModel.jsx
-* DoveSpaceBuilder.js
-* DebugGesture.jsx
+FILES
+DoveModel.jsx
+DoveSpaceBuilder.js
+DebugGesture.jsx
+DONE
+GeometryInspector
+FaceExtractor
+FaceFilter
+Semantic Dove Space
+Primary Dove Axis
+Transition Region
+Transition Region Quality
+Local Wing Space
+LOCKED
+Guide Shape
+Primary Papers
+Contour Papers
+Fill Papers
+PlacementEngine
+SUCCESS_CRITERIA
 
----
+Das Wing Flow Field beschreibt die visuelle Strömung des gesamten Flügels als kontinuierliches Wahrnehmungsfeld.
 
-## DONE
-
-* GeometryInspector
-* FaceExtractor
-* FaceFilter
-* Semantic Dove Space
-* Primary Dove Axis
-* Transition Region
-* Transition Region Quality
-
----
-
-## LOCKED
-
-* Guide Shape
-* Primary Papers
-* Contour Papers
-* Fill Papers
-* PlacementEngine
-
----
-
-## SUCCESS_CRITERIA
-
-Der Local Wing Space entsteht aus einer klar definierten Wahrnehmungsregel des Zielbildes.
-
-Er wird erst implementiert, nachdem diese Regel verstanden und als minimaler PoC beschrieben wurde.
-
-28.06.2026
+Es entsteht aus der Analyse des Zielbildes und wird erst nach erfolgreicher Wahrnehmungsvalidierung implementiert.
