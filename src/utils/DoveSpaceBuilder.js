@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export function findPrimaryDoveAxis(faces) {
   if (!faces || faces.length === 0) return null;
 
@@ -27,13 +29,10 @@ export function findPrimaryDoveAxis(faces) {
     "right"
   );
 
-  
-
   return {
     leftWingTip,
     leftShoulder: leftTransition.point,
     leftTransitionRegion: leftTransition.region,
-
 
     bodyCenter,
 
@@ -41,6 +40,80 @@ export function findPrimaryDoveAxis(faces) {
     rightTransitionRegion: rightTransition.region,
     rightWingTip,
   };
+}
+
+export function createLocalWingSpace(faces, primaryAxis) {
+  if (!faces || !primaryAxis) return null;
+
+  return {
+    left: createWingSpace(
+      faces,
+      primaryAxis.leftShoulder,
+      primaryAxis.leftWingTip,
+      "left"
+    ),
+    right: createWingSpace(
+      faces,
+      primaryAxis.rightShoulder,
+      primaryAxis.rightWingTip,
+      "right"
+    ),
+  };
+}
+
+function createWingSpace(faces, shoulder, wingTip, side) {
+  if (!shoulder || !wingTip) return [];
+
+  const start = shoulder.center;
+  const end = wingTip.center;
+
+  const axis = end.clone().sub(start);
+  const axisLengthSq = axis.lengthSq();
+
+  if (axisLengthSq === 0) return [];
+
+  const axisDir = axis.clone().normalize();
+
+  return faces
+    .map((face) => {
+      const rel = face.center.clone().sub(start);
+
+      const wingProgress = rel.dot(axis) / axisLengthSq;
+
+      if (wingProgress < 0 || wingProgress > 1.05) return null;
+
+      if (side === "left" && face.center.x > shoulder.center.x + 0.5) {
+        return null;
+      }
+
+      if (side === "right" && face.center.x < shoulder.center.x - 0.5) {
+        return null;
+      }
+
+      const normal = face.normal.clone().normalize();
+
+      const flow = axisDir
+        .clone()
+        .sub(normal.clone().multiplyScalar(axisDir.dot(normal)))
+        .normalize();
+
+      if (!Number.isFinite(flow.x)) return null;
+
+      const spread = new THREE.Vector3()
+        .crossVectors(normal, flow)
+        .normalize();
+
+      return {
+        face,
+        center: face.center,
+        normal,
+        flow,
+        spread,
+        wingProgress,
+        side,
+      };
+    })
+    .filter(Boolean);
 }
 
 function findTransitionZonePoint(faces, bodyCenter, wingTip, side) {
@@ -154,35 +227,4 @@ function transitionScore(face, body, tip) {
     distanceToAxis * 0.18 +
     bodyDistance * 0.03
   );
-}
-function createLocalWingSpace(shoulder, wingTip) {
-  if (!shoulder || !wingTip) return null;
-
-  const start = shoulder.center;
-  const end = wingTip.center;
-
-  const axis = {
-    x: end.x - start.x,
-    y: end.y - start.y,
-    z: end.z - start.z,
-  };
-
-  const length = Math.sqrt(
-    axis.x * axis.x +
-    axis.y * axis.y +
-    axis.z * axis.z
-  );
-
-  if (length === 0) return null;
-
-  return {
-    shoulder,
-    wingTip,
-    axis: {
-      x: axis.x / length,
-      y: axis.y / length,
-      z: axis.z / length,
-    },
-    length,
-  };
 }

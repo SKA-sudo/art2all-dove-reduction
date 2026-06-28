@@ -7,7 +7,10 @@ import DebugGesture from "./DebugGesture";
 import { inspectGeometry } from "../utils/GeometryInspector";
 import { extractFaces } from "../utils/FaceExtractor";
 import { filterFaces } from "../utils/FaceFilter";
-import { findPrimaryDoveAxis } from "../utils/DoveSpaceBuilder";
+import {
+  findPrimaryDoveAxis,
+  createLocalWingSpace,
+} from "../utils/DoveSpaceBuilder";
 
 /* -------------------- TAUBE -------------------- */
 export default function DoveModel({ flapRef }) {
@@ -35,14 +38,28 @@ export default function DoveModel({ flapRef }) {
     return found;
   }, [scene]);
 
-  const primaryAxis = useMemo(() => {
+  const engineData = useMemo(() => {
     if (!mesh) return null;
 
     const faces = extractFaces(mesh);
     const filteredFaces = filterFaces(faces);
+    const primaryAxis = findPrimaryDoveAxis(filteredFaces);
+    const localWingSpace = createLocalWingSpace(filteredFaces, primaryAxis);
 
-    return findPrimaryDoveAxis(filteredFaces);
+    console.log("Local Wing Space");
+    console.log("Left:", localWingSpace?.left?.length);
+    console.log("Right:", localWingSpace?.right?.length);
+
+    return {
+      faces,
+      filteredFaces,
+      primaryAxis,
+      localWingSpace,
+    };
   }, [mesh]);
+
+  const primaryAxis = engineData?.primaryAxis ?? null;
+  const localWingSpace = engineData?.localWingSpace ?? null;
 
   const primaryAxisPoints = useMemo(() => {
     if (!primaryAxis) return null;
@@ -59,19 +76,17 @@ export default function DoveModel({ flapRef }) {
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => {
-    if (!mesh) return;
+    if (!mesh || !engineData) return;
 
     inspectGeometry(mesh);
 
-    const faces = extractFaces(mesh);
-    const filteredFaces = filterFaces(faces);
-
     console.log("Selected Mesh:", mesh.name);
-    console.log("Faces:", faces.length);
-    console.log("Gefiltert:", filteredFaces.length);
-    console.log("Beispiel-Face:", filteredFaces[0]);
+    console.log("Faces:", engineData.faces.length);
+    console.log("Gefiltert:", engineData.filteredFaces.length);
+    console.log("Beispiel-Face:", engineData.filteredFaces[0]);
     console.log("Primary Axis:", primaryAxis);
-  }, [mesh, primaryAxis]);
+    console.log("Local Wing Space:", localWingSpace);
+  }, [mesh, engineData, primaryAxis, localWingSpace]);
 
   useEffect(() => {
     const action = Object.values(actions || {})[0];
@@ -91,17 +106,18 @@ export default function DoveModel({ flapRef }) {
       <DoveSurface mesh={mesh} />
 
       {primaryAxisPoints && primaryAxis && (
-      <DebugGesture
-      points={primaryAxisPoints}
-      colors={["red", "orange", "white", "cyan", "blue"]}
-      leftTransitionRegion={primaryAxis.leftTransitionRegion}
-      rightTransitionRegion={primaryAxis.rightTransitionRegion}
-      leftShoulder={primaryAxis.leftShoulder}
-      rightShoulder={primaryAxis.rightShoulder}
-      leftWingTip={primaryAxis.leftWingTip}
-      rightWingTip={primaryAxis.rightWingTip}
-    />
-)}
+        <DebugGesture
+        points={primaryAxisPoints}
+        colors={["red", "orange", "white", "cyan", "blue"]}
+        leftTransitionRegion={primaryAxis.leftTransitionRegion}
+        rightTransitionRegion={primaryAxis.rightTransitionRegion}
+        leftShoulder={primaryAxis.leftShoulder}
+        rightShoulder={primaryAxis.rightShoulder}
+        leftWingTip={primaryAxis.leftWingTip}
+        rightWingTip={primaryAxis.rightWingTip}
+        localWingSpace={localWingSpace}
+      />
+      )}
     </group>
   );
 }

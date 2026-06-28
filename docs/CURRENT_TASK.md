@@ -5,8 +5,19 @@ Algorithmische Frage:
 Wie bekommt jeder Flügel eine lokale Richtung von Schulter zu Flügelspitze?
 ↓
 PoC 05:
-Welche Orientierung der Papierflächen erzeugt im Zielbild die Wirkung des Flügels?
 
+
+---CHATGPT
+Ich würde deshalb den PoC 05 sogar noch einmal umformulieren.
+
+Nicht:
+
+Local Wing Space
+
+Sondern zuerst:
+
+Welche Orientierung der Papierflächen erzeugt im Zielbild die Wirkung des Flügels?
+------
 
 
 Local Wing Space sichtbar machen
