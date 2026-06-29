@@ -72,6 +72,22 @@ Jede Aufgabe muss so geplant werden, dass sie von einer einzelnen Person mit Unt
 
 3. Wahrnehmung
    = daraus erscheint die Taube
+
+
+Decision:
+
+Art2all is product-driven.
+
+Research is performed only when it directly improves the product or the current sprint.
+
+Priority:
+1. Visible product progress
+2. Architecture
+3. Research only as an enabler
+
+Product First
+Every sprint must produce visible progress toward the final Art2all experience. Research is valuable only when it directly enables or improves the current product goal.
+
 ---
 
 Sprint
