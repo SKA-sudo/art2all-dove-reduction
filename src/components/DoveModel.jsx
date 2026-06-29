@@ -14,6 +14,10 @@ import {
 } from "../utils/DoveSpaceBuilder";
 import { buildWingFingerCurves } from "../utils/WingFingerCurveBuilder";
 import DebugWingCurves from "./DebugWingCurves";
+import { buildPrimaryGestures } from "../utils/PrimaryGestureBuilder";
+import { PrimaryGestureDebug } from "./debug/PrimaryGestureDebug.jsx";
+import { buildGestureTreeDebug } from "../utils/GestureTreeBuilder";
+import { GestureTreeDebug } from "./debug/GestureTreeDebug.jsx";
 
 /* -------------------- TAUBE -------------------- */
 export default function DoveModel({ flapRef }) {
@@ -63,6 +67,22 @@ export default function DoveModel({ flapRef }) {
 
   const primaryAxis = engineData?.primaryAxis ?? null;
   const localWingSpace = engineData?.localWingSpace ?? null;
+  const primaryGestures = useMemo(() => {
+  if (!localWingSpace || !primaryAxis) return [];
+
+  return buildPrimaryGestures({
+    localWingSpace,
+    primaryAxis,
+  });
+}, [localWingSpace, primaryAxis]);
+
+const gestureTreeFlowCurves = useMemo(() => {
+  if (!primaryGestures.length) return [];
+
+  return buildGestureTreeDebug({
+    primaryGestures,
+  });
+}, [primaryGestures]);
 
   const leftWingFingerCurves = useMemo(() => {
       if (!localWingSpace || !primaryAxis?.leftShoulder) return [];
@@ -117,10 +137,13 @@ export default function DoveModel({ flapRef }) {
   return (
     <group ref={group} scale={20} position={[0, 6, 0]}>
       <primitive object={scene} />
-      <WingFingerCurvesDebug curves={leftWingFingerCurves} />
+      <PrimaryGestureDebug gestures={primaryGestures} />
+      {/*<GestureTreeDebug flowCurves={gestureTreeFlowCurves} />
+      <WingFingerCurvesDebug curves={leftWingFingerCurves} />*/}
       <DoveSurface mesh={mesh} />
-
-      {primaryAxisPoints && primaryAxis && (
+      
+    
+       {primaryAxisPoints && primaryAxis && (
         <DebugGesture
         points={primaryAxisPoints}
         colors={["red", "orange", "white", "cyan", "blue"]}

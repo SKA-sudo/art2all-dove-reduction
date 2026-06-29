@@ -406,3 +406,5 @@ Vielleicht in einer eingerückten Box:
 Everything follows.
 
 Die visuelle Komplexität entsteht nicht durch unabhängige Einzelobjekte, sondern durch eine Hierarchie semantischer Beziehungen. Jede Ebene folgt ausschließlich ihrer Elternstruktur. Aus diesen wenigen Transformationen entsteht die gesamte Bewegung, Form und Lebendigkeit der Friedenstaube.
+
+Art2all modelliert nicht primär Objekte. Art2all modelliert die minimale visuelle Information, die das menschliche Gehirn benötigt, um ein Objekt zu erkennen. Die Engine beschreibt daher nicht Anatomie, sondern Wahrnehmung und deren Aktivierung im visuellen Gedächtnis.

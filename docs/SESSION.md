@@ -96,155 +96,98 @@ Erst danach wird Code geschrieben.
 ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## 
 
 
-# SESSION – Sprint 07 (Primary Gesture)
+# SESSION – Sprint 08 (PoC 08)
 
-## Status
-
-Sprint erfolgreich abgeschlossen.
-
----
-
-# Ziel
-
+## Ziel
 Weiterentwicklung der wahrnehmungsbasierten Flügelarchitektur.
 
-Ausgangspunkt war die Frage, wie sich die innere Organisation des Flügels nicht aus Anatomie oder Mesh, sondern aus der visuellen Wahrnehmung ableiten lässt.
-
 ---
 
-# Umgesetzt
-
-✅ Wing Root Zones visualisiert
-
-✅ Wing Finger Curves als Debug implementiert
-
-✅ Fächerstruktur erfolgreich dargestellt
-
----
-
-# Wichtigste Erkenntnis
-
-Während der Debug-Phase wurde deutlich, dass die Wing Finger Curves nicht den eigentlichen Ursprung des Flügels darstellen.
-
-Ausgehend von eigenen Vogelzeichnungen entstand die Erkenntnis, dass beim Zeichnen zuerst eine einzige übergeordnete Linie entsteht.
-
-Diese Linie bestimmt:
-
-- Haltung
-- Flügelschlag
-- Dynamik
-- Charakter
-
-Erst danach werden Flügel, Volumen und Details aufgebaut.
-
-Diese Linie wurde als **Primary Gesture** definiert.
-
----
-
-# Neue Wahrnehmungsarchitektur
-
-Primary Gesture
-↓
-Flow Curve
-↓
-Wing Outline
-↓
-Wing Finger Curves
-↓
-Feather Bands
-↓
-Paper Placement
-
----
-
-# Bedeutung der Ebenen
+## Durchgeführte Arbeiten
 
 ### Primary Gesture
 
-Beschreibt die gesamte Bewegung und Haltung des Flügels.
+Die Primary Gesture wurde erstmals separat visualisiert.
 
-Sie ist die erste Linie eines künstlerischen Entwurfs.
+Erkenntnis:
 
----
-
-### Flow Curve
-
-Leitet die Hauptbewegung innerhalb des Flügels.
-
-Sie verbindet Primary Gesture mit der eigentlichen Flügelstruktur.
+- Die Primary Gesture trägt bereits einen großen Teil der visuellen Information.
+- Sie beschreibt die dominante Bewegungsrichtung des Flügels.
+- Sie bleibt ein zentraler Bestandteil der Engine.
 
 ---
 
-### Wing Outline
+### Gesture Tree (Experiment)
 
-Beschreibt ausschließlich die äußere Silhouette.
+Es wurde ein erster Gesture-Tree-Prototyp erstellt.
 
----
+Hypothese:
 
-### Wing Finger Curves
+Primary Gesture
+→ mehrere Flow Curves
+→ Wing Finger Curves
 
-Interne Leitstruktur des Flügels.
+Ergebnis:
 
-Sie orientieren sich an Flow Curve und Wing Outline.
+Der PoC liefert interessante Ansätze, reicht jedoch noch nicht aus, um die Architektur anzupassen.
 
----
+Status:
+OFFENE HYPOTHESE
 
-### Feather Bands
-
-Organisieren die späteren Federfelder.
-
----
-
-### Paper Placement
-
-Platzierung der Kinderzeichnungen innerhalb der Feather Bands.
+Keine Übernahme in die Engine.
 
 ---
 
-# Künstlerische Erkenntnis
+## Wichtigste Erkenntnis des Tages
 
-Ein Vogel entsteht beim Zeichnen nicht aus Anatomie oder Konturen.
+Mehrere Beispiele (einlinige Vogelzeichnungen, Kinderzeichnungen, stilisierte Möwen, Wahrnehmungsbeispiele) führten zu einer neuen gemeinsamen Erkenntnis.
 
-Der Entwurfsprozess beginnt mit einer Primärgeste.
+Die Engine soll nicht die Anatomie eines Vogels modellieren.
 
-Aus dieser entstehen:
+Die Engine sucht die minimale visuelle Information, die das menschliche Gehirn benötigt, um eine Friedenstaube zu erkennen.
 
-- Haltung
-- Dynamik
-- Volumen
-- Flügel
-- Details
-
-Die Art2all-Engine soll zukünftig dieselbe Reihenfolge verwenden.
+Diese Erkenntnis wurde im FOUNDATION-Dokument ergänzt.
 
 ---
 
-# Zusätzliche Beobachtung
+## Projektfokus
 
-Während der Diskussion wurde festgestellt, dass ähnliche Organisationsprinzipien auch bei Blattadern, Fledermausflügeln und anderen Naturformen auftreten.
+Heute wurde bewusst entschieden, den Projektfokus wieder zu schärfen.
 
-Dies wird derzeit **nicht** als Ziel der Entwicklung verstanden, sondern lediglich als offene Hypothese.
+Priorität:
 
-Der Fokus des Projekts bleibt weiterhin ausschließlich die Friedenstaube.
+1. Friedenstaube fertigstellen.
+2. Wirkung erzeugen.
+3. Anschließend wissenschaftliche Verallgemeinerung.
 
----
-
-# Fazit
-
-Sprint erfolgreich abgeschlossen.
-
-Die größte Erkenntnis war keine Implementierung, sondern die Identifikation der **Primary Gesture** als eigentlichen Ausgangspunkt der wahrnehmungsbasierten Flügelarchitektur.
-
-Diese Erkenntnis wird zukünftig als Grundlage für alle weiteren Flügelalgorithmen verwendet.
+Die allgemeine Wahrnehmungsforschung bleibt wichtig, wird jedoch erst nach Fertigstellung der Friedenstaube weiter vertieft.
 
 ---
 
-# Nächster Sprint
+## Vision
 
-PoC 08 – Primary Gesture
+Art2all soll möglichst zeitnah als positives Friedenssymbol entstehen.
 
-Ziel:
+Motivation:
 
-- Primary Gesture als Debug visualisieren
-- Flow Curve daraus ableiten
-- Wing Finger Curves erstmals an Primary Gesture und Flow Curve ausrichten
+Kindern – auch aus Krisen- und Kriegsgebieten – die Möglichkeit geben, selbst aktiv einen Beitrag zu leisten.
+
+Ein einzelnes Bild beendet keinen Krieg.
+
+Aber jedes Kind kann dadurch vom Zuschauer zum Mitgestalter eines weltweiten Friedenssymbols werden.
+
+Die Priorität liegt deshalb auf einer funktionierenden ersten Version der Friedenstaube und nicht auf theoretischer Perfektion.
+
+---
+
+## Nächster Sprint
+
+PoC 09
+
+Fragestellung:
+
+Wie kann aus der Primary Gesture eine Flow Curve entstehen, die tatsächlich zur Organisation des Flügels beiträgt?
+
+Dabei wird ausschließlich die Friedenstaube betrachtet.
+
+Keine Verallgemeinerung auf andere Objekte.
