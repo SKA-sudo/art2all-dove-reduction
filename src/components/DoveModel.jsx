@@ -27,23 +27,36 @@ import SpaceGridDebug from "./debug/SpaceGridDebug";
 export default function DoveModel({ flapRef }) {
   const group = useRef();
   const { scene, animations } = useGLTF("/models/peace_dove.glb");
-const technicalScene = useMemo(() => {
-  
-  const clone = scene.clone(true);
 
-  clone.traverse((child) => {
-    if (!child.isMesh) return;
+  const technicalScene = useMemo(() => {
+        const clone = scene.clone(true);
+    clone.updateMatrixWorld(true);
 
-    child.material = new THREE.MeshBasicMaterial({
-      color: "white",
-      wireframe: true,
-      transparent: true,
-      opacity: 0.75,
+    const box = new THREE.Box3().setFromObject(clone);
+
+    console.log("========== GLB ==========");
+    console.log("MIN:", box.min);
+    console.log("MAX:", box.max);
+
+    const center = new THREE.Vector3();
+    box.getCenter(center);
+
+    console.log("CENTER:", center);
+    console.log("=========================");
+    clone.traverse((child) => {
+      if (!child.isMesh) return;
+
+      child.material = new THREE.MeshBasicMaterial({
+        color: "666666",
+        wireframe: true,
+        transparent: true,
+        opacity: 0.25,
+      });
     });
-  });
 
-  return clone;
-}, [scene]);
+    return clone;
+  }, [scene]);
+
   const mesh = useMemo(() => {
     let found = null;
 
@@ -87,47 +100,43 @@ const technicalScene = useMemo(() => {
 
   const primaryAxis = engineData?.primaryAxis ?? null;
   const localWingSpace = engineData?.localWingSpace ?? null;
+
   const primaryGestures = useMemo(() => {
-  if (!localWingSpace || !primaryAxis) return [];
+    if (!localWingSpace || !primaryAxis) return [];
 
-  return buildPrimaryGestures({
-    localWingSpace,
-    primaryAxis,
-  });
-}, [localWingSpace, primaryAxis]);
+    return buildPrimaryGestures({
+      localWingSpace,
+      primaryAxis,
+    });
+  }, [localWingSpace, primaryAxis]);
 
-const gestureTreeFlowCurves = useMemo(() => {
-  if (!primaryGestures.length) return [];
+  const gestureTreeFlowCurves = useMemo(() => {
+    if (!primaryGestures.length) return [];
 
-  return buildGestureTreeDebug({
-    primaryGestures,
-  });
-}, [primaryGestures]);
+    return buildGestureTreeDebug({
+      primaryGestures,
+    });
+  }, [primaryGestures]);
 
   const leftWingFingerCurves = useMemo(() => {
-      if (!localWingSpace || !primaryAxis?.leftShoulder) return [];
+    if (!localWingSpace || !primaryAxis?.leftShoulder) return [];
 
-      return buildWingFingerCurves({
-        localWingSpace,
-        shoulder: primaryAxis.leftShoulder,
-        side: "left",
-        count: 5,
-      });
-    }, [localWingSpace, primaryAxis]);
+    return buildWingFingerCurves({
+      localWingSpace,
+      shoulder: primaryAxis.leftShoulder,
+      side: "left",
+      count: 5,
+    });
+  }, [localWingSpace, primaryAxis]);
 
-    const gdl = useMemo(() => {
-      return buildGDL({
-        primaryAxis,
-        localWingSpace,
-        primaryGestures,
-        wingFingerCurves: leftWingFingerCurves,
-      });
-    }, [
+  const gdl = useMemo(() => {
+    return buildGDL({
       primaryAxis,
       localWingSpace,
       primaryGestures,
-      leftWingFingerCurves,
-    ]);
+      wingFingerCurves: leftWingFingerCurves,
+    });
+  }, [primaryAxis, localWingSpace, primaryGestures, leftWingFingerCurves]);
 
   const primaryAxisPoints = useMemo(() => {
     if (!primaryAxis) return null;
@@ -167,43 +176,72 @@ const gestureTreeFlowCurves = useMemo(() => {
 
     flapRef.current = Math.sin(action.time * 6) * 0.5 + 0.5;
   });
-
+  const marker = primaryAxis?.bodyCenter?.center;
+  console.log("BODY CENTER MARKER:", marker);
+  
   return (
     <>
+<line renderOrder={9999}>
+  <bufferGeometry>
+    <bufferAttribute
+      attach="attributes-position"
+      args={[
+        new Float32Array([
+          -1.0, 0.45, 0.2,
+           1.0, 0.45, 0.2,
+        ]),
+        3,
+      ]}
+    />
+  </bufferGeometry>
+  <lineBasicMaterial
+    color="red"
+    linewidth={10}
+    depthTest={false}
+    depthWrite={false}
+  />
+</line>
+
+
       <group ref={group} scale={28} position={[0, 6, 0]}>
         <primitive object={technicalScene} />
-        <SpaceGridDebug />
-        {/*<primitive object={scene} />
+       
+<mesh position={[0, 0, 0]} renderOrder={9999}>
+  
+  <line renderOrder={9999}>
+  ...
+</line>
+</mesh>
+
+        {/* <SpaceGridDebug gdl={gdl} /> */}
+
+        {/*
+        <primitive object={scene} />
         <GDLDebug gdl={gdl} />
         <PrimaryGestureDebug gestures={primaryGestures} />
         <GestureTreeDebug flowCurves={gestureTreeFlowCurves} />
         <WingFingerCurvesDebug curves={leftWingFingerCurves} />
-        <DoveSurface mesh={mesh} />*/}
-        
-      
-         {/*{primaryAxisPoints && primaryAxis && (
-          <DebugGesture
-          points={primaryAxisPoints}
-          colors={["red", "orange", "white", "cyan", "blue"]}
-          leftTransitionRegion={primaryAxis.leftTransitionRegion}
-          rightTransitionRegion={primaryAxis.rightTransitionRegion}
-          leftShoulder={primaryAxis.leftShoulder}
-          rightShoulder={primaryAxis.rightShoulder}
-          leftWingTip={primaryAxis.leftWingTip}
-          rightWingTip={primaryAxis.rightWingTip}
-          localWingSpace={localWingSpace}
-        />
-             
-        )}
-          <DebugWingCurves
-            root={[-0.8, 1.2, 0]}
-            side={-1}
-          />
+        <DoveSurface mesh={mesh} />
+        */}
 
-          <DebugWingCurves
-            root={[0.8, 1.2, 0]}
-            side={1}
-          />*/}
+        {/*
+        {primaryAxisPoints && primaryAxis && (
+          <DebugGesture
+            points={primaryAxisPoints}
+            colors={["red", "orange", "white", "cyan", "blue"]}
+            leftTransitionRegion={primaryAxis.leftTransitionRegion}
+            rightTransitionRegion={primaryAxis.rightTransitionRegion}
+            leftShoulder={primaryAxis.leftShoulder}
+            rightShoulder={primaryAxis.rightShoulder}
+            leftWingTip={primaryAxis.leftWingTip}
+            rightWingTip={primaryAxis.rightWingTip}
+            localWingSpace={localWingSpace}
+          />
+        )}
+
+        <DebugWingCurves root={[-0.8, 1.2, 0]} side={-1} />
+        <DebugWingCurves root={[0.8, 1.2, 0]} side={1} />
+        */}
       </group>
     </>
   );

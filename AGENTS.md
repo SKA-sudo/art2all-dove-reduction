@@ -86,3 +86,5 @@ Prefer:
 - minimal diffs
 
 Avoid unnecessary abstractions.
+
+Bei jedem neuen Builder beginnt der Debug mit genau einem primitiven Element (eine Linie oder ein Punkt). Erst wenn dieses sichtbar und verifiziert ist, wird die nächste primitive Struktur hinzugefügt.
