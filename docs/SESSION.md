@@ -90,64 +90,54 @@ Every sprint must produce visible progress toward the final Art2all experience. 
 
 ---
 
-# Sprint 09.x – Local Dove Space
+Sprint 10 – Perceptual Reduction
+Ziel
 
-## Status
+Das Technical Dove Model dient ab sofort als technisches Referenzmodell.
 
-Der eigentliche Local Dove Space wurde noch nicht implementiert.
+Ausgehend von diesem vollständigen Modell wird die räumliche Information schrittweise reduziert, um zu untersuchen, welche Strukturen für die menschliche Wahrnehmung der Taube tatsächlich notwendig sind.
 
-Der Sprint diente überwiegend dazu, den Rendering-Pfad für eigene semantische Debug-Geometrie zu validieren.
+Die zentrale Forschungsfrage lautet:
 
-## Erkenntnisse
+Wie wenig räumliche Information benötigt das menschliche Gehirn, um die Taube noch eindeutig zu erkennen?
 
-- Eigene THREE-Geometrie kann im selben lokalen Koordinatenraum wie das GLB gerendert werden.
-- Eine erste semantische Referenzlinie konnte erfolgreich unabhängig vom GLB dargestellt werden.
-- Das bisherige SpaceGridDebug war als erster Debug-Schritt zu komplex und führte zu unnötigem Debugging.
-- Zukünftig werden neue Builder grundsätzlich mit einer einzigen primitiven Geometrie (Linie oder Punkt) validiert, bevor komplexere Strukturen aufgebaut werden.
+Vorgehensweise
 
-## Aktueller Stand
+Das Technical Dove Model wird nicht neu aufgebaut.
 
-Verifiziert:
+Es wird systematisch vereinfacht.
 
-GLB
-↓
-Eigene semantische Geometrie
-↓
-Rendering funktioniert
+Nach jeder Reduktion erfolgt ausschließlich eine visuelle Bewertung.
 
-Noch offen:
+Die Architektur bleibt während des gesamten Sprints unverändert.
 
-GLB
-↓
-Local Dove Space
-↓
-Primary Dove Axis
-↓
-Local Wing Space
-↓
-Primary Gesture
+Arbeitsweise
 
-## Nächster Sprint
+Jeder Schritt reduziert genau eine räumliche Eigenschaft.
 
-Ziel ist nicht das komplette Grid.
+Nach jeder Änderung wird geprüft:
 
-Schrittweise Aufbau des Local Dove Space:
+Ist die Taube weiterhin eindeutig erkennbar?
+Welche Information ging verloren?
+Welche Information ist offenbar unverzichtbar?
 
-1. X-Achse
-2. Y-Achse
-3. Z-Achse
-4. Bounding Volume
-5. Reduktion auf minimale wahrnehmbare Struktur
+Erst danach folgt die nächste Reduktion.
 
-Erst danach beginnt die Ableitung der Primary Dove Axis.
+Erwartetes Ergebnis
 
-## Engineering-Regel
+Am Ende des Sprints entsteht kein klassisches GDL-Modell.
 
-Keine komplexen Debug-Strukturen mehr.
+Es entsteht eine erste wissenschaftlich begründete Minimalbeschreibung der Taube.
 
-Jeder neue Builder wird zunächst mit genau einer primitiven Geometrie validiert (Linie oder Punkt). Erst nach erfolgreicher visueller Verifikation wird der nächste Baustein ergänzt.
+Diese bildet anschließend die Grundlage für den semantischen Aufbau der Art2all Engine.
 
-Status:
-Sprint begonnen.
-Architektur unverändert.
-Engineering wird im nächsten Sprint auf Basis der verifizierten Debug-Geometrie fortgesetzt.
+Engineering-Regeln
+Das Technical Dove Model bleibt jederzeit lauffähig.
+Es wird niemals mehr als eine Reduktion gleichzeitig durchgeführt.
+Keine neuen Builder.
+Keine Architekturänderungen.
+Jede Änderung muss unmittelbar sichtbar und nachvollziehbar sein.
+Erst nach erfolgreicher Verifikation wird der nächste Reduktionsschritt begonnen.
+Erwarteter Meilenstein
+
+Zum ersten Mal wird die Art2all Engine nicht aus geometrischen Primitivelementen aufgebaut, sondern aus den wahrnehmungsrelevanten Strukturen eines vollständig kontrollierten technischen Referenzmodells abgeleitet.

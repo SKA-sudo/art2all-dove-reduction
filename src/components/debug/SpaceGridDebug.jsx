@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import * as THREE from "three";
 
 /**
- * Sprint 09.1 – Local Dove Space X-Achse
+ * Local Dove Space – X-Achse
  * 
- * Renders a single X-axis line in the local dove coordinate space.
- * Extends from -1.2 to 1.2 along the X axis through the body center.
+ * Renders the X-axis as a red line in the local dove coordinate system.
+ * X-axis extends from -1.2 to +1.2, passing through the body center.
  */
 export default function SpaceGridDebug({ gdl }) {
   const geometry = useMemo(() => {
@@ -14,7 +14,7 @@ export default function SpaceGridDebug({ gdl }) {
     const bodyCenter = gdl.axis.points[2];
     if (!bodyCenter) return null;
 
-    // X-axis: horizontal line from -X to +X, passing through body center
+    // X-axis: horizontal line through body center
     const xMin = -1.2;
     const xMax = 1.2;
     const y = bodyCenter[1];

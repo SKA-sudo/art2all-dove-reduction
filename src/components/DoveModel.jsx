@@ -21,7 +21,6 @@ import { GestureTreeDebug } from "./debug/GestureTreeDebug.jsx";
 import { buildGDL } from "../core/GDLBuilder";
 import GDLDebug from "./debug/GDLDebug";
 import * as THREE from "three";
-import SpaceGridDebug from "./debug/SpaceGridDebug";
 
 /* -------------------- TAUBE -------------------- */
 export default function DoveModel({ flapRef }) {
@@ -47,10 +46,12 @@ export default function DoveModel({ flapRef }) {
       if (!child.isMesh) return;
 
       child.material = new THREE.MeshBasicMaterial({
-        color: "666666",
+        color: "#ff0000",
         wireframe: true,
         transparent: true,
-        opacity: 0.25,
+        opacity: 0.65,
+        depthTest: false,
+        depthWrite: false,
       });
     });
 
@@ -181,39 +182,8 @@ export default function DoveModel({ flapRef }) {
   
   return (
     <>
-<line renderOrder={9999}>
-  <bufferGeometry>
-    <bufferAttribute
-      attach="attributes-position"
-      args={[
-        new Float32Array([
-          -1.0, 0.45, 0.2,
-           1.0, 0.45, 0.2,
-        ]),
-        3,
-      ]}
-    />
-  </bufferGeometry>
-  <lineBasicMaterial
-    color="red"
-    linewidth={10}
-    depthTest={false}
-    depthWrite={false}
-  />
-</line>
-
-
       <group ref={group} scale={28} position={[0, 6, 0]}>
         <primitive object={technicalScene} />
-       
-<mesh position={[0, 0, 0]} renderOrder={9999}>
-  
-  <line renderOrder={9999}>
-  ...
-</line>
-</mesh>
-
-        {/* <SpaceGridDebug gdl={gdl} /> */}
 
         {/*
         <primitive object={scene} />
