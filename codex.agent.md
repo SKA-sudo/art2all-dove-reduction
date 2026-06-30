@@ -86,3 +86,38 @@ Prefer:
 - minimal diffs
 
 Avoid unnecessary abstractions.
+
+## Windows Environment
+
+The primary development environment is:
+
+- Windows 11
+- PowerShell
+
+Avoid Unix commands such as:
+
+- head
+- tail
+- grep
+- sed
+- awk
+
+Use PowerShell equivalents or execute the original command directly.
+
+The visible result has priority.
+
+Implementation is not considered complete until the user has reviewed the visual result.
+
+Never declare a sprint or milestone complete.
+Always wait for user review.
+
+
+## Reporting
+
+Describe only completed implementation work.
+
+Do not declare a sprint complete.
+
+Do not decide that a milestone has been reached.
+
+Leave all milestone and sprint decisions to the user.
