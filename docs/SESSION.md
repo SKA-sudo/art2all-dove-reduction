@@ -166,72 +166,115 @@ Mit Sprint 10 beginnt die Forschungsphase der Art2all Engine.
 
 Um Forschung und Produktentwicklung klar voneinander zu trennen, werden drei eigenständige Repositories verwendet.
 
-### Repository 1 – Observation Lab
+# AI_START
 
-Zweck:
+Read documentation in this order:
 
-Visuelle Beobachtung des Technical Dove Models.
+1. ../art2all/docs/FOUNDATION.md
+2. ../art2all/docs/SESSION.md
+3. this SESSION.md
 
-Funktionen:
-
-* Modell frei drehen
-* Zoomen
-* Animation ein-/ausschalten
-* Betrachtung aus jeder Perspektive
-
-Dieses Repository dient ausschließlich der Wahrnehmung.
-
-Es werden keine Algorithmen entwickelt.
+This document extends the global Art2all documentation.
+It never overrides the global project documentation.
 
 ---
 
-### Repository 2 – Perceptual Reduction Lab
+# Repository
 
-Zweck:
+Repository:
+ 
 
-Systematische Reduktion räumlicher Informationen.
+Purpose:
 
-Hier wird untersucht,
+The Reduction Lab is a dedicated research environment for perceptual reduction experiments.
 
-welche geometrischen Informationen entfernt werden können,
+Its purpose is to identify which spatial information can be removed while preserving human recognition of the dove.
 
-ohne dass die Taube für den Menschen ihre eindeutige Erkennbarkeit verliert.
+The repository never contains product features.
 
-Regeln:
+The repository never modifies the Art2all product.
 
-* Immer nur eine Änderung gleichzeitig
-* Nach jeder Änderung ausschließlich visuelle Bewertung
-* Keine Architekturänderungen
-* Keine Produktfunktionen
-
-Ergebnis dieses Repositories sind ausschließlich Wahrnehmungsregeln.
+Only validated perception rules will later be transferred back into the product repository.
 
 ---
 
-### Repository 3 – Art2all Development
+# Current State
 
-Dieses Repository bleibt das eigentliche Produkt.
+Sprint:
+R1
 
-Hier werden ausschließlich Erkenntnisse umgesetzt,
+Status:
 
-die zuvor im Observation Lab und im Perceptual Reduction Lab nachvollziehbar bestätigt wurden.
+Repository created.
 
-Dieses Repository bleibt weiterhin **Product First**.
+No reduction environment exists yet.
 
 ---
 
-## Verbindlicher Forschungsprozess
+# Current Goal
 
-Jede neue Fragestellung folgt künftig demselben Ablauf:
+Create an independent laboratory for reduction experiments.
 
-1. Beobachtung (Observation Lab)
-2. Wahrnehmung beschreiben
-3. Hypothese formulieren
-4. Reduktion oder Experiment durchführen
-5. Wahrnehmung validieren
-6. Wahrnehmungsregel ableiten
-7. Umsetzung im Art2all Development Repository
+The first sprint prepares the environment only.
 
-Forschung und Produktentwicklung bleiben damit bewusst getrennt.
+No reduction algorithms are implemented.
 
-Das Hauptprojekt übernimmt ausschließlich validierte Erkenntnisse aus den Forschungslaboren.
+No perception rules are evaluated.
+
+---
+
+# Next Sprint
+
+# Session
+
+## Sprint R1 – Reduction Lab Setup
+
+**Status:** ⏸ Blocked (not completed)
+
+### Goal
+
+Create the initial Reduction Lab by transferring the current working Spatial Grid implementation from the Art2all product repository into a standalone research repository.
+
+### What was done
+
+- Reduction Lab repository prepared.
+- Project structure created.
+- Basic application starts successfully.
+- Build completes successfully (`npm run build`).
+- Initial UI created.
+
+### Result
+
+The working Spatial Grid from the Art2all product was **not** successfully reproduced.
+
+The current implementation is **not** a 1:1 copy of the product implementation and therefore is **not accepted**.
+
+No code will be committed.
+
+### Lessons Learned
+
+The Spatial Grid cannot simply be recreated from individual components.
+
+A complete transfer requires the full rendering chain, including all dependencies and data generation.
+
+Future attempts must begin by identifying the complete working implementation inside the product repository before copying any files.
+
+No redesign or reinterpretation is allowed during this step.
+
+### Next Sprint
+
+Restart Sprint R1.
+
+Objective:
+
+Reproduce the **exact** working Spatial Grid from the Art2all product repository inside `art2all-dove-reduction`.
+
+Requirements:
+
+- Use the product implementation as the single source of truth.
+- Copy the complete rendering chain.
+- Copy all required dependencies.
+- Only adjust import paths where necessary.
+- The visual result must match the product repository before any reduction work begins.
+
+Reduction experiments start **only after** the copied implementation is visually identical to the product.
