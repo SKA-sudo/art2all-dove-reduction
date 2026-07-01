@@ -104,6 +104,39 @@ Workflow:
 Alle Entwicklungen erfolgen auf dev.
 Nur abgeschlossene Sprints werden per Pull Request nach main übernommen.
 
+
+## Repository Roles
+
+art2all
+Product development
+
+art2all-dove-observation
+Observation Lab
+
+art2all-dove-reductions
+Perceptual Reduction Lab
+
+Development Flow
+
+Observation Lab
+↓
+
+Reduction Lab
+
+↓
+
+validated perception rule
+
+↓
+
+Art2all Development
+
+Research repositories never contain product code.
+
+The product repository never contains experimental research.
+
+Only validated perception rules are transferred into the product.
+
 ---
 
 ## Research Workflow (ab Sprint 10)

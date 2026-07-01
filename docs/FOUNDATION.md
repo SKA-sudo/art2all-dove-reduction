@@ -506,3 +506,85 @@ Dieses Wahrnehmungsmodell wird unabhängig vom GLB entwickelt und kann sich mit 
 Sollte sich später herausstellen, dass das Wahrnehmungsmodell die Zielwahrnehmung besser beschreibt als das ursprüngliche GLB, darf das Referenzmodell angepasst oder ersetzt werden.
 
 Art2all entwickelt daher nicht das GLB weiter, sondern das Verständnis der zugrunde liegenden Wahrnehmung.
+
+## Repository Strategy
+
+Art2all is developed using separate repositories with clearly defined responsibilities.
+
+### art2all
+
+Purpose:
+Development of the final product.
+
+Contains:
+- Product architecture
+- Engine implementation
+- User experience
+- Production-ready code
+
+Research is never performed directly in this repository.
+
+Only validated findings from the research repositories are implemented here.
+
+---
+
+### art2all-dove-observation
+
+Purpose:
+Observation of the Technical Dove Model.
+
+Goal:
+Understand human visual perception.
+
+Activities include:
+- free camera movement
+- animation control
+- visual inspection
+- documentation of observations
+
+No algorithm development.
+
+---
+
+### art2all-dove-reduction
+
+Purpose:
+Perceptual reduction experiments.
+
+Goal:
+Determine which spatial information is essential for recognizing the dove.
+
+Rules:
+- only one reduction at a time
+- visual validation after every step
+- no architecture changes
+- no product implementation
+
+---
+
+Research Workflow
+
+Observation
+↓
+
+Perception
+
+↓
+
+Hypothesis
+
+↓
+
+Experiment / Reduction
+
+↓
+
+Validation
+
+↓
+
+Perception Rule
+
+↓
+
+Implementation in Art2all
