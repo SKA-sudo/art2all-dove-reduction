@@ -18,6 +18,78 @@ mit Unterstützung von ChatGPT
 ################################################################
 ################################################################
 
+# Main Repository
+
+Repository:
+art2all
+
+## Branch Strategy
+
+main
+Stable production branch.
+
+Contains only verified milestones.
+Must always be buildable and presentable.
+
+dev
+Active development and research branch.
+
+All implementation work is performed on this branch.
+Only validated sprint results are merged into main.
+
+Current development branch:
+dev
+
+Workflow:
+
+Idea
+↓
+Research (separate research repositories if required)
+↓
+Implementation on dev
+↓
+Visual verification
+↓
+Sprint Review
+↓
+Pull Request
+↓
+Merge into main
+
+---
+
+# Research Repositories
+
+art2all-dove-observation
+
+Purpose:
+Research human visual perception.
+No production code.
+
+Goal:
+Understand which visual information the human brain uses to recognize a dove.
+
+---
+
+art2all-dove-reduction
+
+Purpose:
+Research perceptual reduction.
+
+Goal:
+Systematically reduce the Technical Dove Model and identify which semantic information replaces removed geometric information.
+
+---
+
+# Development Principle
+
+The production repository (art2all) is the implementation project.
+
+The research repositories exist to discover new knowledge.
+
+Research never directly changes production code.
+
+Only validated architectural findings are transferred into art2all through normal sprint development.
 ## Branch Strategy
 
 main

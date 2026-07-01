@@ -91,14 +91,25 @@ Every sprint must produce visible progress toward the final Art2all experience. 
 
 ## Repository
 
-main
-Stable product branch
+Current Repository:
+art2all
 
+Current Branch:
 dev
-Active development branch
 
-Current branch
-dev
+Workspace:
+art2all-workspace
+
+Current Focus:
+Sprint 10 – Perceptual Reduction
+
+Research Repository:
+art2all-dove-reduction
+
+Status:
+Workspace restructured.
+Main/dev strategy established.
+Technical Dove Model completed.
 
 Workflow:
 Alle Entwicklungen erfolgen auf dev.
