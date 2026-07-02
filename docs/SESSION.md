@@ -225,50 +225,115 @@ No perception rules are evaluated.
 
 # Next Sprint
 
-# Session
+# Session Update
 
-## Next Sprint – Sprint R2: Interactive Reduction Baseline
+## Sprint R2 – Interactive Reduction Baseline
 
-### Ziel
+### Status
 
-Das Reduction Lab erhält eine stabile, interaktive Basis für alle weiteren Reduktionsschritte.
+Sprint R2 wurde erfolgreich begonnen.
 
-Wichtig:
-Die Taube muss auch dann drehbar bleiben, wenn das Mesh nicht sichtbar ist oder Linien reduziert werden.
+Die Baseline des Reduction Labs wurde aus dem Art2all-Repository wiederhergestellt und auf dem `dev`-Branch stabilisiert.
 
-### Grundsatz
+Die Git-Struktur wurde bereinigt, alle Änderungen sind committed und auf `origin/dev` veröffentlicht.
 
-Mesh-Daten bleiben intern erhalten.  
-Mesh-Anzeige ist optional.  
-Reduzierte Linien, Grid oder Gesture-Strukturen müssen weiterhin im Raum drehbar, zoombar und prüfbar sein.
+---
 
-### Funktionen
+## Erreichte Meilensteine
 
-- OrbitControls aktivieren
-- Linke Maustaste: drehen
-- Mausrad: zoomen
-- Taste `R`: Ansicht zurücksetzen
-- Taste `1`: Mesh / Wireframe anzeigen
-- Taste `2`: reduzierte Linien / Grid anzeigen
+- Restore Baseline erfolgreich abgeschlossen
+- Reduction Lab startet wieder stabil
+- OrbitControls integriert
+- Drehen funktioniert
+- Zoomen funktioniert
+- Feste lokale Ports definiert
 
-### Wichtig
+5173 → Art2all (Produkt)
 
-Nicht das Mesh reduzieren.
+5174 → Observation Lab
 
-Wir reduzieren die sichtbaren Beziehungen:
-- Linien
-- Richtungen
-- Abstände
-- Dichte
-- Flow
-- Gesture
+5175 → Reduction Lab
 
-### Definition of Done
+---
 
-- Reduction Lab startet stabil
-- Taube oder Reduktionsstruktur ist drehbar
-- Zoom funktioniert
-- Ansicht kann mit `R` zurückgesetzt werden
-- Mesh kann ausgeblendet werden, ohne die Interaktion zu verlieren
-- Keine neue Architektur
-- Keine Experimente über R2 hinaus
+## Neue Erkenntnisse
+
+Das Mesh ist ausschließlich interne Datenquelle.
+
+Die spätere Forschung untersucht nicht das Mesh selbst, sondern die Wahrnehmungsstruktur der Taube.
+
+Deshalb muss das Reduction Lab auch dann vollständig navigierbar bleiben, wenn das Mesh ausgeblendet oder Linien reduziert werden.
+
+Die Kamera ist Bestandteil des Forschungssystems und nicht lediglich eine Viewer-Funktion.
+
+---
+
+## Arbeitsprozess
+
+Heute wurde der Entwicklungsworkflow deutlich verbessert.
+
+Neuer Standard:
+
+1. FOUNDATION.md lesen
+2. SESSION.md lesen
+3. Projektstand zusammenfassen
+4. Sprintziel bestätigen
+5. Erst danach implementieren
+
+Zusätzlich wurde die Zusammenarbeit zwischen Mensch, ChatGPT und Codex weiter präzisiert.
+
+MI (Menschliche Intelligenz)
+→ Vision, Wahrnehmung, Entscheidungen
+
+AKI (Architektur-KI / ChatGPT)
+→ Architektur, Sprintplanung, präzise Arbeitsaufträge
+
+IKI (Implementierungs-KI / Codex)
+→ Umsetzung und Code
+
+Die Erfahrung aus Sprint R2 zeigt deutlich:
+
+Präzise Arbeitsaufträge führen zu reproduzierbaren Ergebnissen und sparen Entwicklungszeit.
+
+---
+
+## Nächster Schritt
+
+Sprint R2 wird fortgesetzt.
+
+Nächste Aufgabe:
+
+Implementierung der Kamerarücksetzung.
+
+Taste:
+
+R
+
+setzt jederzeit exakt dieselbe Ausgangsansicht wieder her.
+
+Dabei werden zurückgesetzt:
+
+- Kameraposition
+- OrbitControls Target
+- Zoom
+- Controls Update
+
+Diese Funktion bildet die Grundlage für reproduzierbare Wahrnehmungsanalysen in allen zukünftigen Reduktionsstufen.
+
+---
+
+## Danach
+
+Erst nach Abschluss der Kamera- und Anzeigeverwaltung beginnt Sprint R3:
+
+Spatial Grid
+
+Das Spatial Grid ist die erste sichtbare Wahrnehmungsabstraktion oberhalb des Meshes.
+
+Noch keine Reduktionsalgorithmen.
+
+Zunächst wird ausschließlich die räumliche Beziehungsstruktur sichtbar gemacht.
+
+---
+
+Ende der Session.
