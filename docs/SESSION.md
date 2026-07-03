@@ -227,113 +227,71 @@ No perception rules are evaluated.
 
 # Session Update
 
-## Sprint R2 – Interactive Reduction Baseline
+## Sprint R3.2 – Semantic Spatial Space (SSS)
 
-### Status
+### Research Breakthrough
 
-Sprint R2 wurde erfolgreich begonnen.
+Today's work fundamentally changed the research direction of the Reduction Lab.
 
-Die Baseline des Reduction Labs wurde aus dem Art2all-Repository wiederhergestellt und auf dem `dev`-Branch stabilisiert.
+The initial research question was:
 
-Die Git-Struktur wurde bereinigt, alle Änderungen sind committed und auf `origin/dev` veröffentlicht.
+> How much geometric information can be removed while preserving recognition?
 
----
+During the discussion it became clear that this question is incomplete.
 
-## Erreichte Meilensteine
+The actual research target is not geometry.
 
-- Restore Baseline erfolgreich abgeschlossen
-- Reduction Lab startet wieder stabil
-- OrbitControls integriert
-- Drehen funktioniert
-- Zoomen funktioniert
-- Feste lokale Ports definiert
+It is perception.
 
-5173 → Art2all (Produkt)
+Geometry is only one possible representation.
 
-5174 → Observation Lab
-
-5175 → Reduction Lab
+The Reduction Lab therefore shifts its focus from **geometric reduction** towards **semantic relationships**.
 
 ---
 
-## Neue Erkenntnisse
+### New Research Hypothesis
 
-Das Mesh ist ausschließlich interne Datenquelle.
+A bird is not recognized because of its geometry.
 
-Die spätere Forschung untersucht nicht das Mesh selbst, sondern die Wahrnehmungsstruktur der Taube.
+A bird is recognized because a minimal set of semantic relationships is perceived.
 
-Deshalb muss das Reduction Lab auch dann vollständig navigierbar bleiben, wenn das Mesh ausgeblendet oder Linien reduziert werden.
-
-Die Kamera ist Bestandteil des Forschungssystems und nicht lediglich eine Viewer-Funktion.
+The objective of future reduction experiments is therefore no longer to identify minimal geometry, but to identify the smallest stable set of semantic relationships that consistently produces the perception of a bird.
 
 ---
 
-## Arbeitsprozess
+### Important Observation
 
-Heute wurde der Entwicklungsworkflow deutlich verbessert.
+Simple bird symbols, children's drawings and highly detailed 3D models can all produce the same perception.
 
-Neuer Standard:
+Likewise, humans can recognize birds, faces or animals in clouds, rocks, trees and many other natural structures.
 
-1. FOUNDATION.md lesen
-2. SESSION.md lesen
-3. Projektstand zusammenfassen
-4. Sprintziel bestätigen
-5. Erst danach implementieren
+This suggests that perception is largely independent of the underlying material.
 
-Zusätzlich wurde die Zusammenarbeit zwischen Mensch, ChatGPT und Codex weiter präzisiert.
-
-MI (Menschliche Intelligenz)
-→ Vision, Wahrnehmung, Entscheidungen
-
-AKI (Architektur-KI / ChatGPT)
-→ Architektur, Sprintplanung, präzise Arbeitsaufträge
-
-IKI (Implementierungs-KI / Codex)
-→ Umsetzung und Code
-
-Die Erfahrung aus Sprint R2 zeigt deutlich:
-
-Präzise Arbeitsaufträge führen zu reproduzierbaren Ergebnissen und sparen Entwicklungszeit.
+Material, geometry and rendering are carriers of perceptual information rather than the object itself.
 
 ---
 
-## Nächster Schritt
+### Consequence for the Reduction Lab
 
-Sprint R2 wird fortgesetzt.
+Future experiments will compare different representations instead of reducing only the Technical Dove Model.
 
-Nächste Aufgabe:
+Candidate representations include:
 
-Implementierung der Kamerarücksetzung.
+- Technical Dove Model
+- Children's drawings
+- Simplified bird symbols
+- Line drawings
+- Logos
+- Natural accidental shapes (clouds, rocks, trees)
 
-Taste:
-
-R
-
-setzt jederzeit exakt dieselbe Ausgangsansicht wieder her.
-
-Dabei werden zurückgesetzt:
-
-- Kameraposition
-- OrbitControls Target
-- Zoom
-- Controls Update
-
-Diese Funktion bildet die Grundlage für reproduzierbare Wahrnehmungsanalysen in allen zukünftigen Reduktionsstufen.
+Only semantic relationships that remain stable across different representations may become perception rules for the Art2all Engine.
 
 ---
 
-## Danach
+### Working Principle
 
-Erst nach Abschluss der Kamera- und Anzeigeverwaltung beginnt Sprint R3:
+The Reduction Lab no longer searches for the smallest geometry.
 
-Spatial Grid
+It searches for the smallest stable semantic relationship network that produces a unique perception.
 
-Das Spatial Grid ist die erste sichtbare Wahrnehmungsabstraktion oberhalb des Meshes.
-
-Noch keine Reduktionsalgorithmen.
-
-Zunächst wird ausschließlich die räumliche Beziehungsstruktur sichtbar gemacht.
-
----
-
-Ende der Session.
+This marks the transition from geometric reduction to perception-driven research.
