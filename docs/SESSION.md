@@ -227,7 +227,7 @@ No perception rules are evaluated.
 
 # Session Update
 
-## Sprint R3.2 – Semantic Spatial Space (SSS)
+## Sprint R3.3 – Semantic Spatial Space (SSS)
 
 ### Research Breakthrough
 
@@ -295,3 +295,52 @@ The Reduction Lab no longer searches for the smallest geometry.
 It searches for the smallest stable semantic relationship network that produces a unique perception.
 
 This marks the transition from geometric reduction to perception-driven research.
+
+
+---
+
+# Session Update
+
+## Sprint R3.4 – Perception Dataset / Matrix Review
+
+### Status
+
+Sprint R3.4 wurde begonnen.
+
+Eine erste Wahrnehmungsmatrix wurde erstellt, um Minimaldarstellungen systematisch zu bewerten.
+
+Zusätzlich wurden erste Testbilder mit sehr einfachen Darstellungen erzeugt.
+
+### First Review
+
+Nach erster Sichtung ist klar:
+
+Die Matrix ist noch nicht final.
+
+Die aktuellen Kategorien und Beziehungen sind ein guter Start, aber noch zu breit und teilweise zu ungenau.
+
+Vor der eigentlichen Datenerhebung muss die Matrix weiter verfeinert werden.
+
+### Decision
+
+Es wird noch keine Auswertung gestartet.
+
+Die Testbilder und die Matrix dienen zunächst nur zur Prüfung der Forschungsmethode.
+
+### Next Step
+
+Stephan prüft die Testbilder und die Matrix in Ruhe.
+
+Danach wird entschieden:
+
+- welche Bildkategorien bleiben
+- welche semantischen Beziehungen wirklich notwendig sind
+- welche Begriffe gestrichen oder zusammengeführt werden
+- ob die Matrix breiter oder reduzierter aufgebaut wird
+
+### Current Research Principle
+
+Nicht die Menge der Formen ist entscheidend.
+
+Entscheidend ist, welche semantischen Beziehungen eine Wahrnehmung stabil oder mehrdeutig machen.
+---
