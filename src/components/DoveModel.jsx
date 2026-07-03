@@ -23,7 +23,7 @@ import GDLDebug from "./debug/GDLDebug";
 import * as THREE from "three";
 
 /* -------------------- TAUBE -------------------- */
-export default function DoveModel({ flapRef }) {
+export default function DoveModel({ flapRef, displayMode }) {
   const group = useRef();
   const { scene, animations } = useGLTF("/models/peace_dove.glb");
 
@@ -180,6 +180,18 @@ export default function DoveModel({ flapRef }) {
   const marker = primaryAxis?.bodyCenter?.center;
   console.log("BODY CENTER MARKER:", marker);
   
+  if (displayMode === "grid") {
+    return (
+      <group ref={group} scale={28} position={[0, 6, 0]}>
+        <gridHelper args={[12, 12, "#7fa8ff", "#4f4f4f"]} position={[0, 0, 0]} />
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]}>
+          <planeGeometry args={[12, 12]} />
+          <meshBasicMaterial color="#2b2f3a" transparent opacity={0.35} />
+        </mesh>
+      </group>
+    );
+  }
+
   return (
     <>
       <group ref={group} scale={28} position={[0, 6, 0]}>
