@@ -195,19 +195,18 @@ export default function DoveModel({ flapRef, displayMode, showPrimaryAxis }) {
   return (
     <>
       <group ref={group} scale={28} position={[0, 6, 0]}>
-        {showPrimaryAxis && <primitive object={technicalScene} />}
+        <primitive object={technicalScene} />
 
-        {
         <GDLDebug gdl={gdl} showPrimaryAxis={showPrimaryAxis} />
-        /*
+        {/*
         <primitive object={scene} />
         <GDLDebug gdl={gdl} />
         <PrimaryGestureDebug gestures={primaryGestures} />
         <GestureTreeDebug flowCurves={gestureTreeFlowCurves} />
         <WingFingerCurvesDebug curves={leftWingFingerCurves} />
         <DoveSurface mesh={mesh} />
-        */
-        }
+        */}
+        
 
         {/*
         {primaryAxisPoints && primaryAxis && (

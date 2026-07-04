@@ -57,7 +57,7 @@ Only validated perception rules are transferred back into the product repository
 
 # Session Update
 
-## Sprint R4.2 – Toggle First Information Layer
+## Sprint R4.3 – Visualize Primary Axis
 
 ### Status
 
@@ -65,57 +65,69 @@ Only validated perception rules are transferred back into the product repository
 
 ### Goal
 
-Replace the temporary full-model visibility toggle with a toggle for the first real visual information layer.
+Improve the debug visualization of the Primary Axis so it can be clearly seen and evaluated from normal camera perspectives.
 
-The objective is to prove that a specific perception-relevant layer can be shown or hidden without changing the technical dove model.
+The Primary Axis already exists and can be toggled on and off.
+
+This sprint does not change the Primary Axis calculation.
+
+---
+
+### Problem
+
+The Primary Axis toggle works, but the axis line is only visible from certain camera angles because it lies inside or behind the technical wireframe model.
+
+This makes visual evaluation unreliable.
 
 ---
 
 ### Scope
 
-This sprint toggles only one layer:
+This sprint improves only the visual representation of the existing Primary Axis.
 
-**Primary Axis**
+No new perception experiment is started.
 
-No additional relationship types are introduced.
+No new relationship layers are added.
 
-No experiment profiles are created.
-
-No reduction engine is built.
+No changes are made to the GDL calculation.
 
 ---
 
 ### Tasks
 
-#### 1. Restore technical model visibility
+#### 1. Keep the existing toggle
 
-The technical wireframe model remains visible by default.
+The current button continues to control Primary Axis visibility.
 
-It is no longer controlled by the current toggle button.
+#### 2. Improve Primary Axis visibility
 
-#### 2. Activate Primary Axis debug rendering
+Render the Primary Axis in a way that is clearly visible from normal viewing angles.
 
-Enable rendering of the existing Primary Axis debug line through `GDLDebug`.
+Allowed minimal improvements:
 
-#### 3. Connect the toggle to Primary Axis visibility
+- stronger line width
+- `depthTest={false}`
+- clear color
+- visible marker spheres at axis points
 
-The existing button controls only the Primary Axis visibility.
+#### 3. Do not change axis data
 
-#### 4. Verify visual result
+The underlying points from `gdl.axis.points` remain unchanged.
+
+#### 4. Verify result
 
 Confirm that:
 
-- the red technical model remains visible,
-- the Primary Axis can be shown and hidden,
-- no model geometry is changed,
-- no additional information layers are affected.
+- the red technical dove remains visible,
+- the Primary Axis can be toggled on and off,
+- the Primary Axis is clearly visible from normal camera angles,
+- no new information layer is introduced.
 
 ---
 
 ### Definition of Done
 
-- The red technical dove model stays visible at all times.
-- The Primary Axis can be toggled on and off.
-- The toggle affects only the Primary Axis layer.
-- The implementation remains minimal.
-- No general toggle engine or experiment profile system is introduced.
+- Primary Axis is visibly understandable without searching for a special camera angle.
+- Toggle still works.
+- Technical model remains unchanged.
+- Only debug visualization was improved.
