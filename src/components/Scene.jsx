@@ -18,8 +18,13 @@ export default function Scene({ displayMode, onDisplayModeChange }) {
         displayMode={displayMode}
         onDisplayModeChange={onDisplayModeChange}
       />
+
       <SpatialGrid />
-      <DoveModel flapRef={flapRef} displayMode={displayMode} />
+
+      <DoveModel
+        flapRef={flapRef}
+        displayMode={displayMode}
+      />
     </>
   );
 }
