@@ -57,7 +57,7 @@ Only validated perception rules are transferred back into the product repository
 
 # Session Update
 
-## Sprint R4 – Perception Experiment 001
+## Sprint R4.2 – Toggle First Information Layer
 
 ### Status
 
@@ -65,76 +65,57 @@ Only validated perception rules are transferred back into the product repository
 
 ### Goal
 
-Execute the first complete perception experiment using the methodology defined in `docs/research/PERCEPTION_MATRIX.md`.
+Replace the temporary full-model visibility toggle with a toggle for the first real visual information layer.
 
-The objective is to validate the complete research workflow by documenting one perception experiment from observation through validation.
+The objective is to prove that a specific perception-relevant layer can be shown or hidden without changing the technical dove model.
 
-The focus is the experiment itself—not the methodology.
+---
+
+### Scope
+
+This sprint toggles only one layer:
+
+**Primary Axis**
+
+No additional relationship types are introduced.
+
+No experiment profiles are created.
+
+No reduction engine is built.
 
 ---
 
 ### Tasks
 
-#### 1. Select the reference image
+#### 1. Restore technical model visibility
 
-Confirm the canonical Art2all reference image as the basis for Experiment 001.
+The technical wireframe model remains visible by default.
 
----
+It is no longer controlled by the current toggle button.
 
-#### 2. Observation
+#### 2. Activate Primary Axis debug rendering
 
-Document the visual observations exactly as perceived.
+Enable rendering of the existing Primary Axis debug line through `GDLDebug`.
 
-Rules:
+#### 3. Connect the toggle to Primary Axis visibility
 
-* Describe only what is perceived.
-* Do not explain why.
-* Do not formulate hypotheses.
-* Do not derive algorithms.
+The existing button controls only the Primary Axis visibility.
 
----
+#### 4. Verify visual result
 
-#### 3. Hypothesis
+Confirm that:
 
-Formulate possible explanations for the documented observations.
-
-Clearly separate assumptions from observations.
-
----
-
-#### 4. Reduction
-
-Perform exactly one controlled reduction.
-
-Only one visual property may be modified.
-
-All remaining properties must remain unchanged.
-
----
-
-#### 5. Validation
-
-Repeat the observation process using the reduced image.
-
-Compare both observations.
-
-Determine whether the perception changed.
-
----
-
-#### 6. Perceptual Grammar Review
-
-Identify whether the validated experiment contributes to an emerging perceptual grammar.
-
-If no validated grammar principle can yet be formulated, document the outcome without adding new grammar entries.
+- the red technical model remains visible,
+- the Primary Axis can be shown and hidden,
+- no model geometry is changed,
+- no additional information layers are affected.
 
 ---
 
 ### Definition of Done
 
-* One complete perception experiment has been documented.
-* Observation, hypothesis, reduction and validation are clearly separated.
-* One controlled reduction has been performed.
-* The validation has been completed.
-* The experiment has been reviewed for possible contributions to `docs/research/PERCEPTUAL_GRAMMAR.md`.
-* No perception rule is transferred to the Art2all product repository.
+- The red technical dove model stays visible at all times.
+- The Primary Axis can be toggled on and off.
+- The toggle affects only the Primary Axis layer.
+- The implementation remains minimal.
+- No general toggle engine or experiment profile system is introduced.
