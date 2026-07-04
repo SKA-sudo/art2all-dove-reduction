@@ -35,6 +35,88 @@ The Perception Matrix does **not** define perception rules and does **not** eval
 
 ---
 
+
+## Research Phases
+
+| Phase              | Frage                                      | Erlaubt                            | Nicht erlaubt                      |
+| ------------------ | ------------------------------------------ | ---------------------------------- | ---------------------------------- |
+| **1. Observation** | Was sehe ich?                              | reine Beschreibung der Wahrnehmung | Erklärungen, Anatomie, Algorithmen |
+| **2. Hypothesis**  | Warum könnte das Gehirn das so wahrnehmen? | Vermutungen                        | Implementierung                    |
+| **3. Reduction**   | Welche Information entferne ich?           | genau **eine** Änderung            | mehrere Änderungen gleichzeitig    |
+| **4. Validation**  | Hat sich die Wahrnehmung verändert?        | Beobachtung                        | neue Hypothesen                    |
+
+
+Observation → Perception → Hypothesis → Reduction → Validation → Perception Rule
+
+Every perception experiment follows four strictly separated phases.
+
+### Phase 1 – Observation
+
+
+
+Describe only what is directly perceived.
+
+Allowed:
+
+* Immediate visual perception
+* Neutral description
+* Observable facts
+
+Not allowed:
+
+* Explanations
+* Hypotheses
+* Anatomical reasoning
+* Algorithms
+* Implementation ideas
+
+---
+
+### Phase 2 – Hypothesis
+
+Formulate possible explanations for the observed perception.
+
+Allowed:
+
+* Assumptions
+* Perceptual interpretations
+* Scientific reasoning
+
+Not allowed:
+
+* Implementation
+* Validation
+* Conclusions presented as facts
+
+---
+
+### Phase 3 – Reduction
+
+Modify exactly one visual property at a time.
+
+Rules:
+
+* Only one change per experiment.
+* All other properties remain unchanged.
+* The reduction must be reproducible.
+
+---
+
+### Phase 4 – Validation
+
+Observe the modified result using the same procedure as in Phase 1.
+
+Questions:
+
+* Has the perception changed?
+* Which perception remained stable?
+* Which perception disappeared?
+* Does the hypothesis still explain the observation?
+
+Only after successful validation may a perception rule be formulated.
+
+
+
 # 1. Observation Workflow
 
 Every future experiment follows the identical workflow.
