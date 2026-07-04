@@ -34,7 +34,7 @@ Only validated perception rules are transferred back into the product repository
 
 # Session Update
 
-## Sprint R2 – Perception Matrix
+## Sprint R3 – First Perception Experiment
 
 ### Status
 
@@ -42,60 +42,47 @@ Only validated perception rules are transferred back into the product repository
 
 ### Goal
 
-Define the scientific observation method used by the Reduction Lab.
+Perform the first perception experiment using the standardized methodology defined in `PERCEPTION_MATRIX.md`.
 
-The objective of this sprint is not to perform experiments.
+The objective of this sprint is to validate the methodology itself by documenting one complete reduction experiment from observation to hypothesis.
 
-The objective is to define **how** future perception experiments are documented and evaluated.
-
----
-
-### Scientific Principle
-
-Reliable perception research requires a consistent observation method.
-
-Every future experiment must be documented in exactly the same way.
-
-Only then can different reduction experiments be compared objectively.
+No perception rule is transferred to the Art2all product during this sprint.
 
 ---
 
 ### Tasks
 
-#### 1. Define the observation workflow
+#### 1. Select the first reduction image
 
-Specify the complete workflow from image observation to validated perception rule.
-
----
-
-#### 2. Define the experiment template
-
-Describe exactly which information is collected during every experiment.
-
-No evaluation is performed yet.
+Choose the initial image that will serve as the reference for the first documented experiment.
 
 ---
 
-#### 3. Define semantic observation categories
+#### 2. Execute the observation workflow
 
-Determine which semantic observations are relevant for future experiments.
-
-Do not define perception rules yet.
+Apply the complete workflow defined in `PERCEPTION_MATRIX.md` without modification.
 
 ---
 
-#### 4. Review the methodology
+#### 3. Complete the experiment template
 
-Verify that the Perception Matrix supports every future reduction experiment.
+Document every observation using the standardized template.
 
-Revise the document where necessary.
+Do not omit any fields.
+
+---
+
+#### 4. Review the methodology in practice
+
+Identify ambiguities, missing information or unnecessary steps encountered during the experiment.
+
+Improve the methodology only if required.
 
 ---
 
 ### Definition of Done
 
-`PERCEPTION_MATRIX.md` defines the complete observation methodology of the Reduction Lab.
-
-Future experiments can be performed using this document without changing the methodology.
-
-No perception experiments are executed during this sprint.
+* One complete perception experiment has been documented.
+* The methodology has been applied without modification or with justified refinements.
+* Any improvements are incorporated into `PERCEPTION_MATRIX.md`.
+* No perception rules are transferred to the Art2all product repository.
