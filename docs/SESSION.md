@@ -32,7 +32,9 @@ Only validated perception rules are transferred back into the product repository
 
 # Current Sprint
 
-## Sprint R1 – Reference Baseline
+# Session Update
+
+## Sprint R2 – Perception Matrix
 
 ### Status
 
@@ -40,76 +42,60 @@ Only validated perception rules are transferred back into the product repository
 
 ### Goal
 
-Create the reference implementation of the Spatial Grid from the Art2all product repository.
+Define the scientific observation method used by the Reduction Lab.
 
-This implementation becomes the fixed baseline for every future reduction experiment.
+The objective of this sprint is not to perform experiments.
 
-No redesign, interpretation or optimisation is allowed.
+The objective is to define **how** future perception experiments are documented and evaluated.
 
 ---
 
 ### Scientific Principle
 
-Every reduction experiment must start from exactly the same reference implementation.
+Reliable perception research requires a consistent observation method.
 
-Only then can perceptual changes be attributed to the performed reduction.
+Every future experiment must be documented in exactly the same way.
+
+Only then can different reduction experiments be compared objectively.
 
 ---
 
 ### Tasks
 
-#### 1. Identify the complete implementation
+#### 1. Define the observation workflow
 
-Locate the complete Spatial Grid implementation inside the Art2all product repository.
-
-This includes the complete rendering chain:
-
-- data generation
-- builders
-- rendering components
-- materials
-- camera setup
-- dependencies
-- configuration
-- assets
-- rendering order
-
-Nothing may be recreated from memory.
+Specify the complete workflow from image observation to validated perception rule.
 
 ---
 
-#### 2. Reproduce the implementation
+#### 2. Define the experiment template
 
-Transfer the complete implementation into `art2all-dove-reduction`.
+Describe exactly which information is collected during every experiment.
 
-Rules:
-
-- Product repository is the single source of truth.
-- No redesign.
-- No optimisation.
-- No interpretation.
-- Only import paths may be adjusted when required.
+No evaluation is performed yet.
 
 ---
 
-#### 3. Validate the baseline
+#### 3. Define semantic observation categories
 
-The sprint is completed only if the visual result is indistinguishable from the product repository.
+Determine which semantic observations are relevant for future experiments.
 
-Validation criteria:
+Do not define perception rules yet.
 
-- identical visual appearance
-- identical behaviour
-- identical rendering structure
+---
 
-A successful build alone is **not** sufficient.
+#### 4. Review the methodology
+
+Verify that the Perception Matrix supports every future reduction experiment.
+
+Revise the document where necessary.
 
 ---
 
 ### Definition of Done
 
-The Reduction Lab contains an exact visual reproduction of the Spatial Grid from the product repository.
+`PERCEPTION_MATRIX.md` defines the complete observation methodology of the Reduction Lab.
 
-This implementation becomes the reference baseline for every future reduction experiment.
+Future experiments can be performed using this document without changing the methodology.
 
-Only after this milestone is completed may Reduction Sprint R2 begin.
+No perception experiments are executed during this sprint.
