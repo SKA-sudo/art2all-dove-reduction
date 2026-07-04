@@ -57,7 +57,7 @@ Only validated perception rules are transferred back into the product repository
 
 # Session Update
 
-## Sprint R3 – First Perception Experiment
+## Sprint R4 – Perception Experiment 001
 
 ### Status
 
@@ -65,47 +65,76 @@ Only validated perception rules are transferred back into the product repository
 
 ### Goal
 
-Perform the first perception experiment using the standardized methodology defined in `PERCEPTION_MATRIX.md`.
+Execute the first complete perception experiment using the methodology defined in `docs/research/PERCEPTION_MATRIX.md`.
 
-The objective of this sprint is to validate the methodology itself by documenting one complete reduction experiment from observation to hypothesis.
+The objective is to validate the complete research workflow by documenting one perception experiment from observation through validation.
 
-No perception rule is transferred to the Art2all product during this sprint.
+The focus is the experiment itself—not the methodology.
 
 ---
 
 ### Tasks
 
-#### 1. Select the first reduction image
+#### 1. Select the reference image
 
-Choose the initial image that will serve as the reference for the first documented experiment.
-
----
-
-#### 2. Execute the observation workflow
-
-Apply the complete workflow defined in `PERCEPTION_MATRIX.md` without modification.
+Confirm the canonical Art2all reference image as the basis for Experiment 001.
 
 ---
 
-#### 3. Complete the experiment template
+#### 2. Observation
 
-Document every observation using the standardized template.
+Document the visual observations exactly as perceived.
 
-Do not omit any fields.
+Rules:
+
+* Describe only what is perceived.
+* Do not explain why.
+* Do not formulate hypotheses.
+* Do not derive algorithms.
 
 ---
 
-#### 4. Review the methodology in practice
+#### 3. Hypothesis
 
-Identify ambiguities, missing information or unnecessary steps encountered during the experiment.
+Formulate possible explanations for the documented observations.
 
-Improve the methodology only if required.
+Clearly separate assumptions from observations.
+
+---
+
+#### 4. Reduction
+
+Perform exactly one controlled reduction.
+
+Only one visual property may be modified.
+
+All remaining properties must remain unchanged.
+
+---
+
+#### 5. Validation
+
+Repeat the observation process using the reduced image.
+
+Compare both observations.
+
+Determine whether the perception changed.
+
+---
+
+#### 6. Perceptual Grammar Review
+
+Identify whether the validated experiment contributes to an emerging perceptual grammar.
+
+If no validated grammar principle can yet be formulated, document the outcome without adding new grammar entries.
 
 ---
 
 ### Definition of Done
 
 * One complete perception experiment has been documented.
-* The methodology has been applied without modification or with justified refinements.
-* Any improvements are incorporated into `PERCEPTION_MATRIX.md`.
-* No perception rules are transferred to the Art2all product repository.
+* Observation, hypothesis, reduction and validation are clearly separated.
+* One controlled reduction has been performed.
+* The validation has been completed.
+* The experiment has been reviewed for possible contributions to `docs/research/PERCEPTUAL_GRAMMAR.md`.
+* No perception rule is transferred to the Art2all product repository.
