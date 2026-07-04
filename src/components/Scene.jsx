@@ -4,7 +4,13 @@ import CameraController from "./CameraController";
 import SpatialGrid from "./SpatialGrid";
 
 /* -------------------- SCENE -------------------- */
-export default function Scene({ displayMode, onDisplayModeChange }) {
+    export default function Scene({
+      displayMode,
+      onDisplayModeChange,
+      showPrimaryAxis,
+    }) {
+
+
   const flapRef = useRef(0);
 
   return (
@@ -24,6 +30,7 @@ export default function Scene({ displayMode, onDisplayModeChange }) {
       <DoveModel
         flapRef={flapRef}
         displayMode={displayMode}
+        showPrimaryAxis={showPrimaryAxis}
       />
     </>
   );

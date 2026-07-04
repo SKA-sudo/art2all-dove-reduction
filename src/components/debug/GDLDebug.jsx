@@ -1,16 +1,15 @@
 import { Line, Sphere } from "@react-three/drei";
 
-const SHOW_AXIS = true;
 const SHOW_WING_SPACE = true;
 const SHOW_GESTURES = true;
 const SHOW_WING_CURVES = true;
 
-export default function GDLDebug({ gdl }) {
+export default function GDLDebug({ gdl, showPrimaryAxis = true }) {
   if (!gdl) return null;
 
   return (
     <>
-      {SHOW_AXIS && (
+      {showPrimaryAxis && (
         <Line
           points={gdl.axis.points}
           color="yellow"

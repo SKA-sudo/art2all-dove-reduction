@@ -23,7 +23,7 @@ import GDLDebug from "./debug/GDLDebug";
 import * as THREE from "three";
 
 /* -------------------- TAUBE -------------------- */
-export default function DoveModel({ flapRef, displayMode }) {
+export default function DoveModel({ flapRef, displayMode, showPrimaryAxis }) {
   const group = useRef();
   const { scene, animations } = useGLTF("/models/peace_dove.glb");
 
@@ -195,16 +195,19 @@ export default function DoveModel({ flapRef, displayMode }) {
   return (
     <>
       <group ref={group} scale={28} position={[0, 6, 0]}>
-        <primitive object={technicalScene} />
+        {showPrimaryAxis && <primitive object={technicalScene} />}
 
-        {/*
+        {
+        <GDLDebug gdl={gdl} showPrimaryAxis={showPrimaryAxis} />
+        /*
         <primitive object={scene} />
         <GDLDebug gdl={gdl} />
         <PrimaryGestureDebug gestures={primaryGestures} />
         <GestureTreeDebug flowCurves={gestureTreeFlowCurves} />
         <WingFingerCurvesDebug curves={leftWingFingerCurves} />
         <DoveSurface mesh={mesh} />
-        */}
+        */
+        }
 
         {/*
         {primaryAxisPoints && primaryAxis && (

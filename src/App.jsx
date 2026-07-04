@@ -7,12 +7,27 @@ import Scene from "./components/Scene";
 /* -------------------- APP -------------------- */
 export default function App() {
   const [displayMode, setDisplayMode] = useState("wireframe");
-
+  const [showPrimaryAxis, setShowPrimaryAxis] = useState(true);
   return (
+    
     <div style={{ width: "100vw", height: "100vh" }}>
+      <button
+        onClick={() => setShowPrimaryAxis((value) => !value)}
+        style={{
+          position: "absolute",
+          top: 16,
+          left: 16,
+          zIndex: 10,
+        }}
+      >
+        Toggle Primary Axis
+      </button>
       <Canvas camera={{ position: [8, 5, 8], fov: 22 }}>
-        <Scene displayMode={displayMode} onDisplayModeChange={setDisplayMode} />
-
+        <Scene
+          displayMode={displayMode}
+          onDisplayModeChange={setDisplayMode}
+          showPrimaryAxis={showPrimaryAxis}
+        />
         <EffectComposer>
           <Bloom
             intensity={1.2}
