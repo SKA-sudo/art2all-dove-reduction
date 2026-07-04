@@ -1,7 +1,8 @@
 ################################################################
-# Art2all – Research
+# Art2all – REASEARCH
 ################################################################
 
+REASEARCH
 
 Version: 1.0
 
@@ -16,11 +17,7 @@ mit Unterstützung von ChatGPT
 ################################################################
 ################################################################
 
-
-
-
 PoC 01
-
 Hypothese
 
 Kann die bestehende Pipeline
@@ -38,8 +35,10 @@ die Orientierung.
 
 Das Problem ist die
 Organisation.
-PoC 02
 
+--
+
+PoC 02
 Hypothese
 
 Die Guide Silhouette
@@ -48,8 +47,6 @@ organisiert die Paper.
 Status
 
 In Arbeit.
-
-
 
 Neues Forschungsziel
 

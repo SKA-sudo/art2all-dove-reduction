@@ -1,3 +1,26 @@
+################################################################
+# Art2all – SESSION
+################################################################
+
+
+Session
+
+Version: 1.0
+
+Status: Approved
+
+Repository: art2all-dove-reduction
+
+
+Autor:
+Stephan Kästner
+mit Unterstützung von ChatGPT
+
+
+################################################################
+################################################################
+
+
 # AI_START (MANDATORY)
 
 Read first:

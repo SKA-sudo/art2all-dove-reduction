@@ -1,5 +1,5 @@
 ################################################################
-# Art2all – Perception Matrix
+# Art2all – PERCEPTION MATRIX
 ################################################################
 
 
@@ -7,7 +7,7 @@ Perception Matrix Methodology
 
 Version: 1.0
 
-Status: Approved
+Status: Living Document
 
 Repository: art2all-dove-reduction
 
