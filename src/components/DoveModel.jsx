@@ -63,6 +63,19 @@ export default function DoveModel({ flapRef, displayMode, showPrimaryAxis }) {
 
     scene.traverse((child) => {
       if (child.isMesh && child.geometry?.attributes?.position) {
+
+        console.log(
+          `MESH TRANSFORM ${child.name}: ` +
+            `position=(${child.position.x.toFixed(3)}, ${child.position.y.toFixed(3)}, ${child.position.z.toFixed(3)}), ` +
+            `scale=(${child.scale.x.toFixed(3)}, ${child.scale.y.toFixed(3)}, ${child.scale.z.toFixed(3)}), ` +
+            `rotation=(${child.rotation.x.toFixed(3)}, ${child.rotation.y.toFixed(3)}, ${child.rotation.z.toFixed(3)})`
+        );
+
+        console.log(
+          `MESH MATRIX ${child.name}: ` +
+            child.matrixWorld.elements.map((v) => v.toFixed(3)).join(", ")
+        );
+
         console.log("MESH CANDIDATE", {
           name: child.name,
           vertices: child.geometry.attributes.position.count,
@@ -196,7 +209,22 @@ export default function DoveModel({ flapRef, displayMode, showPrimaryAxis }) {
     <>
       <group ref={group} scale={28} position={[0, 6, 0]}>
         <primitive object={technicalScene} />
-
+          {mesh && (
+            <mesh
+              geometry={mesh.geometry}
+              matrixAutoUpdate={false}
+              matrix={mesh.matrixWorld}
+            >
+              <meshBasicMaterial
+                color="yellow"
+                wireframe
+                transparent
+                opacity={1}
+                depthTest={false}
+                depthWrite={false}
+              />
+            </mesh>
+          )}
         <GDLDebug gdl={gdl} showPrimaryAxis={showPrimaryAxis} />
         {/*
         <primitive object={scene} />

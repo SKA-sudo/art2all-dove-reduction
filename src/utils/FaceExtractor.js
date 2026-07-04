@@ -37,6 +37,10 @@ export function extractFaces(mesh) {
     b.fromBufferAttribute(positions, ib);
     c.fromBufferAttribute(positions, ic);
 
+    a.applyMatrix4(mesh.matrixWorld);
+    b.applyMatrix4(mesh.matrixWorld);
+    c.applyMatrix4(mesh.matrixWorld);
+
     center.copy(a).add(b).add(c).multiplyScalar(1 / 3);
 
     triangle.set(a, b, c);

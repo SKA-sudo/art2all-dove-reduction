@@ -420,3 +420,142 @@ Ziel
 Art2all soll nicht Papier auf einer Taube verteilen.
 
 Art2all soll eine wahrgenommene Form rekonstruieren und diese Form mit den Zeichnungen der Kinder sichtbar werden lassen.
+
+
+---
+
+# Architecture Milestone A2 – Canonical Perception Space
+
+## Status
+
+Approved
+
+---
+
+## Motivation
+
+During Sprint R4.3 (Visualize Primary Axis), the improved debug visualization revealed an important architectural insight.
+
+The technical GLB scene, the extracted BufferGeometry and the perceptual relationships do not necessarily describe the same spatial representation.
+
+This demonstrated that perceptual algorithms must not operate directly on raw mesh geometry.
+
+Instead, every perception layer is built inside a dedicated Canonical Perception Space.
+
+---
+
+## Core Principle
+
+The GLB is the technical source.
+
+The Canonical Perception Space is the perceptual source.
+
+All semantic relationships are derived from this canonical perception space rather than directly from the mesh.
+
+---
+
+## Architecture
+
+GLB Scene
+
+↓
+
+Canonical Dove Space
+
+↓
+
+Canonical Perception Space
+
+↓
+
+Primary Axis
+
+↓
+
+Local Wing Space
+
+↓
+
+Primary Gesture
+
+↓
+
+Gesture Tree
+
+↓
+
+Wing Finger Curves
+
+↓
+
+Feather Bands
+
+↓
+
+Paper Placement
+
+↓
+
+Renderer
+
+---
+
+## Responsibilities
+
+### GLB Scene
+
+Provides the technical representation.
+
+- mesh hierarchy
+- topology
+- normals
+- geometry
+
+---
+
+### Canonical Dove Space
+
+Defines the canonical spatial representation of the dove.
+
+Independent from mesh implementation details.
+
+---
+
+### Canonical Perception Space
+
+Defines the perceptual coordinate system.
+
+All perception algorithms operate exclusively inside this space.
+
+It contains:
+
+- semantic reference points
+- primary relationships
+- perceptual distances
+- perceptual orientation
+
+It deliberately ignores technical mesh structure whenever it is not relevant for human perception.
+
+---
+
+## Design Rule
+
+Never derive perception directly from BufferGeometry.
+
+Always transform technical geometry into the Canonical Perception Space first.
+
+Only then derive semantic relationships.
+
+---
+
+## Result
+
+The engine is no longer geometry-driven.
+
+The engine is no longer scene-driven.
+
+The engine becomes perception-driven.
+
+Technical geometry supplies data.
+
+Perception defines structure.
