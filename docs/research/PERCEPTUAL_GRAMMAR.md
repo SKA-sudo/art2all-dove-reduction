@@ -38,3 +38,9 @@ Perception Rule
 Algorithm
     ↓
 Implementation
+
+# Current Grammar
+
+No validated grammar principles yet.
+
+The document will grow only through completed perception experiments.
