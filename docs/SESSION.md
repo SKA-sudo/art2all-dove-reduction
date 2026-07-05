@@ -153,145 +153,85 @@ Target Image
 ## Nächster Sprint
 
 ################################################################
-# Session R4.4 – Canonical Perception Space
+NEXT SESSION – Sprint R4.3 (Continuation)
 ################################################################
 
-## Ziel
+Current Status
 
-Architektonische Neuausrichtung der Perception Engine.
+The PerceptionModel is now established as the central visualization layer
+for the perception engine.
 
-Während der Entwicklung wurde deutlich, dass Rendering, Debugging,
-Geometrieanalyse und Wahrnehmung bisher zu stark miteinander vermischt
-waren.
+Completed:
+- Original animated dove restored.
+- PerceptionModel integrated as overlay.
+- Primary Axis rendering pipeline connected.
+- Temporary BoundingBox axis successfully validated the rendering architecture.
 
-Der Schwerpunkt dieser Session lag deshalb auf der Definition einer
-sauberen Wahrnehmungsarchitektur.
+Important finding:
+The BoundingBox axis was only a technical validation and will be removed.
 
-----------------------------------------------------------------
+------------------------------------------------------------
 
-## Technischer Fortschritt
+Main Research Result
 
-- Trennung zwischen Originalmodell und Perception Model begonnen.
-- Rotes Wireframe-Modell als zukünftiges Wahrnehmungsmodell etabliert.
-- Analyse der Transformationsprobleme durchgeführt.
-- Ursache identifiziert:
-  Unterschiedliche Koordinatenräume führten zu inkonsistentem Verhalten
-  zwischen Rendering und Wahrnehmungsengine.
+The Primary Axis should NOT be the first perception structure.
 
-----------------------------------------------------------------
+Instead, perception begins with semantic landmarks.
 
-## Neue Architektur
+Current landmark hypothesis:
 
-Die bisherige Architektur
+- Head
+- Beak
+- Neck Base
+- Body Center
+- Left Wing Root
+- Right Wing Root
+- Tail Center
 
-GLB
-↓
+These landmarks form the foundation for all higher perception layers.
 
-Builder
-↓
+Primary Axis
+Wing Space
+Gesture
+Flow
+Outline
 
-Debug
+are derived FROM the landmarks.
 
-wird künftig ersetzt durch
+------------------------------------------------------------
 
-GLB
-↓
+New Research Principle
 
-Canonical Perception Space
-↓
+Perceptual landmarks are species-dependent.
 
-Perception Laboratory
-↓
+Example:
 
-Validierte Wahrnehmungshypothesen
-↓
+Peace Dove
+- Body
+- Wings
+- Tail
+- Head
+- Beak
 
-Builder
-↓
+Eagle
+- Beak
+- Eyes
+- Claws
+- Wings
 
-Production Engine
+Therefore landmarks require perceptual weighting rather than equal importance.
 
-----------------------------------------------------------------
+------------------------------------------------------------
 
-## Neue Erkenntnis
+Next Goal
 
-Das rote Modell ist kein Debugmodell.
+Remove the temporary BoundingBox axis.
 
-Es bildet künftig das Perception Laboratory.
+Implement the first semantic landmark detection.
 
-Dort werden sämtliche Wahrnehmungshypothesen sichtbar gemacht,
-untersucht und validiert.
+Do NOT continue with Wing Space or Gesture before the landmark layer is working.
 
-Erst nach erfolgreicher Validierung werden daraus produktive Builder
-abgeleitet.
+Goal of next sprint:
 
-----------------------------------------------------------------
-
-## Beobachtung zur menschlichen Wahrnehmung
-
-Während der Beobachtung realer Vögel entstand folgende
-Wahrnehmungshierarchie:
-
-Presence
-
-↓
-
-Silhouette / Outline
-
-↓
-
-Characteristic Recognition
-
-↓
-
-Structural Recognition
-
-↓
-
-Dynamic Behaviour
-
-↓
-
-Surface Details
-
-Diese Reihenfolge bildet künftig die Grundlage der
-Art2all Perception Engine.
-
-Die Engine orientiert sich nicht an der Meshstruktur,
-sondern an der Reihenfolge menschlicher Wahrnehmung.
-
-----------------------------------------------------------------
-
-## Architekturentscheidung
-
-Canonical Perception Space
-
-Der Canonical Perception Space definiert künftig den
-einzigen gültigen Koordinatenraum der Wahrnehmungsengine.
-
-Alle zukünftigen Wahrnehmungshypothesen arbeiten ausschließlich
-innerhalb dieses Raumes.
-
-Dadurch werden Rendering, Debugging und Wahrnehmung klar voneinander
-getrennt.
-
-----------------------------------------------------------------
-
-## Nächster Sprint
-
-Sprint R4.5
-
-Canonical Perception Space
-
-Ziele:
-
-- Definition des Canonical Origin
-- Definition der Canonical Orientation
-- Definition der Canonical Scale
-- Definition der Canonical Bounds
-- Aufbau des Perception Laboratory
-- Einführung eines Layer-Systems für Wahrnehmungshypothesen
-- Vorbereitung der ersten validierten Hypothese (Outline)
-
-Keine Erweiterung der Wahrnehmungsalgorithmen,
-bevor der Canonical Perception Space vollständig definiert ist.
+Perception Landmarks
+→ first semantic layer of the perception engine.

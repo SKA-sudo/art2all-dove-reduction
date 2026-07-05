@@ -19,23 +19,33 @@ export default function DebugDoveAxis({ axis }) {
   if (!axis || !geometry) return null;
 
   const debugPoints = [
-    { face: axis.leftWingTip, color: "blue", size: 0.14 },
-    { face: axis.leftShoulder, color: "lime", size: 0.12 },
-    { face: axis.bodyCenter, color: "white", size: 0.16 },
-    { face: axis.rightShoulder, color: "lime", size: 0.12 },
-    { face: axis.rightWingTip, color: "red", size: 0.14 },
+    { face: axis.leftWingTip, color: "blue", size: 0.22 },
+    { face: axis.leftShoulder, color: "lime", size: 0.18 },
+    { face: axis.bodyCenter, color: "white", size: 0.26 },
+    { face: axis.rightShoulder, color: "lime", size: 0.18 },
+    { face: axis.rightWingTip, color: "red", size: 0.22 },
   ];
 
   return (
-    <group>
+    <group renderOrder={999}>
       <line geometry={geometry}>
-        <lineBasicMaterial color="yellow" />
+        <lineBasicMaterial
+          color="yellow"
+          depthTest={false}
+          depthWrite={false}
+          toneMapped={false}
+        />
       </line>
 
       {debugPoints.map((p, index) => (
-        <mesh key={index} position={p.face.center}>
-          <sphereGeometry args={[p.size, 16, 16]} />
-          <meshBasicMaterial color={p.color} />
+        <mesh key={index} position={p.face.center} renderOrder={1000}>
+          <sphereGeometry args={[p.size, 24, 24]} />
+          <meshBasicMaterial
+            color={p.color}
+            depthTest={false}
+            depthWrite={false}
+            toneMapped={false}
+          />
         </mesh>
       ))}
     </group>
