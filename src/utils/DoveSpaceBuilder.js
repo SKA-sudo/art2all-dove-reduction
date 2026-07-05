@@ -14,20 +14,41 @@ export function findPrimaryDoveAxis(faces) {
     leftWingTip,
     "left"
   );
-  function findBodyCenter(faces) {
-    const center = new THREE.Vector3();
 
-    faces.forEach((face) => {
-      center.add(face.center);
-    });
+  const rightTransition = findTransitionZonePoint(
+    faces,
+    bodyCenter,
+    rightWingTip,
+    "right"
+  );
 
-    center.divideScalar(faces.length);
+  return {
+    leftWingTip,
+    leftShoulder: leftTransition.point,
+    leftTransitionRegion: leftTransition.region,
 
-    return faces.reduce((best, face) =>
-      face.center.distanceTo(center) < best.center.distanceTo(center)
-        ? face
-        : best
-    );
+    bodyCenter,
+
+    rightShoulder: rightTransition.point,
+    rightTransitionRegion: rightTransition.region,
+    rightWingTip,
+  };
+}
+
+function findBodyCenter(faces) {
+  const center = new THREE.Vector3();
+
+  faces.forEach((face) => {
+    center.add(face.center);
+  });
+
+  center.divideScalar(faces.length);
+
+  return faces.reduce((best, face) =>
+    face.center.distanceTo(center) < best.center.distanceTo(center)
+      ? face
+      : best
+  );
 }
 
 function findLeftWingTip(faces) {
@@ -49,8 +70,12 @@ function findFunctionalWingTip(faces, side) {
 
   if (!sideFaces.length) {
     return side === "left"
-      ? faces.reduce((best, face) => (face.center.x < best.center.x ? face : best))
-      : faces.reduce((best, face) => (face.center.x > best.center.x ? face : best));
+      ? faces.reduce((best, face) =>
+          face.center.x < best.center.x ? face : best
+        )
+      : faces.reduce((best, face) =>
+          face.center.x > best.center.x ? face : best
+        );
   }
 
   return sideFaces.reduce((best, face) => {
@@ -61,38 +86,16 @@ function findFunctionalWingTip(faces, side) {
   });
 }
 
-    function wingTipScore(face, bodyCenter, side) {
-      const dx = face.center.x - bodyCenter.x;
-      const dy = face.center.y - bodyCenter.y;
+function wingTipScore(face, bodyCenter, side) {
+  const dx = face.center.x - bodyCenter.x;
+  const dy = face.center.y - bodyCenter.y;
 
-      const outward =
-        side === "left"
-          ? Math.max(0, -dx)
-          : Math.max(0, dx);
+  const outward = side === "left" ? Math.max(0, -dx) : Math.max(0, dx);
 
-      const heightBonus = Math.max(0, dy) * 0.35;
-      const centerPenalty = Math.abs(face.center.z - bodyCenter.z) * 0.15;
+  const heightBonus = Math.max(0, dy) * 0.35;
+  const centerPenalty = Math.abs(face.center.z - bodyCenter.z) * 0.15;
 
-      return outward + heightBonus - centerPenalty;
-    }
-const rightTransition = findTransitionZonePoint(
-    faces,
-    bodyCenter,
-    rightWingTip,
-    "right"
-  );
-
-  return {
-    leftWingTip,
-    leftShoulder: leftTransition.point,
-    leftTransitionRegion: leftTransition.region,
-
-    bodyCenter,
-
-    rightShoulder: rightTransition.point,
-    rightTransitionRegion: rightTransition.region,
-    rightWingTip,
-  };
+  return outward + heightBonus - centerPenalty;
 }
 
 export function createLocalWingSpace(faces, primaryAxis) {
@@ -179,8 +182,7 @@ function findTransitionZonePoint(faces, bodyCenter, wingTip, side) {
     z: tip.z - body.z,
   };
 
-  const axisLengthSq =
-    axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
+  const axisLengthSq = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
 
   if (axisLengthSq === 0) {
     return { point: bodyCenter, region: [] };
@@ -196,8 +198,7 @@ function findTransitionZonePoint(faces, bodyCenter, wingTip, side) {
     };
 
     const t =
-      (rel.x * axis.x + rel.y * axis.y + rel.z * axis.z) /
-      axisLengthSq;
+      (rel.x * axis.x + rel.y * axis.y + rel.z * axis.z) / axisLengthSq;
 
     if (t < 0.18 || t > 0.46) return false;
 
@@ -251,14 +252,12 @@ function transitionScore(face, body, tip) {
     z: p.z - body.z,
   };
 
-  const axisLengthSq =
-    axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
+  const axisLengthSq = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
 
   const t =
     axisLengthSq === 0
       ? 0
-      : (rel.x * axis.x + rel.y * axis.y + rel.z * axis.z) /
-        axisLengthSq;
+      : (rel.x * axis.x + rel.y * axis.y + rel.z * axis.z) / axisLengthSq;
 
   const targetT = 0.32;
 

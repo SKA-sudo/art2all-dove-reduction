@@ -57,77 +57,112 @@ Only validated perception rules are transferred back into the product repository
 
 # Session Update
 
-## Sprint R4.3 – Visualize Primary Axis
+################################################################
+# Session R4.3 – Perception Laboratory
+################################################################
 
-### Status
+## Ziel
 
-▶ Ready
+Neuausrichtung der Perception Engine.
 
-### Goal
-
-Improve the debug visualization of the Primary Axis so it can be clearly seen and evaluated from normal camera perspectives.
-
-The Primary Axis already exists and can be toggled on and off.
-
-This sprint does not change the Primary Axis calculation.
+Der Fokus liegt nicht mehr auf einzelnen Debug-Linien, sondern auf dem Aufbau
+eines eigenständigen Perception Laboratory zur Validierung visueller
+Wahrnehmungshypothesen.
 
 ---
 
-### Problem
+## Technischer Fortschritt
 
-The Primary Axis toggle works, but the axis line is only visible from certain camera angles because it lies inside or behind the technical wireframe model.
-
-This makes visual evaluation unreliable.
-
----
-
-### Scope
-
-This sprint improves only the visual representation of the existing Primary Axis.
-
-No new perception experiment is started.
-
-No new relationship layers are added.
-
-No changes are made to the GDL calculation.
+- Originalmodell und Perception Model voneinander getrennt.
+- Rotes Wireframe-Modell als zukünftiges Wahrnehmungsmodell definiert.
+- Erste Architekturtrennung zwischen Rendering und Perception begonnen.
+- Umfangreiche Analyse der Transformationsräume durchgeführt.
+- Erkenntnis:
+  Das bisherige Vermischen von Rendering, Analyse und Debug erschwerte die
+  Weiterentwicklung der Wahrnehmungsengine.
 
 ---
 
-### Tasks
+## Architekturentscheidung
 
-#### 1. Keep the existing toggle
+Das rote Modell ist kein Debugmodell.
 
-The current button continues to control Primary Axis visibility.
+Es ist das zukünftige Perception Laboratory.
 
-#### 2. Improve Primary Axis visibility
+Dieses dient ausschließlich der Entwicklung und Validierung von
+Wahrnehmungshypothesen.
 
-Render the Primary Axis in a way that is clearly visible from normal viewing angles.
-
-Allowed minimal improvements:
-
-- stronger line width
-- `depthTest={false}`
-- clear color
-- visible marker spheres at axis points
-
-#### 3. Do not change axis data
-
-The underlying points from `gdl.axis.points` remain unchanged.
-
-#### 4. Verify result
-
-Confirm that:
-
-- the red technical dove remains visible,
-- the Primary Axis can be toggled on and off,
-- the Primary Axis is clearly visible from normal camera angles,
-- no new information layer is introduced.
+Erst validierte Hypothesen werden später in produktive Builder übernommen.
 
 ---
 
-### Definition of Done
+## Neue Erkenntnis
 
-- Primary Axis is visibly understandable without searching for a special camera angle.
-- Toggle still works.
-- Technical model remains unchanged.
-- Only debug visualization was improved.
+Während der Beobachtung realer Vögel entstand folgende Wahrnehmungshierarchie:
+
+Presence
+
+↓
+
+Silhouette / Outline
+
+↓
+
+Characteristic Recognition
+
+↓
+
+Structural Recognition
+
+↓
+
+Dynamic Behaviour
+
+↓
+
+Surface Details
+
+Diese Reihenfolge bildet künftig die Grundlage der Art2all
+Perception Engine.
+
+Nicht die Geometrie bestimmt den Algorithmus,
+sondern die menschliche Wahrnehmung.
+
+---
+
+## Konsequenz
+
+Die bisherige Reihenfolge
+
+Mesh
+→ Faces
+→ Builder
+
+wird langfristig ersetzt durch
+
+Target Image
+→ Human Perception
+→ Perception Laboratory
+→ Validierte Hypothese
+→ Algorithmus
+→ Builder
+→ Produktionsengine
+
+---
+
+## Nächster Sprint
+
+Sprint R4.4
+
+Perception Laboratory
+
+Ziele:
+
+- Aufbau einer eigenständigen PerceptionModel-Komponente
+- Layer-System für Wahrnehmungshypothesen
+- Toggle-System
+- Trennung zwischen Rendering Engine und Perception Engine
+- Vorbereitung der ersten validierbaren Wahrnehmungshypothesen
+
+Keine neuen Wahrnehmungsalgorithmen,
+bevor das Labor vollständig aufgebaut ist.

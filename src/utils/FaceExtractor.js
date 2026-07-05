@@ -6,10 +6,11 @@ export function extractFaces(mesh) {
     return [];
   }
 
+  mesh.updateMatrixWorld(true);
+
   const geometry = mesh.geometry;
 
   const positions = geometry.attributes.position;
-  const normals = geometry.attributes.normal;
   const index = geometry.index;
 
   const faces = [];
@@ -23,12 +24,9 @@ export function extractFaces(mesh) {
 
   const triangle = new THREE.Triangle();
 
-  const faceCount = index
-    ? index.count / 3
-    : positions.count / 3;
+  const faceCount = index ? index.count / 3 : positions.count / 3;
 
   for (let i = 0; i < faceCount; i++) {
-
     const ia = index ? index.getX(i * 3) : i * 3;
     const ib = index ? index.getX(i * 3 + 1) : i * 3 + 1;
     const ic = index ? index.getX(i * 3 + 2) : i * 3 + 2;
@@ -44,7 +42,6 @@ export function extractFaces(mesh) {
     center.copy(a).add(b).add(c).multiplyScalar(1 / 3);
 
     triangle.set(a, b, c);
-
     triangle.getNormal(normal);
 
     faces.push({
@@ -60,7 +57,13 @@ export function extractFaces(mesh) {
     });
   }
 
+  const box = new THREE.Box3().setFromPoints(
+    faces.flatMap((face) => [face.a, face.b, face.c])
+  );
+
   console.log("🪶 Faces extrahiert:", faces.length);
+  console.log("🧭 Extracted Face World Size:", box.getSize(new THREE.Vector3()));
+  console.log("🧭 Mesh World Scale:", mesh.getWorldScale(new THREE.Vector3()));
 
   return faces;
 }
