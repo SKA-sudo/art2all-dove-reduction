@@ -22,7 +22,7 @@ export default function App() {
       >
         Toggle Primary Axis
       </button>
-      <Canvas camera={{ position: [8, 5, 8], fov: 22 }}>
+        <Canvas camera={{ position: [0, 14, 75], fov: 42 }}>
         <Scene
           displayMode={displayMode}
           onDisplayModeChange={setDisplayMode}

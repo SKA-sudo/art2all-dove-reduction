@@ -152,17 +152,146 @@ Target Image
 
 ## Nächster Sprint
 
-Sprint R4.4
+################################################################
+# Session R4.4 – Canonical Perception Space
+################################################################
+
+## Ziel
+
+Architektonische Neuausrichtung der Perception Engine.
+
+Während der Entwicklung wurde deutlich, dass Rendering, Debugging,
+Geometrieanalyse und Wahrnehmung bisher zu stark miteinander vermischt
+waren.
+
+Der Schwerpunkt dieser Session lag deshalb auf der Definition einer
+sauberen Wahrnehmungsarchitektur.
+
+----------------------------------------------------------------
+
+## Technischer Fortschritt
+
+- Trennung zwischen Originalmodell und Perception Model begonnen.
+- Rotes Wireframe-Modell als zukünftiges Wahrnehmungsmodell etabliert.
+- Analyse der Transformationsprobleme durchgeführt.
+- Ursache identifiziert:
+  Unterschiedliche Koordinatenräume führten zu inkonsistentem Verhalten
+  zwischen Rendering und Wahrnehmungsengine.
+
+----------------------------------------------------------------
+
+## Neue Architektur
+
+Die bisherige Architektur
+
+GLB
+↓
+
+Builder
+↓
+
+Debug
+
+wird künftig ersetzt durch
+
+GLB
+↓
+
+Canonical Perception Space
+↓
 
 Perception Laboratory
+↓
+
+Validierte Wahrnehmungshypothesen
+↓
+
+Builder
+↓
+
+Production Engine
+
+----------------------------------------------------------------
+
+## Neue Erkenntnis
+
+Das rote Modell ist kein Debugmodell.
+
+Es bildet künftig das Perception Laboratory.
+
+Dort werden sämtliche Wahrnehmungshypothesen sichtbar gemacht,
+untersucht und validiert.
+
+Erst nach erfolgreicher Validierung werden daraus produktive Builder
+abgeleitet.
+
+----------------------------------------------------------------
+
+## Beobachtung zur menschlichen Wahrnehmung
+
+Während der Beobachtung realer Vögel entstand folgende
+Wahrnehmungshierarchie:
+
+Presence
+
+↓
+
+Silhouette / Outline
+
+↓
+
+Characteristic Recognition
+
+↓
+
+Structural Recognition
+
+↓
+
+Dynamic Behaviour
+
+↓
+
+Surface Details
+
+Diese Reihenfolge bildet künftig die Grundlage der
+Art2all Perception Engine.
+
+Die Engine orientiert sich nicht an der Meshstruktur,
+sondern an der Reihenfolge menschlicher Wahrnehmung.
+
+----------------------------------------------------------------
+
+## Architekturentscheidung
+
+Canonical Perception Space
+
+Der Canonical Perception Space definiert künftig den
+einzigen gültigen Koordinatenraum der Wahrnehmungsengine.
+
+Alle zukünftigen Wahrnehmungshypothesen arbeiten ausschließlich
+innerhalb dieses Raumes.
+
+Dadurch werden Rendering, Debugging und Wahrnehmung klar voneinander
+getrennt.
+
+----------------------------------------------------------------
+
+## Nächster Sprint
+
+Sprint R4.5
+
+Canonical Perception Space
 
 Ziele:
 
-- Aufbau einer eigenständigen PerceptionModel-Komponente
-- Layer-System für Wahrnehmungshypothesen
-- Toggle-System
-- Trennung zwischen Rendering Engine und Perception Engine
-- Vorbereitung der ersten validierbaren Wahrnehmungshypothesen
+- Definition des Canonical Origin
+- Definition der Canonical Orientation
+- Definition der Canonical Scale
+- Definition der Canonical Bounds
+- Aufbau des Perception Laboratory
+- Einführung eines Layer-Systems für Wahrnehmungshypothesen
+- Vorbereitung der ersten validierten Hypothese (Outline)
 
-Keine neuen Wahrnehmungsalgorithmen,
-bevor das Labor vollständig aufgebaut ist.
+Keine Erweiterung der Wahrnehmungsalgorithmen,
+bevor der Canonical Perception Space vollständig definiert ist.

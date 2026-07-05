@@ -31,8 +31,9 @@ logBounds("WingSpace Right Bounds", gdl.wingSpace.right);
           <Line
             points={gdl.axis.points}
             color="yellow"
-            lineWidth={12}
+            lineWidth={18}
             depthTest={false}
+            renderOrder={999}
           />
 
           {gdl.axis.points.map((point, index) => (
@@ -41,12 +42,14 @@ logBounds("WingSpace Right Bounds", gdl.wingSpace.right);
               key={`axis-${index}`}
               position={point}
               args={[0.06, 12, 12]}
+              renderOrder={1000}
             >
               <meshBasicMaterial
-                color="red"
-                depthTest={false}
-              />
-            </Sphere>
+              color="yellow"
+              depthTest={false}
+              transparent={false}
+            />
+            </Sphere >
             
           ))}
           

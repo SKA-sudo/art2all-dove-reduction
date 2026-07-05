@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import { OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 
-const START_POSITION = [8, 5, 8];
-const START_TARGET = [0, 0, 0];
+const START_POSITION = [0, 10, 18];
+const START_TARGET = [0, 6, 0];
 
 export default function CameraController({ displayMode, onDisplayModeChange }) {
   const controlsRef = useRef(null);
@@ -62,7 +62,7 @@ export default function CameraController({ displayMode, onDisplayModeChange }) {
       rotateSpeed={0.6}
       zoomSpeed={1.0}
       minDistance={2.2}
-      maxDistance={8}
+      maxDistance={80}
       target={START_TARGET}
     />
   );
