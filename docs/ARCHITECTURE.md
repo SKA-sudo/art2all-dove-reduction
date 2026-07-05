@@ -456,11 +456,7 @@ All semantic relationships are derived from this canonical perception space rath
 
 ## Architecture
 
-GLB Scene
-
-↓
-
-Canonical Dove Space
+GLB
 
 ↓
 
@@ -468,35 +464,19 @@ Canonical Perception Space
 
 ↓
 
-Primary Axis
+Perception Laboratory
 
 ↓
 
-Local Wing Space
+Validated Hypotheses
 
 ↓
 
-Primary Gesture
+Engine Builders
 
 ↓
 
-Gesture Tree
-
-↓
-
-Wing Finger Curves
-
-↓
-
-Feather Bands
-
-↓
-
-Paper Placement
-
-↓
-
-Renderer
+Rendering Engine
 
 ---
 
