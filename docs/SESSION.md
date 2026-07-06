@@ -45,6 +45,19 @@ If a new idea conflicts with FOUNDATION, RESEARCH or DECISIONS, the documented d
 
 ---
 
+### AI Collaboration Rule
+
+The assistant should prioritize implementation over speculation.
+
+When multiple possible research directions exist, always recommend the one
+that produces the largest visible improvement of the exhibition prototype
+with the smallest implementation effort.
+
+Avoid introducing new architectural concepts unless the current
+implementation demonstrates a clear limitation that cannot be solved within
+the existing foundation.
+
+
 # Repository
 
 Repository:
@@ -69,129 +82,43 @@ Only validated perception rules are transferred back into the product repository
 # Session Update
 
 ################################################################
-# NEXT SESSION – Sprint R4.4
+# NEXT SESSION – Sprint R4.4 Continuation
 ################################################################
 
 ## Current Status
 
-During Sprint R4.3 an important project review was performed.
+The Perception Laboratory now has functional layer controls.
 
-The discussion revealed that the project already possesses a large body of
-validated knowledge regarding visual perception, including:
+Completed:
+- Removed temporary BoundingBox Primary Axis.
+- Added laboratory layer toggles.
+- Wireframe layer can be switched on/off.
+- Landmark layer can be switched on/off.
+- Placeholder layers exist for:
+  - Semantic Regions
+  - Outline
+  - Flow
+  - Gesture
 
-- Silhouette
-- Volume
-- Outline
-- Flow
-- Movement
-- Light
-- Color
-- Spatial Relationships
-- Hierarchy
-- Visual Organization
-
-The current challenge is therefore no longer to invent additional
-architectural concepts.
-
-The challenge is to experimentally validate the existing hypotheses and
-translate them into working builders.
+Important result:
+The Perception Laboratory is now usable as a platform for isolated perception experiments.
 
 ---
 
-## Important Project Decision
+## Next Goal
 
-From now on the primary success metric is no longer the number of new
-architectural ideas.
+Use the Perception Laboratory for the first real experiment.
 
-Success is measured by visible progress towards the exhibition prototype.
+Do not introduce new architecture.
 
-Every sprint must produce one of the following:
+Do not add new hypotheses.
 
-- a validated perception rule,
-- a working builder,
-- or a reproducible perception experiment.
+Implement the first real Landmark:
 
-Research without measurable project progress should be avoided.
+Body Center
 
----
+Goal:
+Replace the temporary landmark placeholder with a reproducible Body Center landmark derived from the current dove model.
 
-## New Development Principle
-
-The Reduction Lab exists to validate hypotheses.
-
-The Art2all Engine exists to build the Peace Dove.
-
-Research therefore serves implementation.
-
-Not the other way around.
-
----
-
-## New Sprint Strategy
-
-Future development follows the workflow:
-
-Hypothesis
-
-↓
-
-Minimal Builder
-
-↓
-
-Perception Laboratory
-
-↓
-
-Validation
-
-↓
-
-Builder Refinement
-
-↓
-
-Production Engine
-
-Every experiment must answer one concrete question.
-
-No sprint should introduce multiple new architectural concepts.
-
----
-
-## Primary Goal of Sprint R4.4
-
-Validate the first semantic construction hypothesis.
-
-Objective:
-
-Determine whether semantic organization preserves the visual perception of
-the Peace Dove better than non-semantic placement.
-
-The experiment should investigate the visual perception using increasing
-numbers of children's drawings, for example:
-
-- 1 drawing
-- 10 drawings
-- 100 drawings
-- 1000 drawings
-
-The evaluation criterion is simple:
-
-Is the Peace Dove still immediately recognizable?
-
-This experiment represents the first practical validation of the semantic
-construction approach.
-
----
-
-## Long-Term Goal
-
-The Reduction Lab is considered successful only if every validated
-perception rule directly contributes to the construction of the exhibition
-prototype.
-
-The exhibition prototype remains the primary specification of the project.
-
-Every future architectural decision must demonstrate how it contributes to
-this visual goal.
+Validation:
+The Body Center must be visible, toggleable, and suitable as the first stable reference point for later semantic construction experiments.

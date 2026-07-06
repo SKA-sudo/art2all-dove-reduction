@@ -5,7 +5,7 @@ import PerceptionModel from "./debug/PerceptionModel";
 
 const DOVE_SCALE = 28;
 const DOVE_POSITION = [0, 6, 0];
-export default function DoveModel({ flapRef, displayMode, showPrimaryAxis }) {
+export default function DoveModel({ flapRef, displayMode, layers }) {
 
   const group = useRef();
   const { scene, animations } = useGLTF("/models/peace_dove.glb");
@@ -43,10 +43,10 @@ export default function DoveModel({ flapRef, displayMode, showPrimaryAxis }) {
 
     {/* Wahrnehmungsmodell */}
     <PerceptionModel
-      scene={scene}
-      showPrimaryAxis={showPrimaryAxis}
-    />
-    <primitive object={scene} />
+        scene={scene}
+        layers={layers}
+      />
+    {/*<primitive object={scene} />*/}
   </group>
   );
 }
