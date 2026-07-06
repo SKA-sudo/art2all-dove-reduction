@@ -102,3 +102,77 @@ Perception Engine.
 
 Rejected hypotheses remain valuable because they define the boundaries of
 the perceptual model.
+
+
+## Sprint R4.5 — Perception Point Cloud
+# Objective
+
+Continue the first Region-based Perception Experiment.
+
+Instead of visualizing estimated semantic regions, generate a perception dataset directly from the existing dove geometry.
+
+# Implementation
+
+The BodyWingTransitionExtractor was modified to extract the center point of every mesh face.
+
+These face centers are rendered through the existing Semantic Regions layer.
+
+No perceptual filtering or heuristics are applied.
+
+The visualization therefore represents the complete extracted perception dataset.
+
+# Observation
+
+The resulting point cloud is not perceived as random geometric data.
+
+Instead, the complete dove remains immediately recognizable.
+
+Natural visual clusters emerge automatically, including:
+
+head
+neck
+body
+wings
+tail
+
+No explicit region detection algorithm was required.
+
+Insight
+
+The extracted face centers appear to form a coherent perceptual representation of the dove.
+
+This suggests that the face-center cloud may serve as a common perception dataset for future extractors.
+
+Current extractors such as:
+
+Body Center
+Flow
+Body–Wing Transition
+
+may therefore operate on the same perception dataset rather than directly on the mesh.
+
+This is currently an observation and requires further validation.
+
+Next Step
+
+Investigate whether controlled filtering of the perception point cloud reveals stable perceptual regions.
+
+Research workflow remains:
+
+Implementation
+
+↓
+
+Observation
+
+↓
+
+Validation
+
+↓
+
+Scientific Insight
+
+↓
+
+Perception Rule
