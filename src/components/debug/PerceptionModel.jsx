@@ -1,8 +1,12 @@
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+
 import FlowLayer from "./layers/FlowLayer";
+import BodyWingTransitionLayer from "./layers/BodyWingTransitionLayer";
+
 import { extractFlow } from "../../core/perception/FlowExtractor";
+import { extractBodyWingTransition } from "../../core/perception/BodyWingTransitionExtractor";
 
 export default function PerceptionModel({ scene, layers }) {
   const bodyCenterMeshRef = useRef();
@@ -30,6 +34,17 @@ export default function PerceptionModel({ scene, layers }) {
     return clone;
   }, [scene]);
 
+  const flow = useMemo(() => {
+    return extractFlow(scene, {
+      sampleStep: 100,
+      normalLength: 1.5,
+    });
+  }, [scene]);
+
+  const bodyWingTransitionRegions = useMemo(() => {
+    return extractBodyWingTransition(scene);
+  }, [scene]);
+
   useFrame(() => {
     if (!scene || !bodyCenterMeshRef.current) return;
 
@@ -38,13 +53,6 @@ export default function PerceptionModel({ scene, layers }) {
 
     bodyCenterMeshRef.current.position.copy(bodyCenterVectorRef.current);
   });
-
-    const flow = useMemo(() => {
-      return extractFlow(scene, {
-        sampleStep: 100,
-        normalLength: 1.5,
-      });
-    }, [scene]);
 
   if (!perceptionScene) return null;
 
@@ -67,10 +75,7 @@ export default function PerceptionModel({ scene, layers }) {
       </mesh>
 
       {layers?.semanticRegions && (
-        <mesh position={[0, 0.6, 0]} renderOrder={1000}>
-          <sphereGeometry args={[0.18, 24, 24]} />
-          <meshBasicMaterial color="orange" depthTest={false} depthWrite={false} />
-        </mesh>
+        <BodyWingTransitionLayer regions={bodyWingTransitionRegions} />
       )}
 
       {layers?.outline && (
@@ -85,7 +90,11 @@ export default function PerceptionModel({ scene, layers }) {
       {layers?.gesture && (
         <mesh position={[0, -0.6, 0]} renderOrder={1000}>
           <sphereGeometry args={[0.18, 24, 24]} />
-          <meshBasicMaterial color="yellow" depthTest={false} depthWrite={false} />
+          <meshBasicMaterial
+            color="yellow"
+            depthTest={false}
+            depthWrite={false}
+          />
         </mesh>
       )}
     </group>
