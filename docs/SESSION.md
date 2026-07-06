@@ -82,43 +82,91 @@ Only validated perception rules are transferred back into the product repository
 # Session Update
 
 ################################################################
-# NEXT SESSION – Sprint R4.4 Continuation
+# NEXT SESSION – Sprint R4.5 Continuation
 ################################################################
 
 ## Current Status
 
-The Perception Laboratory now has functional layer controls.
+The Perception Laboratory has evolved from a visualization tool into the
+foundation of the future Perception Engine.
 
-Completed:
-- Removed temporary BoundingBox Primary Axis.
-- Added laboratory layer toggles.
-- Wireframe layer can be switched on/off.
-- Landmark layer can be switched on/off.
-- Placeholder layers exist for:
-  - Semantic Regions
-  - Outline
-  - Flow
-  - Gesture
+Completed
 
-Important result:
-The Perception Laboratory is now usable as a platform for isolated perception experiments.
+✓ Stable layer system
+✓ First computed Body Center landmark
+✓ Body Center validated during animation
+✓ First Perception Extractor architecture introduced
+✓ First perception experiment completed
+
+Research Result
+
+Experiment R4.5.1 demonstrated that face normals do not represent
+perceived surface flow.
+
+Conclusion:
+
+Perceptual Flow emerges above the individual face level.
+
+The next research stage therefore focuses on perceptual regions rather
+than individual mesh faces.
+
+---
+
+## Current Architecture
+
+PerceptionModel
+
+↓
+
+Renderer Layers
+
+↓
+
+Perception Extractors
+
+↓
+
+Mesh
+
+The renderer contains no perception logic.
+
+Perception algorithms are implemented inside the extractor layer.
 
 ---
 
 ## Next Goal
 
-Use the Perception Laboratory for the first real experiment.
+Implement the first Region-based perception experiment.
 
-Do not introduce new architecture.
+Objective:
 
-Do not add new hypotheses.
+Understand how humans detect the Body–Wing Transition Region.
 
-Implement the first real Landmark:
+Do not search directly for a Wing Root landmark.
 
-Body Center
+Instead identify the perceptual region from which the Wing Root can later
+be derived.
 
-Goal:
-Replace the temporary landmark placeholder with a reproducible Body Center landmark derived from the current dove model.
+Research workflow:
 
-Validation:
-The Body Center must be visible, toggleable, and suitable as the first stable reference point for later semantic construction experiments.
+Project Goal
+
+↓
+
+Implementation
+
+↓
+
+Observation
+
+↓
+
+Validation
+
+↓
+
+Scientific Insight
+
+↓
+
+Perception Rule
