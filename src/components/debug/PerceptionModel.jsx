@@ -1,8 +1,12 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import LandmarkLayer from "./layers/LandmarkLayer";
 
 export default function PerceptionModel({ scene, layers }) {
+  const bodyCenterMeshRef = useRef();
+  const bodyCenterBoxRef = useRef(new THREE.Box3());
+  const bodyCenterVectorRef = useRef(new THREE.Vector3());
+
   const perceptionScene = useMemo(() => {
     if (!scene) return null;
 
@@ -24,58 +28,62 @@ export default function PerceptionModel({ scene, layers }) {
     return clone;
   }, [scene]);
 
-  const landmarks = useMemo(() => {
-  if (!scene) return [];
+  useFrame(() => {
+    if (!scene || !bodyCenterMeshRef.current) return;
 
-  const box = new THREE.Box3().setFromObject(scene);
-  const center = new THREE.Vector3();
+    bodyCenterBoxRef.current.setFromObject(scene);
+    bodyCenterBoxRef.current.getCenter(bodyCenterVectorRef.current);
 
-  box.getCenter(center);
-
-  return [
-    {
-      name: "Body Center",
-      position: center,
-      color: "yellow",
-    },
-  ];
-}, [scene]);
+    bodyCenterMeshRef.current.position.copy(bodyCenterVectorRef.current);
+  });
 
   if (!perceptionScene) return null;
 
   return (
     <group>
       {layers?.wireframe && <primitive object={perceptionScene} />}
-      {layers?.landmarks && <LandmarkLayer landmarks={landmarks} />}
 
+      <mesh
+        ref={bodyCenterMeshRef}
+        visible={Boolean(layers?.landmarks)}
+        renderOrder={1000}
+      >
+        <sphereGeometry args={[0.22, 24, 24]} />
+        <meshBasicMaterial
+          color="yellow"
+          depthTest={false}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
 
       {layers?.semanticRegions && (
-  <mesh position={[0, 0.6, 0]} renderOrder={1000}>
-    <sphereGeometry args={[0.18, 24, 24]} />
-    <meshBasicMaterial color="orange" depthTest={false} depthWrite={false} />
-  </mesh>
-)}
+        <mesh position={[0, 0.6, 0]} renderOrder={1000}>
+          <sphereGeometry args={[0.18, 24, 24]} />
+          <meshBasicMaterial color="orange" depthTest={false} depthWrite={false} />
+        </mesh>
+      )}
 
-{layers?.outline && (
-  <mesh position={[0.5, 0, 0]} renderOrder={1000}>
-    <sphereGeometry args={[0.18, 24, 24]} />
-    <meshBasicMaterial color="cyan" depthTest={false} depthWrite={false} />
-  </mesh>
-)}
+      {layers?.outline && (
+        <mesh position={[0.5, 0, 0]} renderOrder={1000}>
+          <sphereGeometry args={[0.18, 24, 24]} />
+          <meshBasicMaterial color="cyan" depthTest={false} depthWrite={false} />
+        </mesh>
+      )}
 
-{layers?.flow && (
-  <mesh position={[-0.5, 0, 0]} renderOrder={1000}>
-    <sphereGeometry args={[0.18, 24, 24]} />
-    <meshBasicMaterial color="lime" depthTest={false} depthWrite={false} />
-  </mesh>
-)}
+      {layers?.flow && (
+        <mesh position={[-0.5, 0, 0]} renderOrder={1000}>
+          <sphereGeometry args={[0.18, 24, 24]} />
+          <meshBasicMaterial color="lime" depthTest={false} depthWrite={false} />
+        </mesh>
+      )}
 
-{layers?.gesture && (
-  <mesh position={[0, -0.6, 0]} renderOrder={1000}>
-    <sphereGeometry args={[0.18, 24, 24]} />
-    <meshBasicMaterial color="yellow" depthTest={false} depthWrite={false} />
-  </mesh>
-)}
+      {layers?.gesture && (
+        <mesh position={[0, -0.6, 0]} renderOrder={1000}>
+          <sphereGeometry args={[0.18, 24, 24]} />
+          <meshBasicMaterial color="yellow" depthTest={false} depthWrite={false} />
+        </mesh>
+      )}
     </group>
   );
 }
