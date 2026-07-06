@@ -39,7 +39,7 @@ export default function DoveModel({ flapRef, displayMode, layers }) {
   return (
   <group ref={group} scale={DOVE_SCALE} position={DOVE_POSITION}>
     {/* Originalmodell */}
-    <primitive object={scene} />
+    {layers?.referenceModel && <primitive object={scene} />}
 
     {/* Wahrnehmungsmodell */}
     <PerceptionModel

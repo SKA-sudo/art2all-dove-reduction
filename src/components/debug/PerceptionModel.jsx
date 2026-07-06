@@ -43,7 +43,7 @@ export default function PerceptionModel({ scene, layers }) {
 
   const bodyWingTransitionRegions = useMemo(() => {
       return extractBodyWingTransition(scene, {
-        reduction: 8,
+        reduction: 20,
       });
     }, [scene]);
 

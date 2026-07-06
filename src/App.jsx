@@ -9,6 +9,7 @@ export default function App() {
   const [displayMode, setDisplayMode] = useState("wireframe");
 
   const [layers, setLayers] = useState({
+    referenceModel: true,
     wireframe: true,
     landmarks: false,
     semanticRegions: false,
@@ -37,6 +38,10 @@ export default function App() {
           gap: 8,
         }}
       >
+      <button onClick={() => toggleLayer("referenceModel")}>
+        Reference Model: {layers.referenceModel ? "ON" : "OFF"}
+      </button>
+
         <button onClick={() => toggleLayer("wireframe")}>
           Wireframe: {layers.wireframe ? "ON" : "OFF"}
         </button>
