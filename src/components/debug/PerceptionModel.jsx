@@ -24,16 +24,22 @@ export default function PerceptionModel({ scene, layers }) {
     return clone;
   }, [scene]);
 
-  const landmarks = useMemo(
-    () => [
-      {
-        name: "Body Center",
-        position: new THREE.Vector3(0, 0, 0),
-        color: "white",
-      },
-    ],
-    []
-  );
+  const landmarks = useMemo(() => {
+  if (!scene) return [];
+
+  const box = new THREE.Box3().setFromObject(scene);
+  const center = new THREE.Vector3();
+
+  box.getCenter(center);
+
+  return [
+    {
+      name: "Body Center",
+      position: center,
+      color: "yellow",
+    },
+  ];
+}, [scene]);
 
   if (!perceptionScene) return null;
 
