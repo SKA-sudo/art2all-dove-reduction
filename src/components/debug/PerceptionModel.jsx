@@ -1,6 +1,8 @@
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import FlowLayer from "./layers/FlowLayer";
+import { extractFlow } from "../../core/perception/FlowExtractor";
 
 export default function PerceptionModel({ scene, layers }) {
   const bodyCenterMeshRef = useRef();
@@ -37,6 +39,13 @@ export default function PerceptionModel({ scene, layers }) {
     bodyCenterMeshRef.current.position.copy(bodyCenterVectorRef.current);
   });
 
+    const flow = useMemo(() => {
+      return extractFlow(scene, {
+        sampleStep: 100,
+        normalLength: 1.5,
+      });
+    }, [scene]);
+
   if (!perceptionScene) return null;
 
   return (
@@ -71,12 +80,7 @@ export default function PerceptionModel({ scene, layers }) {
         </mesh>
       )}
 
-      {layers?.flow && (
-        <mesh position={[-0.5, 0, 0]} renderOrder={1000}>
-          <sphereGeometry args={[0.18, 24, 24]} />
-          <meshBasicMaterial color="lime" depthTest={false} depthWrite={false} />
-        </mesh>
-      )}
+      {layers?.flow && <FlowLayer flow={flow} />}
 
       {layers?.gesture && (
         <mesh position={[0, -0.6, 0]} renderOrder={1000}>
