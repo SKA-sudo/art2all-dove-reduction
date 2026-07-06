@@ -98,25 +98,34 @@ Completed
 ✓ First Perception Extractor architecture introduced
 ✓ First perception experiment completed
 ✓ Semantic Regions connected to real perception data
+✓ BodyWingTransitionExtractor implemented
 ✓ First Perception Point Cloud generated
 ✓ Configurable point reduction implemented
-✓ First perceptual reduction experiment completed
 
 ---
 
 ## Current Observation
 
-Uniform reduction demonstrates that perceptual stability is not determined
-solely by the amount of remaining information.
+The first reduction experiments demonstrated that the Perception Point
+Cloud preserves the semantic identity of the dove over a surprisingly
+large reduction range.
 
-Initial observations indicate that recognition also depends on:
+Initial observations suggest that perception depends not only on the
+amount of remaining information, but also on
 
 - spatial information distribution
-- overall silhouette
-- viewpoint
+- global silhouette
+- viewing direction
 
-These observations are documented in RESEARCH and require further
-validation before becoming perception rules.
+An additional observation was made during evaluation:
+
+The visualization itself influences perception.
+
+Large point clouds cannot always be perceived as a complete object,
+making perceptual evaluation unreliable.
+
+Future perception experiments therefore require standardized viewing
+conditions.
 
 ---
 
@@ -152,26 +161,56 @@ Continue the first Region-based perception experiment.
 
 Objective
 
-Identify which regions of the Perception Point Cloud preserve the semantic
-Body–Wing Transition.
+Identify which regions of the Perception Point Cloud preserve the
+semantic Body–Wing Transition.
 
-Do not invent new landmarks.
+Before evaluating perception thresholds, establish a reproducible
+observation setup.
 
-Do not introduce new architecture.
+The visualization should provide a standardized view in which the
+complete dove can be perceived without camera-dependent bias.
 
-Instead determine which perceptual information is essential for stable
-recognition.
+Only after standardizing the observation conditions should further
+reduction experiments be evaluated.
 
 ---
 
-## Working Principle
+## Research Workflow
 
-Maintain the Evidence-Driven Development workflow.
+Project Goal
 
-Every implementation must produce:
+↓
 
-- one visible result
-- one documented observation
+Implementation
+
+↓
+
+Observation
+
+↓
+
+Validation
+
+↓
+
+Scientific Insight
+
+↓
+
+Perception Rule
+
+---
+
+## AI Collaboration Rule
+
+Continue implementing within the existing extractor architecture.
+
+Do not introduce new architecture.
+
+Each implementation must produce
+
+- one visible improvement
 - one reproducible experiment
+- one documented observation
 
 Only validated observations become perception rules.
