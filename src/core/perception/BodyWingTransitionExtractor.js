@@ -17,7 +17,8 @@ export function extractBodyWingTransition(scene, options = {}) {
 
     if (!position || !index) return;
 
-    for (let i = 0; i < index.count; i += 3 * sampleStep) {
+    const reduction = options.reduction ?? 1;
+    for (let i = 0; i < index.count; i += 3 * reduction) {
       const a = index.getX(i);
       const b = index.getX(i + 1);
       const c = index.getX(i + 2);

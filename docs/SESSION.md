@@ -97,18 +97,26 @@ Completed
 ✓ Body Center validated during animation
 ✓ First Perception Extractor architecture introduced
 ✓ First perception experiment completed
+✓ Semantic Regions connected to real perception data
+✓ First Perception Point Cloud generated
+✓ Configurable point reduction implemented
+✓ First perceptual reduction experiment completed
 
-Research Result
+---
 
-Experiment R4.5.1 demonstrated that face normals do not represent
-perceived surface flow.
+## Current Observation
 
-Conclusion:
+Uniform reduction demonstrates that perceptual stability is not determined
+solely by the amount of remaining information.
 
-Perceptual Flow emerges above the individual face level.
+Initial observations indicate that recognition also depends on:
 
-The next research stage therefore focuses on perceptual regions rather
-than individual mesh faces.
+- spatial information distribution
+- overall silhouette
+- viewpoint
+
+These observations are documented in RESEARCH and require further
+validation before becoming perception rules.
 
 ---
 
@@ -126,47 +134,44 @@ Perception Extractors
 
 ↓
 
+Perception Point Cloud
+
+↓
+
 Mesh
 
 The renderer contains no perception logic.
 
-Perception algorithms are implemented inside the extractor layer.
+All perception algorithms operate on the shared Perception Point Cloud.
 
 ---
 
 ## Next Goal
 
-Implement the first Region-based perception experiment.
+Continue the first Region-based perception experiment.
 
-Objective:
+Objective
 
-Understand how humans detect the Body–Wing Transition Region.
+Identify which regions of the Perception Point Cloud preserve the semantic
+Body–Wing Transition.
 
-Do not search directly for a Wing Root landmark.
+Do not invent new landmarks.
 
-Instead identify the perceptual region from which the Wing Root can later
-be derived.
+Do not introduce new architecture.
 
-Research workflow:
+Instead determine which perceptual information is essential for stable
+recognition.
 
-Project Goal
+---
 
-↓
+## Working Principle
 
-Implementation
+Maintain the Evidence-Driven Development workflow.
 
-↓
+Every implementation must produce:
 
-Observation
+- one visible result
+- one documented observation
+- one reproducible experiment
 
-↓
-
-Validation
-
-↓
-
-Scientific Insight
-
-↓
-
-Perception Rule
+Only validated observations become perception rules.

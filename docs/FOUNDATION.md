@@ -660,3 +660,61 @@ Perception Rule
 ↓
 
 Implementation in Art2all
+
+# Leitsatz
+Art2all entwickelt keine Engine zur Organisation von Bildern. Art2all entwickelt eine Perception Engine, die die menschliche Gesamtwahrnehmung auch bei massiv wachsender visueller Komplexität erhält.
+
+
+################################################################
+## Evidence-Driven Development
+################################################################
+
+Art2all develops its Perception Engine through reproducible observations.
+
+The project does not begin with abstract perception theories.
+
+Instead, every perception rule emerges from a visible implementation that
+can be reproduced, observed and validated.
+
+The development workflow is therefore:
+
+Project Goal
+
+↓
+
+Implementation
+
+↓
+
+Observation
+
+↓
+
+Documentation
+
+↓
+
+Hypothesis
+
+↓
+
+Experiment
+
+↓
+
+Validation
+
+↓
+
+Perception Rule
+
+↓
+
+Production Engine
+
+This workflow ensures that every perception algorithm is grounded in
+observable evidence rather than assumptions.
+
+Scientific research therefore supports the project.
+
+It never replaces visible project progress.
