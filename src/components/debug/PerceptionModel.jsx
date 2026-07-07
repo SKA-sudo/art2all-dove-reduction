@@ -7,6 +7,7 @@ import BodyWingTransitionLayer from "./layers/BodyWingTransitionLayer";
 
 import { extractFlow } from "../../core/perception/FlowExtractor";
 import { extractBodyWingTransition } from "../../core/perception/BodyWingTransitionExtractor";
+import OutlineLayer from "./layers/OutlineLayer";
 
 export default function PerceptionModel({ scene, layers }) {
   const bodyCenterMeshRef = useRef();
@@ -43,7 +44,7 @@ export default function PerceptionModel({ scene, layers }) {
 
   const bodyWingTransitionRegions = useMemo(() => {
       return extractBodyWingTransition(scene, {
-        reduction: 20,
+        reduction: 1,
       });
     }, [scene]);
 
@@ -80,12 +81,7 @@ export default function PerceptionModel({ scene, layers }) {
         <BodyWingTransitionLayer regions={bodyWingTransitionRegions} />
       )}
 
-      {layers?.outline && (
-        <mesh position={[0.5, 0, 0]} renderOrder={1000}>
-          <sphereGeometry args={[0.18, 24, 24]} />
-          <meshBasicMaterial color="cyan" depthTest={false} depthWrite={false} />
-        </mesh>
-      )}
+      {layers?.outline && <OutlineLayer scene={scene} />}
 
       {layers?.flow && <FlowLayer flow={flow} />}
 

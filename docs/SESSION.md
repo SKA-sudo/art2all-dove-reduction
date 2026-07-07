@@ -82,135 +82,102 @@ Only validated perception rules are transferred back into the product repository
 # Session Update
 
 ################################################################
-# NEXT SESSION – Sprint R4.5 Continuation
+# NEXT SESSION – Sprint R4.7 Animated Semantic Perception
 ################################################################
 
 ## Current Status
 
-The Perception Laboratory has evolved from a visualization tool into the
-foundation of the future Perception Engine.
+The Perception Laboratory now supports controlled perception experiments.
 
 Completed
 
-✓ Stable layer system
-✓ First computed Body Center landmark
-✓ Body Center validated during animation
-✓ First Perception Extractor architecture introduced
-✓ First perception experiment completed
-✓ Semantic Regions connected to real perception data
-✓ BodyWingTransitionExtractor implemented
-✓ First Perception Point Cloud generated
-✓ Configurable point reduction implemented
+✓ Reference Model ON/OFF
+✓ Animation ON/OFF
+✓ Wireframe Layer
+✓ Semantic Region Layer
+✓ Outline Layer (prototype)
+✓ Stable coordinate system
+✓ Standardized experiment controls
+
+The laboratory has evolved from a visualization tool into an interactive
+perception experiment platform.
 
 ---
 
-## Current Observation
+## Observation
 
-The first reduction experiments demonstrated that the Perception Point
-Cloud preserves the semantic identity of the dove over a surprisingly
-large reduction range.
+The animation toggle revealed an important architectural distinction.
 
-Initial observations suggest that perception depends not only on the
-amount of remaining information, but also on
+The Reference Model is animated.
 
-- spatial information distribution
-- global silhouette
-- viewing direction
+The Semantic Perception Model remains static.
 
-An additional observation was made during evaluation:
+This is not a rendering bug.
 
-The visualization itself influences perception.
-
-Large point clouds cannot always be perceived as a complete object,
-making perceptual evaluation unreliable.
-
-Future perception experiments therefore require standardized viewing
-conditions.
+It demonstrates that the current semantic representation is extracted only
+once from the mesh and is therefore independent of the animated perception
+state.
 
 ---
 
-## Current Architecture
+## Research Question
 
-PerceptionModel
+Should semantic perception remain static?
 
-↓
+Or does human perception also rely on semantic motion?
 
-Renderer Layers
+The first experiments suggest that motion itself may represent semantic
+information.
 
-↓
-
-Perception Extractors
-
-↓
-
-Perception Point Cloud
-
-↓
-
-Mesh
-
-The renderer contains no perception logic.
-
-All perception algorithms operate on the shared Perception Point Cloud.
+Therefore the semantic representation should eventually evolve together
+with the animated dove.
 
 ---
 
-## Next Goal
+## Next Objective
 
-Continue the first Region-based perception experiment.
+Implement the first Animated Semantic Perception Model.
 
-Objective
+The semantic regions should no longer represent only the initial geometry.
 
-Identify which regions of the Perception Point Cloud preserve the
-semantic Body–Wing Transition.
+Instead they should continuously follow the animated perception state of
+the dove.
 
-Before evaluating perception thresholds, establish a reproducible
-observation setup.
+The objective is not visual realism.
 
-The visualization should provide a standardized view in which the
-complete dove can be perceived without camera-dependent bias.
-
-Only after standardizing the observation conditions should further
-reduction experiments be evaluated.
+The objective is to determine whether animated semantic structures improve
+human recognition during perception experiments.
 
 ---
 
-## Research Workflow
+## Success Criteria
 
-Project Goal
+✓ Reference Model and Semantic Model remain spatially synchronized.
 
-↓
+✓ Animation can be switched ON/OFF independently.
 
-Implementation
+✓ Semantic regions move together with the animated dove.
 
-↓
+✓ Existing extractor architecture remains unchanged.
 
-Observation
-
-↓
-
-Validation
-
-↓
-
-Scientific Insight
-
-↓
-
-Perception Rule
+✓ The implementation produces one reproducible perception experiment.
 
 ---
 
-## AI Collaboration Rule
+## Expected Scientific Insight
 
-Continue implementing within the existing extractor architecture.
+Current hypothesis:
 
-Do not introduce new architecture.
+Human perception does not rely exclusively on spatial information.
 
-Each implementation must produce
+Temporal information (motion) is likely another semantic layer of
+recognition.
 
-- one visible improvement
-- one reproducible experiment
-- one documented observation
+The Animated Semantic Model will allow future experiments to separate
 
-Only validated observations become perception rules.
+- static perception
+- dynamic perception
+
+under identical experimental conditions.
+
+Only after validation may motion become a future perception rule.

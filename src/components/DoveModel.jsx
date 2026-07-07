@@ -14,12 +14,19 @@ export default function DoveModel({ flapRef, displayMode, layers }) {
 
   useEffect(() => {
     const action = Object.values(actions || {})[0];
-    if (action) action.reset().play();
-  }, [actions]);
+    if (!action) return;
+
+    if (layers?.animation) {
+      action.paused = false;
+      action.play();
+    } else {
+      action.paused = true;
+    }
+  }, [actions, layers?.animation]);
 
   useFrame(() => {
     const action = Object.values(actions || {})[0];
-    if (!action) return;
+    if (!action || !layers?.animation) return;
 
     flapRef.current = Math.sin(action.time * 6) * 0.5 + 0.5;
   });

@@ -28,7 +28,7 @@ export default function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <div
-        style={{
+        style={{  
           position: "absolute",
           top: 16,
           left: 16,
@@ -42,29 +42,33 @@ export default function App() {
         Reference Model: {layers.referenceModel ? "ON" : "OFF"}
       </button>
 
-        <button onClick={() => toggleLayer("wireframe")}>
+      <button onClick={() => toggleLayer("animation")}>
+        Animation: {layers.animation ? "ON" : "OFF"}
+      </button>
+
+      <button onClick={() => toggleLayer("wireframe")}>
           Wireframe: {layers.wireframe ? "ON" : "OFF"}
-        </button>
+      </button>
 
-        <button onClick={() => toggleLayer("landmarks")}>
+      <button onClick={() => toggleLayer("landmarks")}>
           Landmarks: {layers.landmarks ? "ON" : "OFF"}
-        </button>
-
-        <button onClick={() => toggleLayer("semanticRegions")}>
+      </button>
+      
+      <button onClick={() => toggleLayer("semanticRegions")}>
           Semantic Regions: {layers.semanticRegions ? "ON" : "OFF"}
-        </button>
+       </button>
 
-        <button onClick={() => toggleLayer("outline")}>
+      <button onClick={() => toggleLayer("outline")}>
           Outline: {layers.outline ? "ON" : "OFF"}
-        </button>
+       </button>
 
-        <button onClick={() => toggleLayer("flow")}>
+       <button onClick={() => toggleLayer("flow")}>
           Flow: {layers.flow ? "ON" : "OFF"}
-        </button>
+       </button>
 
-        <button onClick={() => toggleLayer("gesture")}>
+       <button onClick={() => toggleLayer("gesture")}>
           Gesture: {layers.gesture ? "ON" : "OFF"}
-        </button>
+       </button>
       </div>
 
       <Canvas camera={{ position: [0, 14, 75], fov: 42 }}>

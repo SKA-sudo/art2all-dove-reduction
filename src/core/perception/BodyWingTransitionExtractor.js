@@ -28,10 +28,9 @@ export function extractBodyWingTransition(scene, options = {}) {
       const vc = new THREE.Vector3().fromBufferAttribute(position, c);
 
       const center = new THREE.Vector3()
-        .addVectors(va, vb)
-        .add(vc)
-        .divideScalar(3)
-        .applyMatrix4(child.matrixWorld);
+      .addVectors(va, vb)
+      .add(vc)
+      .divideScalar(3);
 
       regions.push({
         id: `face-center-${regions.length}`,
