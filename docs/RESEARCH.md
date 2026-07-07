@@ -255,3 +255,44 @@ semantic interpretation.
 
 Future extractors become independent from the underlying rendering
 implementation.
+
+
+################################################################
+Perception State Hypothesis
+################################################################
+
+Art2all entwickelt keine Engine zur Organisation von Bildern.
+
+Art2all entwickelt eine Perception Engine, die die menschliche
+Gesamtwahrnehmung auch bei massiv wachsender visueller Komplexität erhält.
+
+Semantik könnte nicht nur aus Struktur bestehen, sondern auch aus Verhalten.
+
+Die Friedenstaube besitzt Zustände:
+
+Sleeping
+↓
+Dreaming
+↓
+Awakening
+↓
+Awake
+↓
+Flying
+
+Vielleicht erkennt das Gehirn nicht nur
+
+- Kopf
+- Flügel
+- Körper
+
+sondern auch
+
+- wie sich der Flügel öffnet
+- wie der Körper ruhig bleibt
+- wie der Hals führt
+- wie die Silhouette atmet
+
+Dann ist Bewegung keine Animation.
+
+Sie ist Information.

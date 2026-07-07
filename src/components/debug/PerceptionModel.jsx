@@ -7,6 +7,7 @@ import BodyWingTransitionLayer from "./layers/BodyWingTransitionLayer";
 
 import { extractFlow } from "../../core/perception/FlowExtractor";
 import { extractBodyWingTransition } from "../../core/perception/BodyWingTransitionExtractor";
+import { createPerceptionState } from "../../core/perception/PerceptionState";
 import OutlineLayer from "./layers/OutlineLayer";
 
 export default function PerceptionModel({ scene, layers }) {
@@ -45,10 +46,12 @@ export default function PerceptionModel({ scene, layers }) {
   }, [scene]);
 
   const bodyWingTransitionRegions = useMemo(() => {
-      return extractBodyWingTransition(scene, {
-        reduction: 1,
-      });
-    }, [scene]);
+  const perceptionState = createPerceptionState(scene);
+
+  return extractBodyWingTransition(perceptionState, {
+    reduction: 1,
+  });
+  }, [scene]);
 
   useFrame(() => {
     if (!scene || !bodyCenterMeshRef.current) return;
@@ -56,9 +59,11 @@ export default function PerceptionModel({ scene, layers }) {
     bodyCenterBoxRef.current.setFromObject(scene);
     bodyCenterBoxRef.current.getCenter(bodyCenterVectorRef.current);
       if (layers?.animation && layers?.semanticRegions) {
-        const nextRegions = extractBodyWingTransition(scene, {
-      reduction: 1,
-        });
+        const perceptionState = createPerceptionState(scene);
+
+      const nextRegions = extractBodyWingTransition(perceptionState, {
+        reduction: 1,
+      });
         setAnimatedBodyWingTransitionRegions(nextRegions);
       }
      bodyCenterMeshRef.current.position.copy(bodyCenterVectorRef.current);

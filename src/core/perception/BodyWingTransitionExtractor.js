@@ -1,14 +1,14 @@
 import * as THREE from "three";
 
-export function extractBodyWingTransition(scene, options = {}) {
-  if (!scene) return [];
+export function extractBodyWingTransition(perceptionState, options = {}) {
+  if (!perceptionState) return [];
 
   const sampleStep = options.sampleStep ?? 1;
   const regions = [];
 
-  scene.updateMatrixWorld(true);
+  perceptionState.meshes.forEach((meshState) => {
 
-  scene.traverse((child) => {
+  const child = meshState.object;
     if (!child.isMesh || !child.geometry) return;
     
     const geometry = child.geometry;
