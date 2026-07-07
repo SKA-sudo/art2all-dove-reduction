@@ -296,3 +296,5 @@ sondern auch
 Dann ist Bewegung keine Animation.
 
 Sie ist Information.
+
+Jede Kernklasse der Perception Engine muss einen Begriff der Wahrnehmung repräsentieren – keinen Begriff der Implementierung.

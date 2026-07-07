@@ -82,58 +82,92 @@ Only validated perception rules are transferred back into the product repository
 # Session Update
 
 ################################################################
-NEXT SESSION – Sprint R4.9
-Perception State
+NEXT SESSION – Sprint R5.0
+Perception Engine V2
 ################################################################
 
-Current Status
+## Current Status
 
-The Animated Semantic Perception milestone demonstrated that semantic
-information may depend on the observable state of the reference model.
+The Perception Laboratory has reached an important architectural milestone.
 
-The current architecture allows each extractor to access scene data
-independently.
+During the Animated Semantic Perception experiments it became clear that
+semantic extraction should no longer operate directly on scene geometry.
 
-The next milestone establishes a unified Perception State as the common
-input for all perception extractors.
+The first PerceptionState abstraction has been introduced.
 
----
-
-Sprint Goal
-
-Design and implement the first Perception State.
-
-The objective is not to introduce new perception algorithms.
-
-The objective is to establish a stable architectural foundation for all
-future semantic extraction.
-
----
-
-Research Goal
-
-Determine whether a unified Perception State simplifies perception
-experiments while preserving reproducibility.
-
----
-
-Implementation Goal
-
-Create the first Perception State abstraction.
-
-Adapt one existing extractor to consume the Perception State instead of
+The first extractor already consumes the new PerceptionState instead of
 direct scene access.
 
-Validate that future extractors can reuse the same perception source.
+This validates the new architectural direction.
 
 ---
 
-Expected Result
+## Sprint Goal
 
-One unified perception input.
+Design the canonical architecture of the Art2all Perception Engine.
 
-One adapted extractor.
+The objective is not to implement new algorithms.
 
-One reproducible experiment.
+The objective is to establish a stable architectural foundation that will
+support future perception research and the Production Engine.
 
-One documented architectural insight.
+---
+
+## Deliverables
+
+Define the canonical concepts of the Perception Engine.
+
+- Reference Model
+
+- Observation
+
+- Perception State
+
+- Perception Extractor
+
+- Reduction Experiment
+
+- Perception Rule
+
+- Production Engine
+
+Create the first version of
+
+docs/PERCEPTION_ENGINE.md
+
+This document becomes the architectural foundation of the complete
+Perception Engine.
+
+---
+
+## Important Principle
+
+Every core class represents a perception concept.
+
+Never an implementation concept.
+
+The architecture grows from perception.
+
+The API grows from the architecture.
+
+Implementation grows from the API.
+
+---
+
+## Collaboration Rule
+
+Project First.
+
+Science Second.
+
+The Peace Dove defines the project.
+
+The project drives the research.
+
+Research refines the architecture.
+
+Architecture enables implementation.
+
+The objective remains unchanged:
+
+Preserve stable human perception while visual complexity continuously grows.
