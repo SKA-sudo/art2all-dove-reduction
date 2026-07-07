@@ -718,3 +718,31 @@ observable evidence rather than assumptions.
 Scientific research therefore supports the project.
 
 It never replaces visible project progress.
+
+
+################################################################
+Perception Principle
+################################################################
+
+Perception is not limited to static geometry.
+
+Whenever perception depends on motion, posture or temporal behaviour,
+semantic extraction shall operate on the animated perception state rather
+than on the original static mesh.
+
+The mesh represents geometry.
+
+The animated SkinnedMesh represents perceived behaviour.
+
+Future perception algorithms should distinguish between
+
+- geometric information
+
+and
+
+- perceptual behaviour.
+
+# New Directory
+Geometry describes what an object is.
+Animated semantics describe how an object behaves.
+Human perception combines both into object identity.

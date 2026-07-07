@@ -82,102 +82,76 @@ Only validated perception rules are transferred back into the product repository
 # Session Update
 
 ################################################################
-# NEXT SESSION – Sprint R4.7 Animated Semantic Perception
+# NEXT SESSION – Sprint R4.8
+Animated Semantic Extraction
 ################################################################
 
 ## Current Status
 
-The Perception Laboratory now supports controlled perception experiments.
+The Perception Laboratory now supports reproducible perception
+experiments.
 
-Completed
+Implemented
 
 ✓ Reference Model ON/OFF
+
 ✓ Animation ON/OFF
-✓ Wireframe Layer
-✓ Semantic Region Layer
-✓ Outline Layer (prototype)
+
+✓ Semantic Regions
+
+✓ Outline Layer
+
 ✓ Stable coordinate system
+
 ✓ Standardized experiment controls
 
-The laboratory has evolved from a visualization tool into an interactive
-perception experiment platform.
+---
+
+## Important Observation
+
+The Outline Layer follows the animated dove automatically because it
+renders the animated SkinnedMesh.
+
+The Semantic Point Cloud remains static because it is extracted from the
+original geometry.
+
+The current extractor therefore represents geometry instead of animated
+perception.
 
 ---
 
-## Observation
+## Sprint Goal
 
-The animation toggle revealed an important architectural distinction.
+Develop the first Animated Semantic Extractor.
 
-The Reference Model is animated.
+The objective is not to animate points.
 
-The Semantic Perception Model remains static.
-
-This is not a rendering bug.
-
-It demonstrates that the current semantic representation is extracted only
-once from the mesh and is therefore independent of the animated perception
-state.
+The objective is to extract semantic information directly from the
+animated SkinnedMesh.
 
 ---
 
-## Research Question
+## Research Goal
 
-Should semantic perception remain static?
+Determine whether motion itself represents semantic information.
 
-Or does human perception also rely on semantic motion?
-
-The first experiments suggest that motion itself may represent semantic
-information.
-
-Therefore the semantic representation should eventually evolve together
-with the animated dove.
+The implementation should establish whether animated semantic extraction
+improves perception experiments compared to static semantic extraction.
 
 ---
 
-## Next Objective
+## AI Collaboration Rule
 
-Implement the first Animated Semantic Perception Model.
+Do not implement animation effects.
 
-The semantic regions should no longer represent only the initial geometry.
+Implement semantic extraction from the animated perception state.
 
-Instead they should continuously follow the animated perception state of
-the dove.
+The objective is scientific validation rather than visual appearance.
 
-The objective is not visual realism.
+Every implementation must produce
 
-The objective is to determine whether animated semantic structures improve
-human recognition during perception experiments.
+- one reproducible experiment
 
----
+- one observable result
 
-## Success Criteria
-
-✓ Reference Model and Semantic Model remain spatially synchronized.
-
-✓ Animation can be switched ON/OFF independently.
-
-✓ Semantic regions move together with the animated dove.
-
-✓ Existing extractor architecture remains unchanged.
-
-✓ The implementation produces one reproducible perception experiment.
-
----
-
-## Expected Scientific Insight
-
-Current hypothesis:
-
-Human perception does not rely exclusively on spatial information.
-
-Temporal information (motion) is likely another semantic layer of
-recognition.
-
-The Animated Semantic Model will allow future experiments to separate
-
-- static perception
-- dynamic perception
-
-under identical experimental conditions.
-
-Only after validation may motion become a future perception rule.
+- one documented perception insight.

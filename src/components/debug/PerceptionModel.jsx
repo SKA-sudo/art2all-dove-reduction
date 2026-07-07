@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -13,6 +13,8 @@ export default function PerceptionModel({ scene, layers }) {
   const bodyCenterMeshRef = useRef();
   const bodyCenterBoxRef = useRef(new THREE.Box3());
   const bodyCenterVectorRef = useRef(new THREE.Vector3());
+  const [animatedBodyWingTransitionRegions, setAnimatedBodyWingTransitionRegions] =
+  useState([]);
 
   const perceptionScene = useMemo(() => {
     if (!scene) return null;
@@ -53,7 +55,12 @@ export default function PerceptionModel({ scene, layers }) {
 
     bodyCenterBoxRef.current.setFromObject(scene);
     bodyCenterBoxRef.current.getCenter(bodyCenterVectorRef.current);
-
+      if (layers?.animation && layers?.semanticRegions) {
+        const nextRegions = extractBodyWingTransition(scene, {
+      reduction: 1,
+        });
+        setAnimatedBodyWingTransitionRegions(nextRegions);
+      }
     bodyCenterMeshRef.current.position.copy(bodyCenterVectorRef.current);
   });
 
@@ -78,7 +85,13 @@ export default function PerceptionModel({ scene, layers }) {
       </mesh>
 
       {layers?.semanticRegions && (
-        <BodyWingTransitionLayer regions={bodyWingTransitionRegions} />
+        <BodyWingTransitionLayer
+          regions={
+            layers?.animation
+              ? animatedBodyWingTransitionRegions
+              : bodyWingTransitionRegions
+          }
+        />
       )}
 
       {layers?.outline && <OutlineLayer scene={scene} />}
