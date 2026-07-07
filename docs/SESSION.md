@@ -82,76 +82,58 @@ Only validated perception rules are transferred back into the product repository
 # Session Update
 
 ################################################################
-# NEXT SESSION – Sprint R4.8
-Animated Semantic Extraction
+NEXT SESSION – Sprint R4.9
+Perception State
 ################################################################
 
-## Current Status
+Current Status
 
-The Perception Laboratory now supports reproducible perception
-experiments.
+The Animated Semantic Perception milestone demonstrated that semantic
+information may depend on the observable state of the reference model.
 
-Implemented
+The current architecture allows each extractor to access scene data
+independently.
 
-✓ Reference Model ON/OFF
-
-✓ Animation ON/OFF
-
-✓ Semantic Regions
-
-✓ Outline Layer
-
-✓ Stable coordinate system
-
-✓ Standardized experiment controls
+The next milestone establishes a unified Perception State as the common
+input for all perception extractors.
 
 ---
 
-## Important Observation
+Sprint Goal
 
-The Outline Layer follows the animated dove automatically because it
-renders the animated SkinnedMesh.
+Design and implement the first Perception State.
 
-The Semantic Point Cloud remains static because it is extracted from the
-original geometry.
+The objective is not to introduce new perception algorithms.
 
-The current extractor therefore represents geometry instead of animated
-perception.
+The objective is to establish a stable architectural foundation for all
+future semantic extraction.
 
 ---
 
-## Sprint Goal
+Research Goal
 
-Develop the first Animated Semantic Extractor.
-
-The objective is not to animate points.
-
-The objective is to extract semantic information directly from the
-animated SkinnedMesh.
+Determine whether a unified Perception State simplifies perception
+experiments while preserving reproducibility.
 
 ---
 
-## Research Goal
+Implementation Goal
 
-Determine whether motion itself represents semantic information.
+Create the first Perception State abstraction.
 
-The implementation should establish whether animated semantic extraction
-improves perception experiments compared to static semantic extraction.
+Adapt one existing extractor to consume the Perception State instead of
+direct scene access.
+
+Validate that future extractors can reuse the same perception source.
 
 ---
 
-## AI Collaboration Rule
+Expected Result
 
-Do not implement animation effects.
+One unified perception input.
 
-Implement semantic extraction from the animated perception state.
+One adapted extractor.
 
-The objective is scientific validation rather than visual appearance.
+One reproducible experiment.
 
-Every implementation must produce
-
-- one reproducible experiment
-
-- one observable result
-
-- one documented perception insight.
+One documented architectural insight.

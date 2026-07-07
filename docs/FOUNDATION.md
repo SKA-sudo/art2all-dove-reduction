@@ -719,6 +719,58 @@ Scientific research therefore supports the project.
 
 It never replaces visible project progress.
 
+################################################################
+Project-Driven Research
+################################################################
+
+Art2all follows a project-driven development methodology.
+
+The project defines the next implementation goal.
+
+Implementation produces observable results.
+
+Observations lead to scientific hypotheses.
+
+Validated hypotheses refine the architecture.
+
+The refined architecture enables the next implementation step.
+
+Project
+↓
+
+Implementation
+↓
+
+Observation
+↓
+
+Hypothesis
+↓
+
+Experiment
+
+↓
+
+Validation
+
+↓
+
+Architecture
+
+↓
+
+Next Implementation
+
+Scientific research supports the project.
+
+It never replaces visible project progress.
+
+The project drives the research.
+
+Research refines the architecture.
+
+Architecture enables the implementation.
+
 
 ################################################################
 Perception Principle
@@ -746,3 +798,21 @@ and
 Geometry describes what an object is.
 Animated semantics describe how an object behaves.
 Human perception combines both into object identity.
+
+################################################################
+Perception State Principle
+################################################################
+
+The Perception Engine does not analyse raw geometry.
+
+It analyses the current observable Perception State.
+
+The Perception State represents the complete perceptual description of the
+reference model at one specific moment.
+
+Semantic extractors never define perception.
+
+They analyse an existing Perception State.
+
+This keeps perception generation and semantic interpretation separated and
+allows future extractors to remain independent from rendering details.

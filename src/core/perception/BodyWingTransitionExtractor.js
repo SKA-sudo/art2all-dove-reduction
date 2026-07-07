@@ -18,6 +18,9 @@ export function extractBodyWingTransition(scene, options = {}) {
     if (!position || !index) return;
 
     const reduction = options.reduction ?? 1;
+        if (child.isSkinnedMesh) {
+      child.skeleton?.update();
+    }
     for (let i = 0; i < index.count; i += 3 * reduction) {
       const a = index.getX(i);
       const b = index.getX(i + 1);
@@ -27,12 +30,10 @@ export function extractBodyWingTransition(scene, options = {}) {
       const vb = new THREE.Vector3().fromBufferAttribute(position, b);
       const vc = new THREE.Vector3().fromBufferAttribute(position, c);
       if (child.isSkinnedMesh && typeof child.boneTransform === "function") {
-          child.skeleton?.update();
-
-          child.boneTransform(a, va);
-          child.boneTransform(b, vb);
-          child.boneTransform(c, vc);
-        }
+        child.boneTransform(a, va);
+        child.boneTransform(b, vb);
+        child.boneTransform(c, vc);
+      }
 
       const center = new THREE.Vector3()
       .addVectors(va, vb)

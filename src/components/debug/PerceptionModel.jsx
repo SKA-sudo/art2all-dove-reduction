@@ -61,8 +61,8 @@ export default function PerceptionModel({ scene, layers }) {
         });
         setAnimatedBodyWingTransitionRegions(nextRegions);
       }
-    bodyCenterMeshRef.current.position.copy(bodyCenterVectorRef.current);
-  });
+     bodyCenterMeshRef.current.position.copy(bodyCenterVectorRef.current);
+    }, 1);
 
   if (!perceptionScene) return null;
 

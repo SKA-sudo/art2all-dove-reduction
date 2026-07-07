@@ -180,3 +180,78 @@ This would allow the Perception Engine to study
 - recognition during movement
 
 instead of analysing only static spatial relationships.
+
+################################################################
+Research R4.8
+Perception State
+################################################################
+
+## Observation
+
+During the implementation of the Animated Semantic Extraction experiments,
+an important architectural limitation became visible.
+
+The current extractors operate directly on scene geometry.
+
+However, different perception layers already operate on different
+representations of the same dove.
+
+The Outline Layer follows the animated SkinnedMesh automatically.
+
+The Semantic Extractor currently samples geometry directly.
+
+This revealed that the current engine has no explicit representation of the
+current perceptual state.
+
+Instead, every extractor decides individually which representation it uses.
+
+---
+
+## New Research Question
+
+Should semantic extractors operate directly on scene objects,
+
+or
+
+should they operate on a unified Perception State?
+
+---
+
+## Hypothesis
+
+Human perception does not analyse isolated geometry.
+
+It analyses the complete observable state of an object.
+
+The engine should therefore establish a unified Perception State before any
+semantic extraction takes place.
+
+Extractors should analyse this Perception State rather than directly
+accessing scene geometry.
+
+---
+
+## Expected Impact
+
+If validated,
+
+the Perception State becomes the common input for all future extractors.
+
+Possible perception information includes
+
+- geometry
+- animated pose
+- skeleton deformation
+- world transformation
+- future observable perception attributes
+
+This separates
+
+observable perception
+
+from
+
+semantic interpretation.
+
+Future extractors become independent from the underlying rendering
+implementation.

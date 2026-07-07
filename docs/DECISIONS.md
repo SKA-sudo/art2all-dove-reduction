@@ -305,3 +305,38 @@ Consequences
 
 - Wahrnehmung steht dauerhaft
   vor Implementierung
+
+  ################################################################
+Decision R4.8
+Perception State
+################################################################
+
+Status:
+Accepted
+
+Motivation
+
+Animated Semantic Perception demonstrated that different perception layers
+already depend on different representations of the reference model.
+
+Allowing every extractor to choose its own source representation would
+introduce inconsistent semantic behaviour.
+
+Decision
+
+Before semantic extraction, the engine defines one unified
+Perception State.
+
+Extractors no longer conceptually operate on isolated geometry.
+
+They operate on the current observable perception state.
+
+Consequences
+
+- unified extractor interface
+
+- reproducible perception experiments
+
+- animated and static perception become interchangeable inputs
+
+- rendering implementation remains separated from semantic extraction
