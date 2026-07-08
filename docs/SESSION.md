@@ -82,79 +82,64 @@ Only validated perception rules are transferred back into the product repository
 
 ---
 
-################################################################
-# Current State
-################################################################
+## Session Goal
 
-The semantic pipeline is operational.
+Continue the semantic migration of the Perception Engine.
 
-Implemented Semantic Observations:
+The architecture has been cleaned up and the semantic migration process is now the primary implementation focus.
 
-✓ HAS_OBSERVATION
-✓ HAS_BODY_CENTER
-✓ HAS_PRIMARY_GESTURE
-✓ HAS_OUTLINE
+Current State
 
-The Perception Monitor visualizes the current semantic understanding.
+AI_START documentation is authoritative.
+Semantic pipeline is operational.
+SemanticObservation is established as the canonical semantic unit.
+PerceptionState has been introduced.
+Duplicate extractor implementation has been removed.
+The former Region/BodyWingTransition implementation was analysed.
+The algorithm does not detect semantic regions.
+Its actual semantic responsibility is:
+WholeDove
+HAS_FACE_CENTERS
+FaceCenterExtractor has been introduced successfully.
+The pipeline currently produces five Semantic Observations:
+HAS_OBSERVATION
+HAS_FACE_CENTERS
+HAS_BODY_CENTER
+HAS_PRIMARY_GESTURE
+HAS_OUTLINE
 
-################################################################
-# Working Principle
-################################################################
+Working Principle
 
-Project First.
+Do not introduce new architecture.
 
-Science Second.
+Do not speculate.
 
-One measurable implementation step per iteration.
+Before implementing anything:
 
-Do not redesign architecture unless implementation requires it.
+Read the relevant implementation.
+Determine the current semantic responsibility.
+Produce exactly one SemanticObservation.
+Validate it in the Perception Monitor.
+Commit.
 
-################################################################
-# Semantic Migration Principle
-################################################################
+The objective is to migrate existing engineering capabilities into the Perception Engine one semantic responsibility at a time.
 
-Do not migrate implementations.
+Immediate Next Goal
 
-Migrate semantic responsibilities.
+Continue the semantic migration from the current implementation.
 
-Before creating a new Extractor always determine:
+Read the next existing engineering algorithm and determine:
 
 "What semantic statement can this algorithm truthfully produce today?"
 
-Only then implement the corresponding SemanticObservation.
+Only after that create the next Semantic Extractor.
 
-Never migrate intended future behaviour.
+Success Criterion
 
-Only migrate existing semantic capability.
+The Perception Monitor must display one additional validated Semantic Observation.
 
-################################################################
-# Collaboration Rule
-################################################################
+One implementation step.
 
-Stay focused.
+One measurable result.
 
-Do not jump to future architecture.
-
-Do not discuss multiple future steps.
-
-Always finish the current implementation before exploring new ideas.
-
-Small measurable progress is preferred over large discussions.
-
-################################################################
-# Next Goal
-################################################################
-
-Continue migrating existing engineering algorithms into Semantic Extractors.
-
-For every migration:
-
-1. Read the existing implementation.
-2. Determine its actual semantic responsibility.
-3. Create exactly one SemanticObservation.
-4. Validate it in the Perception Monitor.
-5. Commit.
-
-The Perception Monitor is the primary indicator of implementation progress.
-
-################################################################
+One commit.
