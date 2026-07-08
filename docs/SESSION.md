@@ -25,10 +25,11 @@ Before proposing any architecture, implementation or research,
 the following documents MUST be read in this exact order:
 
 1. ../art2all/docs/FOUNDATION.md
-2. ../art2all/docs/SESSION.md
+2. ../art2all-dove-reduction/docs/SESSION.md
 3. ../art2all-dove-reduction/RESEARCH.md
 4. ../art2all-dove-reduction/DECISIONS.md
-5. this repository's docs/SESSION.md
+5. ../art2all-dove-reduction/PERCEPTION_API.md
+
 
 After reading, the assistant must:
 

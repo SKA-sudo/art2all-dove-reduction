@@ -1,0 +1,273 @@
+################################################################
+# Art2all – Perception API
+################################################################
+
+Version: 1.0
+
+Status: Draft
+
+Author:
+Stephan Kästner
+with support from ChatGPT
+
+################################################################
+
+# Purpose
+
+The Perception API defines the canonical contract between the
+Perception Engine architecture and its implementation.
+
+The API does not define algorithms.
+
+The API does not define data structures.
+
+The API defines semantic responsibilities and communication between
+the canonical concepts of the Perception Engine.
+
+Architecture defines the concepts.
+
+The API defines how those concepts interact.
+
+Implementation follows the API.
+
+---
+
+# Canonical Pipeline
+
+Reference Model
+        │
+        ▼
+Observation
+        │
+        ▼
+Perception State
+        │
+        ▼
+Perception Extractor
+        │
+        ▼
+Reduction Experiment
+        │
+        ▼
+Perception Rule
+        │
+        ▼
+Production Engine
+
+---
+
+# API Principles
+
+The API is semantic.
+
+It never exposes implementation details.
+
+Every concept has exactly one responsibility.
+
+Every concept communicates only with the next layer.
+
+No concept bypasses another concept.
+
+Everything follows.
+
+---
+
+# Canonical Concepts
+
+## Reference Model
+
+### Purpose
+
+Represents a visual reference used for perception research.
+
+### Receives
+
+Nothing.
+
+It is the entry point of the pipeline.
+
+### Produces
+
+Observation
+
+### Public API
+
+createObservation()
+
+### Never
+
+Interpret visual information.
+
+Know perception rules.
+
+Know production logic.
+
+---
+
+## Observation
+
+### Purpose
+
+Represents an objective visual observation.
+
+### Receives
+
+Reference Model
+
+### Produces
+
+Perception State
+
+### Public API
+
+createPerceptionState()
+
+### Never
+
+Interpret observations.
+
+Contain semantic knowledge.
+
+Perform extraction.
+
+---
+
+## Perception State
+
+### Purpose
+
+Represents the current perceptual situation.
+
+Acts as the common semantic interface for all extractors.
+
+### Receives
+
+Observation
+
+### Produces
+
+Perception State
+
+(updated by extractors)
+
+### Public API
+
+runExtractors()
+
+### Never
+
+Know production logic.
+
+Contain perception rules.
+
+Run experiments.
+
+---
+
+## Perception Extractor
+
+### Purpose
+
+Extract exactly one perceptual aspect.
+
+### Receives
+
+Perception State
+
+### Produces
+
+Updated Perception State
+
+### Public API
+
+extract(state)
+
+### Never
+
+Modify observations.
+
+Know production logic.
+
+Validate hypotheses.
+
+---
+
+## Reduction Experiment
+
+### Purpose
+
+Validate a perceptual hypothesis.
+
+### Receives
+
+Perception State
+
+### Produces
+
+Experiment Result
+
+### Public API
+
+run(state)
+
+### Never
+
+Generate artwork.
+
+Modify the Production Engine.
+
+---
+
+## Perception Rule
+
+### Purpose
+
+Represent validated perceptual knowledge.
+
+### Receives
+
+Experiment Result
+
+### Produces
+
+Validated Rule
+
+### Public API
+
+createRule()
+
+### Never
+
+Contain hypotheses.
+
+Perform extraction.
+
+Generate geometry.
+
+---
+
+## Production Engine
+
+### Purpose
+
+Transform validated perception knowledge into the final artwork.
+
+### Receives
+
+Validated Perception Rules
+
+### Produces
+
+Final Artwork
+
+### Public API
+
+applyRules()
+
+### Never
+
+Perform perception research.
+
+Execute reduction experiments.
+
+Create new perception rules.
