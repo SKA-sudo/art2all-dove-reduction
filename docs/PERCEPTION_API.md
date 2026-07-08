@@ -306,3 +306,48 @@ Perform perception research.
 Execute reduction experiments.
 
 Create new perception rules.
+
+## Engineering Principles
+Reuse Existing Knowledge
+
+The Perception Engine does not replace existing algorithms.
+
+It provides a semantic architecture that integrates them.
+
+Research produces knowledge.
+
+Engineering makes knowledge reusable.
+
+Algorithms remain independent from the Perception Engine.
+
+Extractors adapt existing algorithms to the semantic API.
+
+The Perception Engine coordinates semantic processing.
+
+The Production Engine consumes validated perceptual knowledge.
+
+
+Research
+        │
+        ▼
+Algorithms
+        │
+        ▼
+Extractors
+        │
+        ▼
+Extractor Pipeline
+        │
+        ▼
+Perception Engine
+        │
+        ▼
+Production Engine
+
+Each layer has exactly one responsibility.
+
+Knowledge is never duplicated.
+
+Existing algorithms are reused whenever possible.
+
+New research should extend the architecture rather than replace it.
