@@ -7,8 +7,10 @@ import BodyWingTransitionLayer from "./layers/BodyWingTransitionLayer";
 
 import { extractFlow } from "../../core/perception/FlowExtractor";
 import { extractBodyWingTransition } from "../../core/perception/BodyWingTransitionExtractor";
-import { createPerceptionState } from "../../core/perception/PerceptionState";
+// import { createPerceptionState } from "../../core/perception/PerceptionState";
 import OutlineLayer from "./layers/OutlineLayer";
+
+
 
 export default function PerceptionModel({ scene, layers }) {
   const bodyCenterMeshRef = useRef();
