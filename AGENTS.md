@@ -4,10 +4,9 @@
 
 Always read before starting any implementation:
 
-- docs/FOUNDATION.md
-- docs/SESSION.md
+- art2all/docs/FOUNDATION.md
 
-These documents define the current project state and take precedence over new ideas.
+These document define the current project state and take precedence over new ideas.
 
 ---
 
@@ -20,11 +19,14 @@ Content:
 
 # Art2all uses a hierarchical documentation model.
 
+
+Für AI connector https://raw.githubusercontent.com/SKA-sudo/art2all-dove-reduction/tree/dev/ 
+
 Read documentation in this order:
 
-1. art2all/docs/FOUNDATION.md
-2. art2all/docs/SESSION.md
-3. The current repository's docs/SESSION.md
+1. art2all-dove-reduction/docs/FOUNDATION.md
+2. art2all-dove-reduction/docs/SESSION.md
+3. art2all-dove-reduction/docs/PERCEPTION_ENGINE.md
 
 Rules:
 
