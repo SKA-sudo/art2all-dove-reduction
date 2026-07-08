@@ -3,10 +3,9 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 import FlowLayer from "./layers/FlowLayer";
-import BodyWingTransitionLayer from "./layers/BodyWingTransitionLayer";
 
 import { extractFlow } from "../../core/perception/FlowExtractor";
-import { extractBodyWingTransition } from "../../core/perception/BodyWingTransitionExtractor";
+import { extractFaceCenters } from "../../core/perception/RegionExtractor";
 // import { createPerceptionState } from "../../core/perception/PerceptionState";
 import OutlineLayer from "./layers/OutlineLayer";
 
@@ -50,7 +49,7 @@ export default function PerceptionModel({ scene, layers }) {
   const bodyWingTransitionRegions = useMemo(() => {
   const perceptionState = createPerceptionState(scene);
 
-  return extractBodyWingTransition(perceptionState, {
+  return extractFaceCenters(perceptionState, {
     reduction: 1,
   });
   }, [scene]);
@@ -63,7 +62,7 @@ export default function PerceptionModel({ scene, layers }) {
       if (layers?.animation && layers?.semanticRegions) {
         const perceptionState = createPerceptionState(scene);
 
-      const nextRegions = extractBodyWingTransition(perceptionState, {
+      const nextRegions = extractFaceCenters(perceptionState, {
         reduction: 1,
       });
         setAnimatedBodyWingTransitionRegions(nextRegions);

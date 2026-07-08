@@ -1,15 +1,24 @@
-export default class IdentityExtractor {
-  constructor({ id = "identity-extractor" } = {}) {
-    this.id = id;
+export default class ExtractorPipeline {
+  constructor(extractors = []) {
+    this.extractors = extractors;
   }
 
-  extract(observation) {
-    return {
-      id: crypto.randomUUID(),
-      type: "Identity",
-      value: observation,
-      source: this.id,
-      confidence: 1,
-    };
+  run(observation) {
+    const semanticObservations = [];
+
+    this.extractors.forEach((extractor) => {
+      const result = extractor.extract(observation);
+
+      if (!result) return;
+
+      if (Array.isArray(result)) {
+        semanticObservations.push(...result);
+        return;
+      }
+
+      semanticObservations.push(result);
+    });
+
+    return semanticObservations;
   }
 }

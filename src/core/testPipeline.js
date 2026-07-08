@@ -4,6 +4,7 @@ import BodyCenterExtractor from "./perception/BodyCenterExtractor";
 import GestureExtractor from "./perception/GestureExtractor";
 import * as THREE from "three";
 import OutlineExtractor from "./perception/OutlineExtractor";
+import FaceCenterExtractor from "./perception/FaceCenterExtractor";
 
 console.log("PERCEPTION PIPELINE TEST START");
 
@@ -42,11 +43,13 @@ const observation = reference.createObservation({
 
 const extractors = [
   new IdentityExtractor(),
+  new FaceCenterExtractor(),
   new BodyCenterExtractor(),
   new GestureExtractor(),
   new OutlineExtractor(),
 ];
-
+console.log("FaceCenterExtractor:", FaceCenterExtractor);
+console.log("Extractors count:", extractors.length);
 const semanticObservations = extractors.map((extractor) =>
   extractor.extract(observation)
 );

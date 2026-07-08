@@ -1,11 +1,21 @@
 export default class PerceptionState {
   constructor({
-    id,
-    observation,
+    observation = null,
     semanticObservations = [],
-  }) {
-    this.id = id;
+  } = {}) {
     this.observation = observation;
     this.semanticObservations = semanticObservations;
+  }
+
+  addSemanticObservation(semanticObservation) {
+    if (!semanticObservation) return this;
+
+    return new PerceptionState({
+      observation: this.observation,
+      semanticObservations: [
+        ...this.semanticObservations,
+        semanticObservation,
+      ],
+    });
   }
 }
