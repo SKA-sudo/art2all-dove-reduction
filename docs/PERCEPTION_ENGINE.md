@@ -530,3 +530,30 @@ Existing algorithms are integrated through semantic extractors.
 
 The goal is architectural migration,
 not algorithm replacement.
+
+
+Existing Engineering Algorithm
+            │
+            ▼
+Determine actual semantic responsibility
+            │
+            ▼
+Perception Extractor
+            │
+            ▼
+Semantic Observation
+            │
+            ▼
+Perception State
+
+Important:
+
+Algorithms are not integrated because they exist.
+
+Algorithms are integrated only when they can produce one well-defined semantic statement.
+
+The semantic responsibility must reflect the current implementation.
+
+Never the intended future implementation.
+
+If an algorithm cannot yet justify the intended semantic statement, the migration is postponed until the implementation matches the semantic meaning.

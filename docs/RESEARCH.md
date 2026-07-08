@@ -300,3 +300,66 @@ Sie ist Information.
 Jede Kernklasse der Perception Engine muss einen Begriff der Wahrnehmung repräsentieren – keinen Begriff der Implementierung.
 
 Architecture is discovered through implementation, not speculation.
+Implementation First. Speculation Second.
+
+
+
+## Perception Hypothesis P-001
+# Observation
+
+During an informal perception discussion, a semantic point representation of the dove produced uncertain recognition.
+
+Typical responses included:
+
+"Could be a dove."
+
+"Maybe a pigeon, a blackbird, or a chicken."
+
+In contrast, minimal outline representations of birds were recognized immediately despite containing significantly less visual information.
+
+Hypothesis
+
+The visual outline is likely one of the strongest semantic carriers of object identity.
+
+The human visual system appears to establish object identity primarily from the outline before integrating additional semantic information such as gesture, body regions, or local details.
+
+Proposed Validation
+
+Future reduction experiments should compare recognition performance of:
+
+semantic point representations
+outline only
+primary gesture only
+outline + primary gesture
+outline + semantic points
+full semantic model
+
+The objective is to determine the perceptual contribution of each semantic observation to stable object recognition.
+
+Current Evidence
+
+Status:
+Initial observation
+
+Evidence:
+
+- Coffee Meeting (human observer)
+- Sparse semantic point representation produced uncertain recognition.
+- Minimal outline produced immediate recognition.
+- Formal reduction experiments pending.
+
+## Perception Importance Hierarchy
+# WholeDove
+
+HAS_OUTLINE                Importance: ?
+HAS_PRIMARY_GESTURE        Importance: ?
+HAS_BODY_CENTER            Importance: ?
+HAS_BODY_WING_TRANSITION   Importance: ?
+HAS_FLOW                   Importance: ?
+HAS_REGIONS                Importance: ?
+...
+
+Experiment	Darstellung	Erste Antwort	Sicherheit	Begründung
+E-001	Semantic Points	"Könnte Taube sein"	60 %	"Flügel und Kopf"
+E-002	Outline	"Taube"	98 %	"Die Form erkennt man sofort"
+E-003	Gesture	...	...	...

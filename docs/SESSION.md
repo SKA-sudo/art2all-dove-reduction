@@ -29,6 +29,7 @@ the following documents MUST be read in this exact order:
 3. ../art2all-dove-reduction/RESEARCH.md
 4. ../art2all-dove-reduction/DECISIONS.md
 5. ../art2all-dove-reduction/PERCEPTION_API.md
+5. ../art2all-dove-reduction/PERCEPTION_ENGINE.md
 
 
 After reading, the assistant must:
@@ -58,6 +59,9 @@ Avoid introducing new architectural concepts unless the current
 implementation demonstrates a clear limitation that cannot be solved within
 the existing foundation.
 
+Do not redesign the architecture.
+Continue the current implementation.
+
 
 # Repository
 
@@ -78,157 +82,79 @@ Only validated perception rules are transferred back into the product repository
 
 ---
 
-# Current Sprint
-
-# Session Update
-
 ################################################################
-NEXT SESSION – Sprint R5.1
-Perception Engine V2
+# Current State
 ################################################################
 
+The semantic pipeline is operational.
+
+Implemented Semantic Observations:
+
+✓ HAS_OBSERVATION
+✓ HAS_BODY_CENTER
+✓ HAS_PRIMARY_GESTURE
+✓ HAS_OUTLINE
+
+The Perception Monitor visualizes the current semantic understanding.
+
 ################################################################
-# Sprint Summary
+# Working Principle
 ################################################################
 
-Sprint Goal
+Project First.
 
-Establish the canonical semantic architecture of the Perception Engine.
+Science Second.
 
----
+One measurable implementation step per iteration.
 
-## Completed
+Do not redesign architecture unless implementation requires it.
 
-### Canonical Perception API
+################################################################
+# Semantic Migration Principle
+################################################################
 
-The first implementation of the Perception API is now operational.
+Do not migrate implementations.
 
-Implemented components:
+Migrate semantic responsibilities.
 
-- ReferenceModel
-- Observation
-- SemanticObservation
-- PerceptionState
-- IdentityExtractor
-- BodyCenterExtractor
+Before creating a new Extractor always determine:
 
-The first complete semantic perception pipeline is running successfully.
+"What semantic statement can this algorithm truthfully produce today?"
 
----
+Only then implement the corresponding SemanticObservation.
 
-### Canonical Pipeline
+Never migrate intended future behaviour.
 
-The current canonical perception pipeline is now:
+Only migrate existing semantic capability.
 
-Reference Model
-        │
-        ▼
-Observation
-        │
-        ▼
-Perception Extractor(s)
-        │
-        ▼
-Semantic Observation(s)
-        │
-        ▼
-Perception State
-        │
-        ▼
-Reduction Experiment
-        │
-        ▼
-Perception Rule
-        │
-        ▼
-Production Engine
+################################################################
+# Collaboration Rule
+################################################################
 
----
+Stay focused.
 
-### Semantic Observation
+Do not jump to future architecture.
 
-A major architectural refinement was discovered during implementation.
+Do not discuss multiple future steps.
 
-The smallest semantic unit of the Perception Engine is not a
-Perception State.
+Always finish the current implementation before exploring new ideas.
 
-It is a Semantic Observation.
+Small measurable progress is preferred over large discussions.
 
-Every extractor produces exactly one semantic statement.
+################################################################
+# Next Goal
+################################################################
 
-Canonical structure:
+Continue migrating existing engineering algorithms into Semantic Extractors.
 
-- subject
-- predicate
-- value
-- source
-- confidence
+For every migration:
 
-Example:
+1. Read the existing implementation.
+2. Determine its actual semantic responsibility.
+3. Create exactly one SemanticObservation.
+4. Validate it in the Perception Monitor.
+5. Commit.
 
-WholeDove
-HAS_BODY_CENTER
-Vector3(...)
+The Perception Monitor is the primary indicator of implementation progress.
 
-This represents the first executable semantic statement generated
-by the Perception Engine.
-
----
-
-### Perception Monitor
-
-The static debug panel has evolved into the first Perception Monitor.
-
-Instead of displaying implementation details,
-the monitor now displays the semantic understanding of the engine.
-
-Current output:
-
-ReferenceModel
-HAS_OBSERVATION
-
-WholeDove
-HAS_BODY_CENTER
-
-This establishes the foundation for visualizing the internal semantic
-reasoning of the Perception Engine.
-
----
-
-### Engineering Decision
-
-A major architectural decision was made.
-
-The Perception Engine does not replace existing engineering algorithms.
-
-Existing algorithms remain independent and reusable.
-
-Extractors act as semantic adapters between engineering algorithms
-and the Perception API.
-
-Research produces knowledge.
-
-Engineering integrates knowledge.
-
-The migration towards the Perception Engine is therefore an
-architectural migration rather than a complete rewrite.
-
----
-
-### Current Status
-
-Operational:
-
-✓ ReferenceModel
-✓ Observation
-✓ SemanticObservation
-✓ PerceptionState
-✓ IdentityExtractor
-✓ BodyCenterExtractor
-✓ Perception Monitor
-
-The first semantic statement is now successfully generated,
-processed and visualized.
-
-This marks the beginning of the executable semantic architecture
-of the Perception Engine.
+################################################################
