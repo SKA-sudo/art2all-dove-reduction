@@ -467,3 +467,66 @@ The Perception Engine explains **why** humans perceive.
 The Production Engine determines **how** this knowledge is transformed into a visual experience.
 
 Everything follows.
+
+
+# The objective of the Perception Engine is to discover the grammar of visual perception.
+
+Geometry is vocabulary.
+Perception is grammar.
+Meaning emerges from their relationships.
+
+
+## Neue kanonische Reihenfolge
+Reference Model
+        │
+        ▼
+Observation
+        │
+        ▼
+Perception Extractor(s)
+        │
+        ▼
+Semantic Observation(s)
+        │
+        ▼
+Perception State
+        │
+        ▼
+Reduction Experiment
+        │
+        ▼
+Perception Rule
+        │
+        ▼
+Production Engine
+
+
+## Semantic Observation
+
+Mit ungefähr folgendem Inhalt:
+
+A Semantic Observation is the smallest semantic statement produced by the Perception Engine.
+
+It represents one extracted perceptual fact.
+
+Every Semantic Observation follows the canonical structure:
+
+subject
+predicate
+value
+source
+confidence
+
+
+## ENGINEERING PRINCIPLES
+
+Research discovers.
+
+Engineering integrates.
+
+The Perception Engine does not replace existing algorithms.
+
+Existing algorithms are integrated through semantic extractors.
+
+The goal is architectural migration,
+not algorithm replacement.

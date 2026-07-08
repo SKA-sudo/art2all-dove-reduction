@@ -1,13 +1,15 @@
 export default class SemanticObservation {
   constructor({
     id,
-    type,
+    subject,
+    predicate,
     value,
     source,
-    confidence = 1,
+    confidence = 1.0,
   }) {
     this.id = id;
-    this.type = type;
+    this.subject = subject;
+    this.predicate = predicate;
     this.value = value;
     this.source = source;
     this.confidence = confidence;

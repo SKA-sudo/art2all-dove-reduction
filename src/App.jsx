@@ -3,7 +3,7 @@ import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useState } from "react";
 
 import Scene from "./components/Scene";
-import "./core/testPipeline";
+import perceptionState from "./core/testPipeline";
 import PerceptionEngineDebug from "./components/perception/PerceptionEngineDebug";
 
 /* -------------------- APP -------------------- */
@@ -29,7 +29,7 @@ export default function App() {
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
-      <PerceptionEngineDebug />
+      <PerceptionEngineDebug perceptionState={perceptionState} />
       <div
         style={{  
           position: "absolute",

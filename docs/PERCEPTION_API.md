@@ -40,13 +40,13 @@ Reference Model
 Observation
         │
         ▼
-Perception State
-        │
-        ▼
-Extractor Pipeline
-        │
-        ▼
 Perception Extractor(s)
+        │
+        ▼
+Semantic Observation(s)
+        │
+        ▼
+Perception State
         │
         ▼
 Reduction Experiment
@@ -351,3 +351,5 @@ Knowledge is never duplicated.
 Existing algorithms are reused whenever possible.
 
 New research should extend the architecture rather than replace it.
+
+The Perception State represents the aggregated semantic understanding produced from multiple Semantic Observations.

@@ -1,12 +1,15 @@
-export default class ExtractorPipeline {
-  constructor({ extractors = [] } = {}) {
-    this.extractors = extractors;
+export default class IdentityExtractor {
+  constructor({ id = "identity-extractor" } = {}) {
+    this.id = id;
   }
 
-  run(perceptionState) {
-    return this.extractors.reduce(
-      (currentState, extractor) => extractor.extract(currentState),
-      perceptionState
-    );
+  extract(observation) {
+    return {
+      id: crypto.randomUUID(),
+      type: "Identity",
+      value: observation,
+      source: this.id,
+      confidence: 1,
+    };
   }
 }

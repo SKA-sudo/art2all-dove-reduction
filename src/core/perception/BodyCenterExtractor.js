@@ -2,8 +2,8 @@ import { calculateBodyCenter } from "../engine/BodyCenter";
 import SemanticObservation from "./SemanticObservation";
 
 export default class BodyCenterExtractor {
-  constructor() {
-    this.id = "body-center-extractor";
+  constructor({ id = "body-center-extractor" } = {}) {
+    this.id = id;
   }
 
   extract(observation) {
@@ -12,10 +12,11 @@ export default class BodyCenterExtractor {
 
     return new SemanticObservation({
       id: crypto.randomUUID(),
-      type: "BodyCenter",
+      subject: "WholeDove",
+      predicate: "HAS_BODY_CENTER",
       value: bodyCenter,
       source: this.id,
-      confidence: bodyCenter ? 1 : 0,
+      confidence: bodyCenter ? 1.0 : 0.0,
     });
   }
 }

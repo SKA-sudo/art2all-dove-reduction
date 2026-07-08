@@ -13,10 +13,11 @@ export default class ReferenceModel {
     this.metadata = metadata;
   }
 
-  createObservation() {
-    return new Observation({
-      id: crypto.randomUUID(),
-      referenceModel: this,
-    });
-  }
+ createObservation({ faces = [] } = {}) {
+  return new Observation({
+    id: crypto.randomUUID(),
+    referenceModel: this,
+    faces,
+  });
+}
 }

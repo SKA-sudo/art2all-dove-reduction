@@ -83,92 +83,152 @@ Only validated perception rules are transferred back into the product repository
 # Session Update
 
 ################################################################
-NEXT SESSION – Sprint R5.0
+NEXT SESSION – Sprint R5.1
 Perception Engine V2
 ################################################################
 
-## Current Status
+################################################################
+# Sprint Summary
+################################################################
 
-The Perception Laboratory has reached an important architectural milestone.
+Sprint Goal
 
-During the Animated Semantic Perception experiments it became clear that
-semantic extraction should no longer operate directly on scene geometry.
-
-The first PerceptionState abstraction has been introduced.
-
-The first extractor already consumes the new PerceptionState instead of
-direct scene access.
-
-This validates the new architectural direction.
+Establish the canonical semantic architecture of the Perception Engine.
 
 ---
 
-## Sprint Goal
+## Completed
 
-Design the canonical architecture of the Art2all Perception Engine.
+### Canonical Perception API
 
-The objective is not to implement new algorithms.
+The first implementation of the Perception API is now operational.
 
-The objective is to establish a stable architectural foundation that will
-support future perception research and the Production Engine.
+Implemented components:
 
----
-
-## Deliverables
-
-Define the canonical concepts of the Perception Engine.
-
-- Reference Model
-
+- ReferenceModel
 - Observation
+- SemanticObservation
+- PerceptionState
+- IdentityExtractor
+- BodyCenterExtractor
 
-- Perception State
-
-- Perception Extractor
-
-- Reduction Experiment
-
-- Perception Rule
-
-- Production Engine
-
-Create the first version of
-
-docs/PERCEPTION_ENGINE.md
-
-This document becomes the architectural foundation of the complete
-Perception Engine.
+The first complete semantic perception pipeline is running successfully.
 
 ---
 
-## Important Principle
+### Canonical Pipeline
 
-Every core class represents a perception concept.
+The current canonical perception pipeline is now:
 
-Never an implementation concept.
-
-The architecture grows from perception.
-
-The API grows from the architecture.
-
-Implementation grows from the API.
+Reference Model
+        │
+        ▼
+Observation
+        │
+        ▼
+Perception Extractor(s)
+        │
+        ▼
+Semantic Observation(s)
+        │
+        ▼
+Perception State
+        │
+        ▼
+Reduction Experiment
+        │
+        ▼
+Perception Rule
+        │
+        ▼
+Production Engine
 
 ---
 
-## Collaboration Rule
+### Semantic Observation
 
-Project First.
+A major architectural refinement was discovered during implementation.
 
-Science Second.
+The smallest semantic unit of the Perception Engine is not a
+Perception State.
 
-The Peace Dove defines the project.
+It is a Semantic Observation.
 
-The project drives the research.
+Every extractor produces exactly one semantic statement.
 
-Research refines the architecture.
+Canonical structure:
 
-Architecture enables implementation.
+- subject
+- predicate
+- value
+- source
+- confidence
 
-The objective remains unchanged:
+Example:
 
-Preserve stable human perception while visual complexity continuously grows.
+WholeDove
+HAS_BODY_CENTER
+Vector3(...)
+
+This represents the first executable semantic statement generated
+by the Perception Engine.
+
+---
+
+### Perception Monitor
+
+The static debug panel has evolved into the first Perception Monitor.
+
+Instead of displaying implementation details,
+the monitor now displays the semantic understanding of the engine.
+
+Current output:
+
+ReferenceModel
+HAS_OBSERVATION
+
+WholeDove
+HAS_BODY_CENTER
+
+This establishes the foundation for visualizing the internal semantic
+reasoning of the Perception Engine.
+
+---
+
+### Engineering Decision
+
+A major architectural decision was made.
+
+The Perception Engine does not replace existing engineering algorithms.
+
+Existing algorithms remain independent and reusable.
+
+Extractors act as semantic adapters between engineering algorithms
+and the Perception API.
+
+Research produces knowledge.
+
+Engineering integrates knowledge.
+
+The migration towards the Perception Engine is therefore an
+architectural migration rather than a complete rewrite.
+
+---
+
+### Current Status
+
+Operational:
+
+✓ ReferenceModel
+✓ Observation
+✓ SemanticObservation
+✓ PerceptionState
+✓ IdentityExtractor
+✓ BodyCenterExtractor
+✓ Perception Monitor
+
+The first semantic statement is now successfully generated,
+processed and visualized.
+
+This marks the beginning of the executable semantic architecture
+of the Perception Engine.
