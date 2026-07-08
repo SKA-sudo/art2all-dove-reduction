@@ -13,11 +13,19 @@ export default class ReferenceModel {
     this.metadata = metadata;
   }
 
- createObservation({ faces = [] } = {}) {
+createObservation({
+  faces = [],
+  bounds = null,
+  primaryAxis = null,
+  localWingSpace = null,
+} = {}) {
   return new Observation({
     id: crypto.randomUUID(),
     referenceModel: this,
     faces,
+    bounds,
+    primaryAxis,
+    localWingSpace,
   });
 }
 }
