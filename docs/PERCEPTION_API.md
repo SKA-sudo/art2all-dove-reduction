@@ -19,14 +19,14 @@ Perception Engine architecture and its implementation.
 
 The API does not define algorithms.
 
-The API does not define data structures.
+The API does not define implementation details.
 
 The API defines semantic responsibilities and communication between
 the canonical concepts of the Perception Engine.
 
 Architecture defines the concepts.
 
-The API defines how those concepts interact.
+The API defines how those concepts collaborate.
 
 Implementation follows the API.
 
@@ -43,7 +43,10 @@ Observation
 Perception State
         │
         ▼
-Perception Extractor
+Extractor Pipeline
+        │
+        ▼
+Perception Extractor(s)
         │
         ▼
 Reduction Experiment
@@ -138,7 +141,7 @@ Perform extraction.
 
 Represents the current perceptual situation.
 
-Acts as the common semantic interface for all extractors.
+Acts as the canonical semantic data model shared by all extractors.
 
 ### Receives
 
@@ -146,21 +149,51 @@ Observation
 
 ### Produces
 
-Perception State
-
-(updated by extractors)
+Semantic state data.
 
 ### Public API
 
-runExtractors()
+None.
+
+The Perception State is a semantic data object.
 
 ### Never
+
+Know extractors.
 
 Know production logic.
 
 Contain perception rules.
 
 Run experiments.
+
+---
+
+## Extractor Pipeline
+
+### Purpose
+
+Coordinate the execution order of perception extractors.
+
+### Receives
+
+Perception State
+
+### Produces
+
+Updated Perception State
+
+### Public API
+
+run(state)
+
+### Never
+
+Interpret observations.
+
+Contain perception knowledge.
+
+Perform production tasks.
 
 ---
 
@@ -189,6 +222,8 @@ Modify observations.
 Know production logic.
 
 Validate hypotheses.
+
+Run other extractors.
 
 ---
 
