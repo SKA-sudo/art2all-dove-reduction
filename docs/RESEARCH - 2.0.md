@@ -69,10 +69,10 @@ How does semantic knowledge grow?
 
 ----------------------------------------------------------------
 
-Chapter 9
-Future Direction
+    Chapter 9
+    Future Direction
 
-Where is the Reduction Lab heading?
+    Where is the Reduction Lab heading?
 
 ----------------------------------------------------------------
 

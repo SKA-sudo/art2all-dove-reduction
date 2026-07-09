@@ -61,7 +61,12 @@ const extractors = [
   new OutlineExtractor(),
   new FlowExtractor(),
   new RelationshipForcesExtractor(),
-  new WingFingerCurvesExtractor(),
+  new WingFingerCurvesExtractor({
+    side: "left",
+  }),
+  new WingFingerCurvesExtractor({
+    side: "right",
+  }),
 ];
 
 console.log("FaceCenterExtractor:", FaceCenterExtractor);

@@ -1,18 +1,21 @@
-import { buildWingFingerCurves } from "../../utils/WingFingerCurveBuilder";
+import WingFingerCurveAdapter from "./adapters/WingFingerCurveAdapter";
 import SemanticObservation from "./SemanticObservation";
 
 export default class WingFingerCurvesExtractor {
   constructor({ id = "wing-finger-curves-extractor", side = "left" } = {}) {
     this.id = id;
-    this.side = side;
+    this.adapter = new WingFingerCurveAdapter();
   }
 
   extract(observation) {
-    const value = buildWingFingerCurves({
-      localWingSpace: observation.localWingSpace,
-      shoulder: observation.primaryAxis?.leftShoulder,
-      side: this.side,
-    });
+    const value = this.adapter.extract({
+        localWingSpace: observation.localWingSpace,
+        shoulder:
+            this.side === "left"
+            ? observation.primaryAxis?.leftShoulder
+            : observation.primaryAxis?.rightShoulder,
+        side: this.side,
+        });
 
     return new SemanticObservation({
       id: crypto.randomUUID(),

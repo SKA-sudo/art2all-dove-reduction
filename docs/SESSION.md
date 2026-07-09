@@ -80,66 +80,76 @@ The repository never modifies the Art2all product.
 
 Only validated perception rules are transferred back into the product repository.
 
----
 
-## Session Goal
+### Current Development Principle
 
-Continue the semantic migration of the Perception Engine.
+Continue the semantic migration exactly as before.
 
-The architecture has been cleaned up and the semantic migration process is now the primary implementation focus.
+One existing algorithm.
 
-Current State
+One truthful semantic responsibility.
 
-AI_START documentation is authoritative.
-Semantic pipeline is operational.
-SemanticObservation is established as the canonical semantic unit.
-PerceptionState has been introduced.
-Duplicate extractor implementation has been removed.
-The former Region/BodyWingTransition implementation was analysed.
-The algorithm does not detect semantic regions.
-Its actual semantic responsibility is:
-WholeDove
-HAS_FACE_CENTERS
-FaceCenterExtractor has been introduced successfully.
-The pipeline currently produces five Semantic Observations:
-HAS_OBSERVATION
-HAS_FACE_CENTERS
-HAS_BODY_CENTER
-HAS_PRIMARY_GESTURE
-HAS_OUTLINE
+One validated Semantic Observation.
 
-Working Principle
-
-Do not introduce new architecture.
-
-Do not speculate.
-
-Before implementing anything:
-
-Read the relevant implementation.
-Determine the current semantic responsibility.
-Produce exactly one SemanticObservation.
-Validate it in the Perception Monitor.
-Commit.
-
-The objective is to migrate existing engineering capabilities into the Perception Engine one semantic responsibility at a time.
-
-Immediate Next Goal
-
-Continue the semantic migration from the current implementation.
-
-Read the next existing engineering algorithm and determine:
-
-"What semantic statement can this algorithm truthfully produce today?"
-
-Only after that create the next Semantic Extractor.
-
-Success Criterion
-
-The Perception Monitor must display one additional validated Semantic Observation.
-
-One implementation step.
-
-One measurable result.
+One measurable implementation result.
 
 One commit.
+
+At the end of every implementation step, additionally evaluate:
+
+**How can this semantic observation later contribute to the visual construction of the Art2all Peace Dove?**
+
+Research supports the product.
+
+The product remains the primary objective.
+
+
+---
+
+## Research Observation – Semantic Knowledge emerges from Implementation
+
+### Status
+
+During the semantic migration of the Perception Engine, a significant observation emerged.
+
+The objective of the current sprint was not to design a semantic architecture, but simply to migrate existing engineering algorithms into truthful `SemanticObservation` objects.
+
+The resulting observations are now:
+
+* WholeDove → HAS_OBSERVATION
+* WholeDove → HAS_FACE_CENTERS
+* WholeDove → HAS_BODY_CENTER
+* WholeDove → HAS_PRIMARY_GESTURE
+* WholeDove → HAS_OUTLINE
+* WholeDove → HAS_SURFACE_NORMALS
+* PaperField → HAS_RELATIONSHIP_FORCES
+* LeftWing → HAS_WING_FINGER_CURVES
+
+### Observation
+
+The collection of semantic observations no longer behaves like a flat list of extracted properties.
+
+Instead, it naturally begins to form a structured semantic knowledge representation consisting of multiple semantic entities (WholeDove, PaperField, LeftWing) and their validated semantic properties.
+
+This behavior was not designed in advance.
+
+It emerged directly from the implementation process.
+
+### Research Hypothesis
+
+Future evaluation should investigate whether the semantic migration process naturally evolves into a semantic knowledge graph rather than requiring an explicitly designed ontology.
+
+This is currently a research hypothesis and not yet a validated architectural decision.
+
+### Project Reminder
+
+The Reduction Lab is not the final product.
+
+Its purpose is to discover validated semantic rules that can later be transferred into the Art2all Engine.
+
+Research is therefore always evaluated against one additional question:
+
+**Does this discovery bring the visual Art2all prototype closer to a Peace Dove that organically grows from children's drawings?**
+
+Only validated knowledge with a clear visual application should leave the Reduction Lab and become part of the product.
+
