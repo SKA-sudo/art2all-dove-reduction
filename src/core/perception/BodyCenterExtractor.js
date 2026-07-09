@@ -1,14 +1,18 @@
-import { calculateBodyCenter } from "../engine/BodyCenter";
 import SemanticObservation from "./SemanticObservation";
+import BodyCenterAdapter from "./adapters/BodyCenterAdapter";
 
 export default class BodyCenterExtractor {
   constructor({ id = "body-center-extractor" } = {}) {
     this.id = id;
+    this.adapter = new BodyCenterAdapter();
   }
 
   extract(observation) {
     const faces = observation.faces ?? [];
-    const bodyCenter = calculateBodyCenter(faces);
+
+    const bodyCenter = this.adapter.extract({
+      faces,
+    });
 
     return new SemanticObservation({
       id: crypto.randomUUID(),
