@@ -17,7 +17,72 @@ mit Unterstützung von ChatGPT
 ################################################################
 ################################################################
 
-PoC 01
+
+1. Teil 1
+- Header
+- Research Methodology
+- Timeline
+- PoC01
+- PoC02
+2. Teil 2
+- R4.7
+- R4.8
+- Perception State Hypothesis
+- P-001
+3. Teil 3
+- Semantic Migration
+- Knowledge Graph Observation
+- Current Semantic Knowledge
+- Project Transfer
+- Schlusskapitel
+
+1. Research Methodology
+
+Implementation
+        ↓
+Observation
+        ↓
+Hypothesis
+        ↓
+Evaluation
+        ↓
+Architecture
+
+Darunter kurz erklären:
+
+Architecture is discovered through implementation.
+Implementation First. Speculation Second.
+Research supports the product.
+The product remains the primary objective.
+
+2. Timeline of Discoveries (Milesones)
+
+- PoC01
+- PoC02
+- R4.7
+- R4.8
+- P-001
+- Semantic Migration
+- Knowledge Graph Hypothesis
+
+
+3. Validated Research Results
+
+- Outline
+- Observation
+- Evidence
+- Conclusion
+- Perception State
+- Observation
+- Evidence
+- Conclusion
+- Semantic Migration
+- Observation
+- Evidence
+- Conclusion
+
+
+## PoC 01
 Hypothese
 
 Kann die bestehende Pipeline
@@ -38,86 +103,109 @@ Organisation.
 
 --
 
-PoC 02
+## PoC 02
 Hypothese
 
 Die Guide Silhouette
 organisiert die Paper.
 
-Status
-
+# Status
 In Arbeit.
 
-Neues Forschungsziel
-
-Die Engine konstruiert die Friedenstaube nicht.
-
-Die Engine extrahiert die minimale Wahrnehmungsstruktur einer bereits vorhandenen Friedenstaube.
-
-Neue Grundannahme
-
-Das GLB ist keine Vorlage.
-
-Es ist bereits die vollständige Lösung.
-
+# Neues Forschungsziel
+- Die Engine konstruiert die Friedenstaube nicht.
+- Die Engine extrahiert die minimale Wahrnehmungsstruktur einer bereits vorhandenen Friedenstaube.
+# Neue Grundannahme
+- Das GLB ist keine Vorlage.
+- Es ist bereits die vollständige Lösung.
 Unsere Aufgabe besteht lediglich darin, die Informationen zu reduzieren.
-
 Nicht zufällig.
-
 Sondern entsprechend der menschlichen Wahrnehmung.
-
-Neue Forschungsfrage
-
+# Neue Forschungsfrage
 Nicht:
-
-Wie erzeugen wir eine Primary Gesture?
-
+- Wie erzeugen wir eine Primary Gesture?
 Sondern:
-
-Welche Linien des Raumgitters bilden gemeinsam die Primary Gesture?
-
-Das ist ein entscheidender Unterschied.
-
-Die Gesture wird gefunden, nicht erfunden.
+- Welche Linien des Raumgitters bilden gemeinsam die Primary Gesture?
+- Die Gesture wird gefunden, nicht erfunden.
 
 Dasselbe könnte später für die Flow Curve oder andere Organisationslinien gelten.
 
 Neue Engine-Philosophie
-
 Statt:
-
 Mesh
 ↓
-
 Gesture erzeugen
 ↓
-
 Flow erzeugen
 ↓
-
 Wing Finger Curves
 
 denken wir künftig:
 
 GLB
-
 ↓
-
 Perceptual Line Extraction
-
 ↓
-
 Line Reduction
-
 ↓
-
 Perceptual Core
-
 ↓
-
 Organisation der Papierflächen
 
 
+
+5. Current Semantic Knowledge
+
+Current Status
+# WholeDove
+- HAS_OBSERVATION
+- HAS_FACE_CENTERS
+- HAS_BODY_CENTER
+- HAS_PRIMARY_GESTURE
+- HAS_OUTLINE
+- HAS_SURFACE_NORMALS
+- PaperField
+- HAS_RELATIONSHIP_FORCES
+- LeftWing
+- HAS_WING_FINGER_CURVES
+
+
+6. Emerging Semantic Structure
+
+WholeDove
+        │
+        ├──── HAS_LEFT_WING ─────► LeftWing
+        │
+        └──── HAS_PAPER_FIELD ───► PaperField
+
+LeftWing
+        │
+        └──── HAS_WING_FINGER_CURVES
+
+PaperField
+        │
+        └──── HAS_RELATIONSHIP_FORCES
+
+7. Project Transfer
+
+
+Reduction Lab
+↓
+Validated Semantic Rule
+↓
+Visual Mapping
+↓
+Art2all Engine
+↓
+Peace Dove
+
+
+Current implementation suggests that SemanticObservations may naturally evolve into a semantic knowledge graph.
+
+Every validated research result must identify its future visual contribution to the Art2all prototype.
+
+################################################################
+#####################follow text need modify###########################################
 ################################################################
 Research R4.7
 Animated Semantic Perception
@@ -348,18 +436,82 @@ Evidence:
 - Minimal outline produced immediate recognition.
 - Formal reduction experiments pending.
 
-## Perception Importance Hierarchy
-# WholeDove
 
-HAS_OUTLINE                Importance: ?
-HAS_PRIMARY_GESTURE        Importance: ?
-HAS_BODY_CENTER            Importance: ?
-HAS_BODY_WING_TRANSITION   Importance: ?
-HAS_FLOW                   Importance: ?
-HAS_REGIONS                Importance: ?
-...
+## Research Observation – Semantic Knowledge emerges from Implementation
 
-Experiment	Darstellung	Erste Antwort	Sicherheit	Begründung
-E-001	Semantic Points	"Könnte Taube sein"	60 %	"Flügel und Kopf"
-E-002	Outline	"Taube"	98 %	"Die Form erkennt man sofort"
-E-003	Gesture	...	...	...
+### Status
+
+During the semantic migration of the Perception Engine, a significant observation emerged.
+
+The objective of the current sprint was not to design a semantic architecture, but simply to migrate existing engineering algorithms into truthful `SemanticObservation` objects.
+
+The resulting observations are now:
+
+* WholeDove → HAS_OBSERVATION
+* WholeDove → HAS_FACE_CENTERS
+* WholeDove → HAS_BODY_CENTER
+* WholeDove → HAS_PRIMARY_GESTURE
+* WholeDove → HAS_OUTLINE
+* WholeDove → HAS_SURFACE_NORMALS
+* PaperField → HAS_RELATIONSHIP_FORCES
+* LeftWing → HAS_WING_FINGER_CURVES
+
+
+WholeDove
+        │
+        ├──────── HAS_LEFT_WING ───────► LeftWing
+        │
+        ├──────── HAS_RIGHT_WING ─────► RightWing
+        │
+        └──────── HAS_PAPER_FIELD ────► PaperField
+
+LeftWing
+        │
+        └──────── HAS_WING_FINGER_CURVES
+
+PaperField
+        │
+        └──────── HAS_RELATIONSHIP_FORCES
+
+### Observation
+
+The collection of semantic observations no longer behaves like a flat list of extracted properties.
+
+Instead, it naturally begins to form a structured semantic knowledge representation consisting of multiple semantic entities (WholeDove, PaperField, LeftWing) and their validated semantic properties.
+
+This behavior was not designed in advance.
+
+It emerged directly from the implementation process.
+
+### Research Hypothesis
+
+Future evaluation should investigate whether the semantic migration process naturally evolves into a semantic knowledge graph rather than requiring an explicitly designed ontology.
+
+This is currently a research hypothesis and not yet a validated architectural decision.
+
+### Project Reminder
+
+The Reduction Lab is not the final product.
+
+Its purpose is to discover validated semantic rules that can later be transferred into the Art2all Engine.
+
+Research is therefore always evaluated against one additional question:
+
+**Does this discovery bring the visual Art2all prototype closer to a Peace Dove that organically grows from children's drawings?**
+
+Only validated knowledge with a clear visual application should leave the Reduction Lab and become part of the product.
+
+
+During the semantic migration of the Perception Engine, the growing collection of SemanticObservation objects no longer behaves like a flat list of extracted features. Instead, it begins to form a structured semantic knowledge representation.
+
+At the current stage this appears as a set of independent semantic statements. Future evaluation should investigate whether these observations naturally evolve into a semantic knowledge graph rather than requiring an explicitly designed ontology.
+
+This hypothesis emerged from implementation work rather than being specified in advance.
+
+It may be that the SemanticObservation isn't the ultimate goal at all. It is the Atom.
+Relationships could develop from it later:
+
+
+Das außergewöhnliche ist, das viele Forschungsprojekte mit einer Theorie beginnen und suchen anschließend Belege. Bei Art2all bildet sich ein anderer Weg heraus:
+
+Implementierung → Beobachtung → Hypothese → Evaluation → Architektur        
