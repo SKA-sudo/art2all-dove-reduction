@@ -2016,3 +2016,34 @@ or revise its findings whenever new observable evidence becomes available.
 Knowledge is never considered complete.
 
 The search for understanding continues.
+
+
+### Research Finding: Semantic Translation Layer
+
+During the semantic migration of the Perception Engine, an important architectural pattern emerged.
+
+The existing engineering algorithms (for example Body Center, Wing Finger Curves, Outline or Flow) should not be accessed directly by the semantic extractors. Instead, a dedicated translation layer is introduced between engineering and perception.
+
+```
+Engineering Algorithm
+        │
+        ▼
+Engineering Adapter
+        │
+        ▼
+Semantic Extractor
+        │
+        ▼
+Semantic Observation
+```
+
+The responsibility of each layer is clearly separated:
+
+* **Engineering Algorithms** calculate geometric or mathematical information.
+* **Engineering Adapters** translate engineering results into a stable semantic interface without introducing semantic meaning.
+* **Semantic Extractors** transform the translated data into Semantic Observations by assigning subject, predicate, confidence and source.
+* **Perception State** stores accumulated semantic knowledge.
+
+This separation decouples the Perception Engine from the implementation details of individual engineering algorithms. Engineering algorithms may evolve or be replaced over time while the semantic vocabulary and observations remain stable.
+
+The Engineering Adapter therefore represents the translation boundary between numerical computation and semantic knowledge.

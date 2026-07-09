@@ -1,18 +1,18 @@
 import SemanticObservation from "./SemanticObservation";
+import FaceCenterAdapter from "./adapters/FaceCenterAdapter";
 
 export default class FaceCenterExtractor {
   constructor({ id = "face-center-extractor" } = {}) {
     this.id = id;
+    this.adapter = new FaceCenterAdapter();
   }
 
   extract(observation) {
     const faces = observation.faces ?? [];
-    const value = faces
-      .map((face, index) => ({
-        id: `face-center-${index}`,
-        position: face.center,
-      }))
-      .filter((faceCenter) => faceCenter.position);
+
+    const value = this.adapter.extract({
+      faces,
+    });
 
     return new SemanticObservation({
       id: crypto.randomUUID(),

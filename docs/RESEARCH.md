@@ -47,3 +47,16 @@ the visual construction of the final artwork.
 The Reduction Lab does not attempt to invent perception.
 
 It attempts to discover the perceptual principles that already exist within a completed reference model and to transform them into validated semantic knowledge.
+
+□ Enthält der Extractor einen Engineering-Import?
+    → Dann gehört dieser in einen Adapter.
+
+□ Erzeugt der Adapter Semantic Observations?
+    → Dann gehört diese Logik in den Extractor.
+
+□ Kennt der Engineering-Code SemanticObservation?
+    → Das darf niemals passieren.
+
+□ Kann der Engineering-Algorithmus ersetzt werden,
+  ohne den Extractor anzufassen?
+    → Dann ist die Trennung gelungen.
