@@ -7,6 +7,7 @@ import OutlineExtractor from "./perception/OutlineExtractor";
 import FaceCenterExtractor from "./perception/FaceCenterExtractor";
 import FlowExtractor from "./perception/FlowExtractor";
 import RelationshipForcesExtractor from "./perception/RelationshipForcesExtractor";
+import WingFingerCurvesExtractor from "./perception/WingFingerCurvesExtractor";
 
 console.log("PERCEPTION PIPELINE TEST START");
 
@@ -60,6 +61,7 @@ const extractors = [
   new OutlineExtractor(),
   new FlowExtractor(),
   new RelationshipForcesExtractor(),
+  new WingFingerCurvesExtractor(),
 ];
 
 console.log("FaceCenterExtractor:", FaceCenterExtractor);
