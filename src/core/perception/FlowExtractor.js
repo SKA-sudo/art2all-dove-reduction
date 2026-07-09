@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import SemanticObservation from "./SemanticObservation";
 
 export function extractFlow(scene, options = {}) {
   const sampleStep = options.sampleStep ?? 100;
@@ -6,7 +7,7 @@ export function extractFlow(scene, options = {}) {
 
   if (!scene) return [];
 
-  const flow = [];
+  const surfaceNormals = [];
 
   scene.updateMatrixWorld(true);
 
@@ -49,7 +50,9 @@ export function extractFlow(scene, options = {}) {
         .applyMatrix3(normalMatrix)
         .normalize();
 
-      flow.push({
+      surfaceNormals.push({
+        id: `surface-normal-${surfaceNormals.length}`,
+        position: center,
         center,
         normal,
         end: center.clone().add(normal.clone().multiplyScalar(normalLength)),
@@ -57,5 +60,38 @@ export function extractFlow(scene, options = {}) {
     }
   });
 
-  return flow;
+  return surfaceNormals;
+}
+
+export default class FlowExtractor {
+  constructor({ id = "surface-normal-extractor" } = {}) {
+    this.id = id;
+  }
+
+  extract(observation) {
+    const faces = observation.faces ?? [];
+
+    const value = faces
+      .map((face, index) => {
+        if (!face.center || !face.normal) return null;
+
+        return {
+          id: `surface-normal-${index}`,
+          position: face.center,
+          center: face.center,
+          normal: face.normal,
+          end: face.center.clone().add(face.normal.clone()),
+        };
+      })
+      .filter(Boolean);
+
+    return new SemanticObservation({
+      id: crypto.randomUUID(),
+      subject: "WholeDove",
+      predicate: "HAS_SURFACE_NORMALS",
+      value,
+      source: this.id,
+      confidence: value.length > 0 ? 1.0 : 0.0,
+    });
+  }
 }
