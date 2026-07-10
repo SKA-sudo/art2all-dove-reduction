@@ -3,20 +3,44 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 import FlowLayer from "./layers/FlowLayer";
+import OutlineLayer from "./layers/OutlineLayer";
+import BodyWingTransitionLayer from "./layers/BodyWingTransitionLayer";
+import DebugOrganizationZones from "./DebugOrganizationZones";
 
 import { extractFlow } from "../../core/perception/FlowExtractor";
 import { extractFaceCenters } from "../../core/perception/RegionExtractor";
-// import { createPerceptionState } from "../../core/perception/PerceptionState";
-import OutlineLayer from "./layers/OutlineLayer";
 
+function createRegionPerceptionState(scene) {
+  if (!scene) {
+    return {
+      meshes: [],
+    };
+  }
 
+  const meshes = [];
+
+  scene.traverse((child) => {
+    if (!child.isMesh) return;
+
+    meshes.push({
+      object: child,
+    });
+  });
+
+  return {
+    meshes,
+  };
+}
 
 export default function PerceptionModel({ scene, layers }) {
   const bodyCenterMeshRef = useRef();
   const bodyCenterBoxRef = useRef(new THREE.Box3());
   const bodyCenterVectorRef = useRef(new THREE.Vector3());
-  const [animatedBodyWingTransitionRegions, setAnimatedBodyWingTransitionRegions] =
-  useState([]);
+
+  const [
+    animatedBodyWingTransitionRegions,
+    setAnimatedBodyWingTransitionRegions,
+  ] = useState([]);
 
   const perceptionScene = useMemo(() => {
     if (!scene) return null;
@@ -47,11 +71,13 @@ export default function PerceptionModel({ scene, layers }) {
   }, [scene]);
 
   const bodyWingTransitionRegions = useMemo(() => {
-  const perceptionState = createPerceptionState(scene);
+    if (!scene) return [];
 
-  return extractFaceCenters(perceptionState, {
-    reduction: 1,
-  });
+    const perceptionState = createRegionPerceptionState(scene);
+
+    return extractFaceCenters(perceptionState, {
+      reduction: 1,
+    });
   }, [scene]);
 
   useFrame(() => {
@@ -59,21 +85,26 @@ export default function PerceptionModel({ scene, layers }) {
 
     bodyCenterBoxRef.current.setFromObject(scene);
     bodyCenterBoxRef.current.getCenter(bodyCenterVectorRef.current);
-      if (layers?.animation && layers?.semanticRegions) {
-        const perceptionState = createPerceptionState(scene);
+
+    if (layers?.animation && layers?.semanticRegions) {
+      const perceptionState = createRegionPerceptionState(scene);
 
       const nextRegions = extractFaceCenters(perceptionState, {
         reduction: 1,
       });
-        setAnimatedBodyWingTransitionRegions(nextRegions);
-      }
-     bodyCenterMeshRef.current.position.copy(bodyCenterVectorRef.current);
-    }, 1);
+
+      setAnimatedBodyWingTransitionRegions(nextRegions);
+    }
+
+    bodyCenterMeshRef.current.position.copy(bodyCenterVectorRef.current);
+  });
 
   if (!perceptionScene) return null;
 
   return (
     <group>
+      <DebugOrganizationZones scene={scene} />
+
       {layers?.wireframe && <primitive object={perceptionScene} />}
 
       <mesh
@@ -82,6 +113,7 @@ export default function PerceptionModel({ scene, layers }) {
         renderOrder={1000}
       >
         <sphereGeometry args={[0.22, 24, 24]} />
+
         <meshBasicMaterial
           color="yellow"
           depthTest={false}
@@ -107,6 +139,7 @@ export default function PerceptionModel({ scene, layers }) {
       {layers?.gesture && (
         <mesh position={[0, -0.6, 0]} renderOrder={1000}>
           <sphereGeometry args={[0.18, 24, 24]} />
+
           <meshBasicMaterial
             color="yellow"
             depthTest={false}
