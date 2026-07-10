@@ -5,7 +5,7 @@ import * as THREE from "three";
 import FlowLayer from "./layers/FlowLayer";
 import OutlineLayer from "./layers/OutlineLayer";
 import BodyWingTransitionLayer from "./layers/BodyWingTransitionLayer";
-import DebugOrganizationZones from "./DebugOrganizationZones";
+import DebugVisualEmergence from "./DebugVisualEmergence";
 
 import { extractFlow } from "../../core/perception/FlowExtractor";
 import { extractFaceCenters } from "../../core/perception/RegionExtractor";
@@ -32,7 +32,11 @@ function createRegionPerceptionState(scene) {
   };
 }
 
-export default function PerceptionModel({ scene, layers }) {
+  export default function PerceptionModel({
+    scene,
+    layers,
+    emergenceCount,
+  }) {
   const bodyCenterMeshRef = useRef();
   const bodyCenterBoxRef = useRef(new THREE.Box3());
   const bodyCenterVectorRef = useRef(new THREE.Vector3());
@@ -103,7 +107,12 @@ export default function PerceptionModel({ scene, layers }) {
 
   return (
     <group>
-      <DebugOrganizationZones scene={scene} />
+      {layers?.visualEmergence && (
+          <DebugVisualEmergence
+            scene={scene}
+            count={emergenceCount}
+          />
+        )}
 
       {layers?.wireframe && <primitive object={perceptionScene} />}
 

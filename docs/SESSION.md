@@ -161,3 +161,9 @@ Reminder
 Research supports the Art2all product.
 
 Every validated observation should move the final Peace Dove closer to organically growing from children's drawings.
+
+Today's experiment validated the laboratory itself.
+
+The value of the Reduction Lab is not proving hypotheses.
+
+Its value is making hypotheses immediately visible and therefore quickly validating or rejecting them.

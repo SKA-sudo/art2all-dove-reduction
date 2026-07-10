@@ -8,13 +8,18 @@ export default function PerceptionEngineDebug({ perceptionState }) {
         top: 16,
         right: 16,
         zIndex: 10,
+        width: 320,
+        maxWidth: "calc(100vw - 32px)",
+        maxHeight: "calc(100vh - 32px)",
+        overflowY: "auto",
+        boxSizing: "border-box",
         padding: 12,
-        background: "rgba(0,0,0,0.7)",
+        background: "rgba(0, 0, 0, 0.82)",
         color: "white",
         fontFamily: "monospace",
         fontSize: 13,
         borderRadius: 8,
-        minWidth: 340,
+        boxShadow: "0 6px 24px rgba(0, 0, 0, 0.35)",
       }}
     >
       <div style={{ marginBottom: 8 }}>

@@ -277,6 +277,8 @@ Architecture
 
 Art2all
 
+Before evaluating a perceptual hypothesis, the visualization itself must be verified to be technically correct.
+
 ################################################################ 
 
 # Development Strategy

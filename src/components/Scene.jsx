@@ -5,10 +5,11 @@ import SpatialGrid from "./SpatialGrid";
 
 /* -------------------- SCENE -------------------- */
 export default function Scene({
-  displayMode,
-  onDisplayModeChange,
-  layers,
-}) {
+    displayMode,
+    onDisplayModeChange,
+    layers,
+    emergenceCount,
+  }) {
   const flapRef = useRef(0);
 
   return (
@@ -29,6 +30,7 @@ export default function Scene({
         flapRef={flapRef}
         displayMode={displayMode}
         layers={layers}
+        emergenceCount={emergenceCount}
       />
     </>
   );
