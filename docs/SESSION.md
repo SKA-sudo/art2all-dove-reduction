@@ -106,46 +106,45 @@ The product remains the primary objective.
 
 ---
 
-## Research Observation – Semantic Knowledge emerges from Implementation
+Sprint R4.x – Semantic Adapter Migration
 
-### Status
+Objective
 
-During the semantic migration of the Perception Engine, a significant observation emerged.
+Complete the migration of the remaining engineering algorithms to the Semantic Translation Layer.
 
-The objective of the current sprint was not to design a semantic architecture, but simply to migrate existing engineering algorithms into truthful `SemanticObservation` objects.
+Goals
 
-The resulting observations are now:
+Migrate the remaining engineering algorithms using the established adapter pattern.
+Ensure that every Semantic Extractor depends only on an Adapter.
+Ensure that every Adapter depends only on Engineering algorithms.
+Keep Semantic Observations and the Perception State unchanged.
 
-* WholeDove → HAS_OBSERVATION
-* WholeDove → HAS_FACE_CENTERS
-* WholeDove → HAS_BODY_CENTER
-* WholeDove → HAS_PRIMARY_GESTURE
-* WholeDove → HAS_OUTLINE
-* WholeDove → HAS_SURFACE_NORMALS
-* PaperField → HAS_RELATIONSHIP_FORCES
-* LeftWing → HAS_WING_FINGER_CURVES
+Architecture Rule
 
-### Observation
+Engineering Algorithm
+        │
+        ▼
+Engineering Adapter
+        │
+        ▼
+Semantic Extractor
+        │
+        ▼
+Semantic Observation
+        │
+        ▼
+Perception State
 
-The collection of semantic observations no longer behaves like a flat list of extracted properties.
+Definition of Done
 
-Instead, it naturally begins to form a structured semantic knowledge representation consisting of multiple semantic entities (WholeDove, PaperField, LeftWing) and their validated semantic properties.
+All existing Extractors use Adapters.
+No Extractor imports Engineering algorithms directly.
+Engineering remains independent from the Perception Layer.
+The Semantic Translation Layer is consistently applied across the pipeline.
 
-This behavior was not designed in advance.
+Expected Outcome
 
-It emerged directly from the implementation process.
-
-### Research Hypothesis
-
-Future evaluation should investigate whether the semantic migration process naturally evolves into a semantic knowledge graph rather than requiring an explicitly designed ontology.
-
-This is currently a research hypothesis and not yet a validated architectural decision.
-
-### Project Reminder
-
-The Reduction Lab is not the final product.
-
-Its purpose is to discover validated semantic rules that can later be transferred into the Art2all Engine.
+The semantic migration architecture becomes fully consistent and serves as the stable foundation for future perception research, semantic relationships, and higher-level reasoning.
 
 Research is therefore always evaluated against one additional question:
 

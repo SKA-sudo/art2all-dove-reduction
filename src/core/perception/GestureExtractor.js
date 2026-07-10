@@ -1,13 +1,14 @@
-import { buildPrimaryGestures } from "../../utils/PrimaryGestureBuilder";
+import PrimaryGestureAdapter from "./adapters/PrimaryGestureAdapter";
 import SemanticObservation from "./SemanticObservation";
 
 export default class GestureExtractor {
   constructor({ id = "gesture-extractor" } = {}) {
     this.id = id;
+    this.adapter = new PrimaryGestureAdapter();
   }
 
   extract(observation) {
-    const value = buildPrimaryGestures({
+    const value = this.adapter.extract({
       localWingSpace: observation.localWingSpace,
       primaryAxis: observation.primaryAxis,
     });

@@ -2047,3 +2047,5 @@ The responsibility of each layer is clearly separated:
 This separation decouples the Perception Engine from the implementation details of individual engineering algorithms. Engineering algorithms may evolve or be replaced over time while the semantic vocabulary and observations remain stable.
 
 The Engineering Adapter therefore represents the translation boundary between numerical computation and semantic knowledge.
+
+Extractors must never depend directly on engineering algorithms. All engineering dependencies are encapsulated inside adapters.
