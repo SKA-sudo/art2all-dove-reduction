@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import * as THREE from "three";
+import { createRoundedPlane } from "../../utils/RoundedPlaneGeometry";
+
 
 const PAPER_WIDTH = 0.055;
 const PAPER_HEIGHT = 0.035;
@@ -18,89 +20,141 @@ export default function DebugVisualEmergence({
   count = 25,
 }) {
   const samples = useMemo(() => {
-    if (!scene || count <= 0) return [];
+  if (!scene || count <= 0) return [];
 
-    scene.updateMatrixWorld(true);
+  scene.updateMatrixWorld(true);
 
-    const candidates = [];
-    const sceneWorldInverse = new THREE.Matrix4()
-      .copy(scene.matrixWorld)
-      .invert();
+  const candidates = [];
 
-    scene.traverse((child) => {
-      if (!child.isMesh || !child.geometry) return;
+  /*
+   * Die Emergence-Komponente liegt neben dem Referenzmodell
+   * im selben übergeordneten Gruppenraum.
+   *
+   * Deshalb werden die aktuellen World-Space-Positionen
+   * anschließend zurück in den lokalen Raum der GLTF-Scene
+   * transformiert.
+   */
+  const worldToScene = new THREE.Matrix4()
+    .copy(scene.matrixWorld)
+    .invert();
 
-      const positionAttribute =
-        child.geometry.getAttribute("position");
+  scene.traverse((child) => {
+    if (!child.isMesh || !child.geometry) return;
 
-      if (!positionAttribute) return;
+    const positions =
+      child.geometry.getAttribute("position");
+
+    if (!positions) return;
+
+    const index = child.geometry.index;
+
+    const faceCount = index
+      ? index.count / 3
+      : positions.count / 3;
+
+    const a = new THREE.Vector3();
+    const b = new THREE.Vector3();
+    const c = new THREE.Vector3();
+
+    const center = new THREE.Vector3();
+    const normal = new THREE.Vector3();
+
+    const edgeAB = new THREE.Vector3();
+    const edgeAC = new THREE.Vector3();
+
+    for (
+      let faceIndex = 0;
+      faceIndex < faceCount;
+      faceIndex += 1
+    ) {
+      const ia = index
+        ? index.getX(faceIndex * 3)
+        : faceIndex * 3;
+
+      const ib = index
+        ? index.getX(faceIndex * 3 + 1)
+        : faceIndex * 3 + 1;
+
+      const ic = index
+        ? index.getX(faceIndex * 3 + 2)
+        : faceIndex * 3 + 2;
 
       /*
-       * Wandelt die Vertexposition aus dem lokalen Mesh-Raum
-       * in den lokalen Raum des Referenzmodells um.
+       * Entscheidend:
        *
-       * Dadurch bleibt das Experiment innerhalb desselben
-       * DOVE_SCALE-Gruppenraums wie PerceptionModel.
+       * getVertexPosition() berücksichtigt bei einem
+       * SkinnedMesh die aktuelle Knochenverformung.
+       *
+       * Ein direktes Lesen aus dem Position-Attribut
+       * würde nur die ursprüngliche Bind Pose liefern.
        */
-      const meshToScene = new THREE.Matrix4()
-        .multiplyMatrices(
-          sceneWorldInverse,
-          child.matrixWorld
-        );
+      child.getVertexPosition(ia, a);
+      child.getVertexPosition(ib, b);
+      child.getVertexPosition(ic, c);
 
-      const normalMatrix =
-        new THREE.Matrix3().getNormalMatrix(meshToScene);
+      a.applyMatrix4(child.matrixWorld);
+      b.applyMatrix4(child.matrixWorld);
+      c.applyMatrix4(child.matrixWorld);
 
-      const normalAttribute =
-        child.geometry.getAttribute("normal");
+      center
+        .copy(a)
+        .add(b)
+        .add(c)
+        .multiplyScalar(1 / 3);
 
-      for (
-        let vertexIndex = 0;
-        vertexIndex < positionAttribute.count;
-        vertexIndex += 1
-      ) {
-        const position = new THREE.Vector3()
-          .fromBufferAttribute(positionAttribute, vertexIndex)
-          .applyMatrix4(meshToScene);
+      edgeAB.subVectors(b, a);
+      edgeAC.subVectors(c, a);
 
-        const normal = normalAttribute
-          ? new THREE.Vector3()
-              .fromBufferAttribute(
-                normalAttribute,
-                vertexIndex
-              )
-              .applyMatrix3(normalMatrix)
-              .normalize()
-          : new THREE.Vector3(0, 0, 1);
+      normal
+        .crossVectors(edgeAB, edgeAC)
+        .normalize();
 
-        candidates.push({
-          position,
-          normal,
-        });
-      }
-    });
+      const area =
+        edgeAB
+          .clone()
+          .cross(edgeAC)
+          .length() * 0.5;
 
-    if (candidates.length === 0) return [];
+      candidates.push({
+        position: center
+          .clone()
+          .applyMatrix4(worldToScene),
 
-    const sampleCount = Math.min(
-      Math.max(1, count),
-      candidates.length
-    );
+        normal: normal.clone(),
 
-    const step = candidates.length / sampleCount;
+        area,
+        faceIndex,
+      });
+    }
+  });
 
-    return Array.from(
-      { length: sampleCount },
-      (_, sampleIndex) => {
-        const candidateIndex = Math.min(
-          Math.floor(sampleIndex * step),
-          candidates.length - 1
-        );
+  if (candidates.length === 0) return [];
 
-        return candidates[candidateIndex];
-      }
-    );
-  }, [scene, count]);
+  const sortedCandidates = [...candidates].sort(
+    (candidateA, candidateB) =>
+      candidateB.area - candidateA.area
+  );
+
+  const sampleCount = Math.min(
+    Math.max(1, count),
+    sortedCandidates.length
+  );
+
+  const step =
+    sortedCandidates.length / sampleCount;
+
+  return Array.from(
+    { length: sampleCount },
+    (_, sampleIndex) => {
+      const candidateIndex = Math.min(
+        Math.floor(sampleIndex * step),
+        sortedCandidates.length - 1
+      );
+
+      return sortedCandidates[candidateIndex];
+    }
+  );
+}, [scene, count]);
 
   if (samples.length === 0) return null;
 
@@ -118,27 +172,38 @@ export default function DebugVisualEmergence({
 }
 
 function EmergencePaper({ position, normal }) {
+  const geometry = useMemo(() => {
+    return createRoundedPlane(
+      PAPER_WIDTH,
+      PAPER_HEIGHT,
+      0.004,
+      4
+    );
+  }, []);
+
   const quaternion = useMemo(() => {
-    const forward = new THREE.Vector3(0, 0, 1);
+    if (!normal) {
+      return new THREE.Quaternion();
+    }
+
+    const normalizedNormal = normal.clone().normalize();
 
     return new THREE.Quaternion().setFromUnitVectors(
-      forward,
-      normal.clone().normalize()
+      new THREE.Vector3(0, 0, 1),
+      normalizedNormal
     );
   }, [normal]);
 
   return (
     <mesh
+      geometry={geometry}
       position={position}
       quaternion={quaternion}
+      scale={[3, 3, 3]}
       renderOrder={1200}
     >
-      <planeGeometry
-        args={[PAPER_WIDTH, PAPER_HEIGHT]}
-      />
-
       <meshBasicMaterial
-        color="#ffffff"
+        color="#ff00ff"
         side={THREE.DoubleSide}
         depthTest={false}
         depthWrite={false}

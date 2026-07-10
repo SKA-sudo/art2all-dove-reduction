@@ -107,63 +107,90 @@ The product remains the primary objective.
 ---
 
 ################################################################
-# Next Session
+Sprint: R5.2a – Laboratory Calibration
 ################################################################
 
-Sprint
+################################################################
+# Sprint Goal
+################################################################
 
-R5.1 – Visual Organization Research
+Continue building the Perception Laboratory by improving the
+technical reliability of perception experiments.
 
-Status
+The goal is NOT to develop new perception algorithms.
 
-Ready
+The goal is to ensure that every future perceptual observation
+is based on a technically correct and reproducible visualization.
 
-Objective
+################################################################
+# Current Status
+################################################################
 
-Continue the transition from semantic perception to visual organization.
+Completed:
 
-Today's milestone established the first visual organization experiment.
+✓ Visual Emergence experiment integrated into the laboratory.
+✓ Interactive element density control implemented.
+✓ Laboratory control panel improved.
+✓ Perception Monitor can be toggled independently.
+✓ Emergence elements now use the current deformed mesh
+  instead of the original bind pose.
+✓ Surface placement significantly improved.
 
-The experiment demonstrated an important research result:
+First observation:
 
-Bounding boxes do not represent how humans organize the perception of the Peace Dove.
+Increasing element density gradually reproduces the
+visible organization of the reference model.
 
-The purpose of the experiment was therefore fulfilled.
+This observation is preliminary and will be validated
+after laboratory calibration is complete.
 
-Current Focus
+################################################################
+# Current Research Question
+################################################################
 
-Do not develop new architecture.
+How does stable visual organization emerge from an
+increasing number of independent elements?
 
-Continue observing the reference model.
+################################################################
+# Current Task
+################################################################
 
-Use the laboratory to discover how children's drawings are visually organized across the dove.
+Continue laboratory calibration.
 
-Implementation Goal
+Verify:
 
-Replace artificial spatial regions with visually meaningful organizational structures derived from observation.
+- element orientation
+- element size
+- spacing from the surface
+- distribution quality
+- reproducibility of experiments
 
-Research Rule
+Only after calibration:
+
+Begin systematic perception experiments
+using different element counts.
+
+################################################################
+# Important Rule
+################################################################
+
+Before documenting any perceptual observation,
+verify that the visualization itself is technically correct.
+
+Technical validation precedes perceptual validation.
+
+################################################################
+# AI Collaboration Rule
+################################################################
+
+Do not propose new architecture.
+
+Do not introduce new builders.
+
+Continue improving the existing laboratory until
+experiments become fully reproducible.
 
 Observation precedes explanation.
 
-Every new visualization must answer one perceptual question.
-
-If an experiment disproves a hypothesis, the experiment is considered successful.
-
-Current Research Question
-
-If perception is not organized by spatial boxes...
-
-...what visual organization does the human observer actually perceive?
-
-Reminder
-
-Research supports the Art2all product.
-
-Every validated observation should move the final Peace Dove closer to organically growing from children's drawings.
-
-Today's experiment validated the laboratory itself.
-
-The value of the Reduction Lab is not proving hypotheses.
-
-Its value is making hypotheses immediately visible and therefore quickly validating or rejecting them.
+Project First.
+Science Second.
