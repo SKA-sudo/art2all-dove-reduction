@@ -106,36 +106,58 @@ The product remains the primary objective.
 
 ---
 
-Sprint R4.x – Semantic Adapter Migration
+################################################################
+# Next Session
+################################################################
 
-Status: ✅ Completed
+Sprint
+
+R5.1 – Visual Organization Research
+
+Status
+
+Ready
 
 Objective
 
-Complete the migration of the existing Engineering algorithms to the Semantic Translation Layer without changing semantic observations or the Perception State.
+Continue the transition from semantic perception to visual organization.
 
-Result
+Today's milestone established the first visual organization experiment.
 
-The Semantic Translation Layer is now consistently applied across the Perception Engine.
+The experiment demonstrated an important research result:
 
-Validated results:
+Bounding boxes do not represent how humans organize the perception of the Peace Dove.
 
-Engineering algorithms are accessed through Adapters.
-Semantic Extractors no longer depend directly on Engineering implementations.
-Engineering remains independent from the Semantic Layer.
-Semantic Observations remain unchanged.
-The Perception State remains unchanged.
-The adapter architecture is now consistently established.
-Validation
+The purpose of the experiment was therefore fulfilled.
 
-The complete Perception pipeline was inspected.
+Current Focus
 
-No remaining Semantic Extractor imports Engineering Builders or Engineering utilities directly.
+Do not develop new architecture.
 
-The migration therefore fulfills the Definition of Done of Sprint R4.x.
+Continue observing the reference model.
 
-Product Relevance
+Use the laboratory to discover how children's drawings are visually organized across the dove.
 
-The completed Semantic Translation Layer establishes a stable architectural foundation for future perception research while keeping the Engineering implementation isolated from semantic reasoning.
+Implementation Goal
 
-This separation supports the long-term goal of constructing the Art2all Peace Dove from validated semantic knowledge instead of technical implementation details.
+Replace artificial spatial regions with visually meaningful organizational structures derived from observation.
+
+Research Rule
+
+Observation precedes explanation.
+
+Every new visualization must answer one perceptual question.
+
+If an experiment disproves a hypothesis, the experiment is considered successful.
+
+Current Research Question
+
+If perception is not organized by spatial boxes...
+
+...what visual organization does the human observer actually perceive?
+
+Reminder
+
+Research supports the Art2all product.
+
+Every validated observation should move the final Peace Dove closer to organically growing from children's drawings.
