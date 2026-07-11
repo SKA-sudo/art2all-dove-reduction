@@ -6,6 +6,7 @@ import FlowLayer from "./layers/FlowLayer";
 import OutlineLayer from "./layers/OutlineLayer";
 import BodyWingTransitionLayer from "./layers/BodyWingTransitionLayer";
 import DebugVisualEmergence from "./DebugVisualEmergence";
+import VisualPriorityLayer from "./VisualPriorityLayer";
 
 import { extractFlow } from "../../core/perception/FlowExtractor";
 import { extractFaceCenters } from "../../core/perception/RegionExtractor";
@@ -121,7 +122,7 @@ export default function PerceptionModel({
 
   if (!perceptionScene) return null;
 
-  return (
+ return (
     <group>
       {layers?.visualEmergence && (
         <DebugVisualEmergence
@@ -129,6 +130,13 @@ export default function PerceptionModel({
           count={emergenceCount}
           distributionMode={distributionMode}
         />
+      )}
+
+      {layers?.visualPriority && (
+        <VisualPriorityLayer
+        scene={scene}
+        distributionMode={distributionMode}
+      />
       )}
 
       {layers?.wireframe && (

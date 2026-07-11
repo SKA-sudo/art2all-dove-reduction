@@ -106,91 +106,43 @@ The product remains the primary objective.
 
 ---
 
-################################################################
-Sprint: R5.2a – Laboratory Calibration
-################################################################
 
 ################################################################
-# Sprint Goal
+Sprint: R5.3b – Shape Contribution
 ################################################################
 
-Continue building the Perception Laboratory by improving the
-technical reliability of perception experiments.
+Sprint Goal
 
-The goal is NOT to develop new perception algorithms.
+Continue the development of the Visual Priority system.
 
-The goal is to ensure that every future perceptual observation
-is based on a technically correct and reproducible visualization.
+The objective is no longer to estimate priority using
+geometric distance.
 
-################################################################
-# Current Status
-################################################################
+Instead, investigate which regions contribute most strongly
+to the perceived overall shape of the Peace Dove.
 
-Completed:
+Current Research Question
 
-✓ Visual Emergence experiment integrated into the laboratory.
-✓ Interactive element density control implemented.
-✓ Laboratory control panel improved.
-✓ Perception Monitor can be toggled independently.
-✓ Emergence elements now use the current deformed mesh
-  instead of the original bind pose.
-✓ Surface placement significantly improved.
+Which surface regions contribute most to stable human
+recognition of the Peace Dove?
 
-First observation:
+Current Task
 
-Increasing element density gradually reproduces the
-visible organization of the reference model.
+Replace the first radial priority hypothesis with a new
+Shape Contribution hypothesis.
 
-This observation is preliminary and will be validated
-after laboratory calibration is complete.
+Continue using the Visual Priority Layer.
 
-################################################################
-# Current Research Question
-################################################################
+Do not modify the Distribution Engine yet.
 
-How does stable visual organization emerge from an
-increasing number of independent elements?
+First validate the new priority model visually.
 
-################################################################
-# Current Task
-################################################################
+Only after validation may the Priority Map be used
+for Emergence Distribution.
 
-Continue laboratory calibration.
+Important Rule
 
-Verify:
-
-- element orientation
-- element size
-- spacing from the surface
-- distribution quality
-- reproducibility of experiments
-
-Only after calibration:
-
-Begin systematic perception experiments
-using different element counts.
-
-################################################################
-# Important Rule
-################################################################
-
-Before documenting any perceptual observation,
-verify that the visualization itself is technically correct.
-
-Technical validation precedes perceptual validation.
-
-################################################################
-# AI Collaboration Rule
-################################################################
-
-Do not propose new architecture.
-
-Do not introduce new builders.
-
-Continue improving the existing laboratory until
-experiments become fully reproducible.
-
-Observation precedes explanation.
+Perceptual contribution precedes geometric approximation.
 
 Project First.
 Science Second.

@@ -28,6 +28,7 @@ export default function App() {
     flow: false,
     gesture: false,
     visualEmergence: false,
+    visualPriority: false,
   });
 
   const toggleLayer = (layerName) => {
@@ -48,6 +49,7 @@ export default function App() {
       flow: false,
       gesture: false,
       visualEmergence: true,
+      visualPriority: false,
     });
 
     setShowPerceptionMonitor(false);
@@ -158,6 +160,19 @@ export default function App() {
           onClick={activateEmergenceCleanView}
         >
           Emergence Clean View
+        </button>
+        
+        <button
+          type="button"
+          style={getToggleButtonStyle(
+            layers.visualPriority
+          )}
+          onClick={() =>
+            toggleLayer("visualPriority")
+          }
+        >
+          Visual Priority:{" "}
+          {layers.visualPriority ? "ON" : "OFF"}
         </button>
 
         <div style={sectionTitleStyle}>

@@ -1162,6 +1162,55 @@ Current Status
 
 Not validated
 
+
+### Laboratory Experiment R5.3a — Visual Priority
+
+The first Visual Priority Layer was introduced into the Perception Laboratory.
+
+Instead of directly influencing paper placement, priority is visualized
+independently as a reproducible heat map.
+
+This separates the investigation of perceptual importance from the
+distribution algorithm itself.
+
+#### Experiment 1 — Radial Priority
+
+Working hypothesis:
+
+Visual priority increases with geometric distance from the model center.
+
+Result:
+
+The resulting priority map does not correspond to human perception of the
+Peace Dove.
+
+Observed differences:
+
+- Claws receive disproportionately high priority despite contributing
+  very little to object recognition.
+- Wings contribute significantly more to perception than predicted by
+  radial distance.
+- The body contributes much more strongly than expected.
+- The tail contributes more strongly to the perceived silhouette than
+  predicted by geometry.
+
+#### Research Observation
+
+Geometric distance is not a reliable approximation of perceptual
+importance.
+
+Visual priority appears to depend on the contribution of a region to the
+overall perceived shape rather than its geometric extremity.
+
+#### Next Experiment
+
+Investigate a Shape Contribution model instead of a purely geometric
+priority model.
+
+The existing Visual Priority Layer will be reused to compare future
+priority hypotheses under identical rendering conditions.
+
+
 Further laboratory experiments are required.
 
 The current objective of the Reduction Laboratory is no longer to optimize element placement, but to identify the organizational principles that transform correctly placed elements into a stable perceptual object.
