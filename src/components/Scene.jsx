@@ -1,15 +1,18 @@
 import { useRef } from "react";
+
 import DoveModel from "./DoveModel";
 import CameraController from "./CameraController";
 import SpatialGrid from "./SpatialGrid";
 
 /* -------------------- SCENE -------------------- */
+
 export default function Scene({
-    displayMode,
-    onDisplayModeChange,
-    layers,
-    emergenceCount,
-  }) {
+  displayMode,
+  onDisplayModeChange,
+  layers,
+  emergenceCount,
+  distributionMode,
+}) {
   const flapRef = useRef(0);
 
   return (
@@ -17,7 +20,11 @@ export default function Scene({
       <color attach="background" args={["#202020"]} />
 
       <ambientLight intensity={0.8} />
-      <directionalLight position={[8, 12, 8]} intensity={1.5} />
+
+      <directionalLight
+        position={[8, 12, 8]}
+        intensity={1.5}
+      />
 
       <CameraController
         displayMode={displayMode}
@@ -31,6 +38,7 @@ export default function Scene({
         displayMode={displayMode}
         layers={layers}
         emergenceCount={emergenceCount}
+        distributionMode={distributionMode}
       />
     </>
   );

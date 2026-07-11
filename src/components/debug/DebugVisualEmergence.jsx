@@ -23,6 +23,42 @@ const orientationMarkerGeometry =
   ]);
 
 /**
+ * Bereitet die Kandidaten für den ausgewählten
+ * Distribution-Modus vor.
+ *
+ * Wichtig:
+ * In diesem ersten Infrastruktur-Schritt liefern
+ * alle Modi absichtlich dieselbe Verteilung.
+ *
+ * Die einzelnen Organisationsregeln werden später
+ * nacheinander experimentell implementiert.
+ */
+function organizeCandidates(candidates, distributionMode) {
+  const sortedCandidates = [...candidates].sort(
+    (candidateA, candidateB) =>
+      candidateB.area - candidateA.area
+  );
+
+  switch (distributionMode) {
+    case "silhouette":
+      return sortedCandidates;
+
+    case "head":
+      return sortedCandidates;
+
+    case "wing":
+      return sortedCandidates;
+
+    case "body":
+      return sortedCandidates;
+
+    case "uniform":
+    default:
+      return sortedCandidates;
+  }
+}
+
+/**
  * R5.2 – Visual Emergence Experiment
  *
  * Visualisiert eine kontrollierbare Anzahl einfacher weißer Flächen
@@ -34,6 +70,7 @@ const orientationMarkerGeometry =
 export default function DebugVisualEmergence({
   scene,
   count = 25,
+  distributionMode = "uniform",
 }) {
   const samples = useMemo(() => {
     if (!scene || count <= 0) return [];
@@ -54,9 +91,10 @@ export default function DebugVisualEmergence({
       .copy(scene.matrixWorld)
       .invert();
 
-    const normalMatrix = new THREE.Matrix3().setFromMatrix4(
-      worldToScene
-    );
+    const normalMatrix =
+      new THREE.Matrix3().setFromMatrix4(
+        worldToScene
+      );
 
     scene.traverse((child) => {
       if (!child.isMesh || !child.geometry) return;
@@ -126,9 +164,10 @@ export default function DebugVisualEmergence({
         normal
           .crossVectors(edgeAB, edgeAC)
           .normalize();
+
         normal
           .applyMatrix3(normalMatrix)
-          .normalize();  
+          .normalize();
 
         const area =
           edgeAB
@@ -151,31 +190,31 @@ export default function DebugVisualEmergence({
 
     if (candidates.length === 0) return [];
 
-    const sortedCandidates = [...candidates].sort(
-      (candidateA, candidateB) =>
-        candidateB.area - candidateA.area
+    const organizedCandidates = organizeCandidates(
+      candidates,
+      distributionMode
     );
 
     const sampleCount = Math.min(
       Math.max(1, count),
-      sortedCandidates.length
+      organizedCandidates.length
     );
 
     const step =
-      sortedCandidates.length / sampleCount;
+      organizedCandidates.length / sampleCount;
 
     return Array.from(
       { length: sampleCount },
       (_, sampleIndex) => {
         const candidateIndex = Math.min(
           Math.floor(sampleIndex * step),
-          sortedCandidates.length - 1
+          organizedCandidates.length - 1
         );
 
-        return sortedCandidates[candidateIndex];
+        return organizedCandidates[candidateIndex];
       }
     );
-  }, [scene, count]);
+  }, [scene, count, distributionMode]);
 
   if (samples.length === 0) return null;
 
@@ -183,7 +222,7 @@ export default function DebugVisualEmergence({
     <group renderOrder={1200}>
       {samples.map((sample, index) => (
         <EmergencePaper
-          key={`${count}-${index}`}
+          key={`${distributionMode}-${count}-${index}`}
           position={sample.position}
           normal={sample.normal}
         />
@@ -207,7 +246,8 @@ function EmergencePaper({ position, normal }) {
       return new THREE.Quaternion();
     }
 
-    const normalizedNormal = normal.clone().normalize();
+    const normalizedNormal =
+      normal.clone().normalize();
 
     return new THREE.Quaternion().setFromUnitVectors(
       new THREE.Vector3(0, 0, 1),
@@ -226,15 +266,16 @@ function EmergencePaper({ position, normal }) {
         scale={[3, 3, 3]}
         renderOrder={1200}
       >
-      <meshBasicMaterial
-        color="#ff00ff"
-        side={THREE.DoubleSide}
-        depthTest
-        depthWrite
-        toneMapped={false}
-      /></mesh>
-        
-        {SHOW_ORIENTATION_DEBUG && (
+        <meshBasicMaterial
+          color="#ff00ff"
+          side={THREE.DoubleSide}
+          depthTest
+          depthWrite
+          toneMapped={false}
+        />
+      </mesh>
+
+      {SHOW_ORIENTATION_DEBUG && (
         <line
           geometry={orientationMarkerGeometry}
           renderOrder={1201}

@@ -11,6 +11,10 @@ import PerceptionEngineDebug from "./components/perception/PerceptionEngineDebug
 export default function App() {
   const [displayMode, setDisplayMode] = useState("wireframe");
   const [emergenceCount, setEmergenceCount] = useState(25);
+
+  const [distributionMode, setDistributionMode] =
+    useState("uniform");
+
   const [showPerceptionMonitor, setShowPerceptionMonitor] =
     useState(false);
 
@@ -49,7 +53,7 @@ export default function App() {
     setShowPerceptionMonitor(false);
   };
 
-   const panelButtonStyle = {
+  const panelButtonStyle = {
     minHeight: 20,
     padding: "2px 6px",
     border: "1px solid rgba(255, 255, 255, 0.16)",
@@ -63,7 +67,7 @@ export default function App() {
     cursor: "pointer",
   };
 
-   const sectionTitleStyle = {
+  const sectionTitleStyle = {
     marginTop: 2,
     paddingTop: 4,
     borderTop: "1px solid rgba(255, 255, 255, 0.16)",
@@ -74,7 +78,7 @@ export default function App() {
     opacity: 0.65,
   };
 
-   const presetButtonStyle = {
+  const presetButtonStyle = {
     ...panelButtonStyle,
     minWidth: 28,
     minHeight: 18,
@@ -90,6 +94,14 @@ export default function App() {
       : panelButtonStyle.background,
   });
 
+  const distributionModes = [
+    "uniform",
+    "silhouette",
+    "head",
+    "wing",
+    "body",
+  ];
+
   return (
     <div
       style={{
@@ -100,7 +112,9 @@ export default function App() {
       }}
     >
       {showPerceptionMonitor && (
-        <PerceptionEngineDebug perceptionState={perceptionState} />
+        <PerceptionEngineDebug
+          perceptionState={perceptionState}
+        />
       )}
 
       <div
@@ -138,7 +152,9 @@ export default function App() {
 
         <button
           type="button"
-          style={getToggleButtonStyle(layers.visualEmergence)}
+          style={getToggleButtonStyle(
+            layers.visualEmergence
+          )}
           onClick={activateEmergenceCleanView}
         >
           Emergence Clean View
@@ -150,10 +166,13 @@ export default function App() {
 
         <button
           type="button"
-          style={getToggleButtonStyle(layers.referenceModel)}
+          style={getToggleButtonStyle(
+            layers.referenceModel
+          )}
           onClick={() => toggleLayer("referenceModel")}
         >
-          Reference Model: {layers.referenceModel ? "ON" : "OFF"}
+          Reference Model:{" "}
+          {layers.referenceModel ? "ON" : "OFF"}
         </button>
 
         <button
@@ -182,7 +201,9 @@ export default function App() {
 
         <button
           type="button"
-          style={getToggleButtonStyle(layers.semanticRegions)}
+          style={getToggleButtonStyle(
+            layers.semanticRegions
+          )}
           onClick={() => toggleLayer("semanticRegions")}
         >
           Semantic Regions:{" "}
@@ -213,11 +234,15 @@ export default function App() {
           Gesture: {layers.gesture ? "ON" : "OFF"}
         </button>
 
-        <div style={sectionTitleStyle}>Visual emergence</div>
+        <div style={sectionTitleStyle}>
+          Visual emergence
+        </div>
 
         <button
           type="button"
-          style={getToggleButtonStyle(layers.visualEmergence)}
+          style={getToggleButtonStyle(
+            layers.visualEmergence
+          )}
           onClick={() => toggleLayer("visualEmergence")}
         >
           Visual Emergence:{" "}
@@ -245,7 +270,9 @@ export default function App() {
             step="1"
             value={emergenceCount}
             onChange={(event) =>
-              setEmergenceCount(Number(event.target.value))
+              setEmergenceCount(
+                Number(event.target.value)
+              )
             }
           />
         </label>
@@ -257,33 +284,82 @@ export default function App() {
             gap: 2,
           }}
         >
-          {[1, 2, 5, 10, 25, 50, 100, 250, 500, 1000].map(
-            (value) => (
-              <button
-                type="button"
-                key={value}
-                style={{
-                  ...presetButtonStyle,
-                  background:
-                    emergenceCount === value
-                      ? "rgba(90, 170, 255, 0.32)"
-                      : presetButtonStyle.background,
-                }}
-                onClick={() => setEmergenceCount(value)}
-              >
-                {value}
-              </button>
-            )
-          )}
+          {[
+            1,
+            2,
+            5,
+            10,
+            25,
+            50,
+            100,
+            250,
+            500,
+            1000,
+          ].map((value) => (
+            <button
+              type="button"
+              key={value}
+              style={{
+                ...presetButtonStyle,
+                background:
+                  emergenceCount === value
+                    ? "rgba(90, 170, 255, 0.32)"
+                    : presetButtonStyle.background,
+              }}
+              onClick={() =>
+                setEmergenceCount(value)
+              }
+            >
+              {value}
+            </button>
+          ))}
         </div>
 
-        <div style={sectionTitleStyle}>Laboratory tools</div>
+        <div style={sectionTitleStyle}>
+          Distribution
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 2,
+          }}
+        >
+          {distributionModes.map((mode) => (
+            <button
+              type="button"
+              key={mode}
+              style={{
+                ...presetButtonStyle,
+                textTransform: "capitalize",
+                background:
+                  distributionMode === mode
+                    ? "rgba(90, 170, 255, 0.32)"
+                    : presetButtonStyle.background,
+              }}
+              onClick={() =>
+                setDistributionMode(mode)
+              }
+            >
+              {mode}
+            </button>
+          ))}
+        </div>
+
+        <div style={sectionTitleStyle}>
+          Laboratory tools
+        </div>
 
         <button
           type="button"
-          style={getToggleButtonStyle(showPerceptionMonitor)}
+          style={getToggleButtonStyle(
+            showPerceptionMonitor
+          )}
           onClick={() =>
-            setShowPerceptionMonitor((current) => !current)
+            setShowPerceptionMonitor(
+              (current) => !current
+            )
           }
         >
           Perception Monitor:{" "}
@@ -291,12 +367,18 @@ export default function App() {
         </button>
       </div>
 
-      <Canvas camera={{ position: [0, 14, 75], fov: 42 }}>
+      <Canvas
+        camera={{
+          position: [0, 14, 75],
+          fov: 42,
+        }}
+      >
         <Scene
           displayMode={displayMode}
           onDisplayModeChange={setDisplayMode}
           layers={layers}
           emergenceCount={emergenceCount}
+          distributionMode={distributionMode}
         />
 
         <EffectComposer>
