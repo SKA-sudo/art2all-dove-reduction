@@ -492,6 +492,8 @@ Die visuelle Komplexität entsteht nicht durch unabhängige Einzelobjekte, sonde
 
 Art2all modelliert nicht primär Objekte. Art2all modelliert die minimale visuelle Information, die das menschliche Gehirn benötigt, um ein Objekt zu erkennen. Die Engine beschreibt daher nicht Anatomie, sondern Wahrnehmung und deren Aktivierung im visuellen Gedächtnis.
 
+Die Perception Engine erkennt keine Objekte.
+Sie erkennt die visuellen Eigenschaften, aus denen Identität entsteht.
 
 # Prinzip der Einfachheit
 

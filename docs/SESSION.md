@@ -108,41 +108,125 @@ The product remains the primary objective.
 
 
 ################################################################
-Sprint: R5.3b – Shape Contribution
+Sprint: R5.3c – Head Priority Coordinate Validation
 ################################################################
 
 Sprint Goal
 
-Continue the development of the Visual Priority system.
+Continue the Visual Priority implementation by resolving the first
+regional priority model.
 
-The objective is no longer to estimate priority using
-geometric distance.
+The Head distribution currently calls headPriority(), but the visible
+priority maximum appears in the tail-feather region of the reference
+model.
 
-Instead, investigate which regions contribute most strongly
-to the perceived overall shape of the Peace Dove.
+The visual observation is considered authoritative regardless of the
+function name or intended implementation.
+
+Current Reproducible Observation
+
+Visual Priority: ON
+Distribution: Head
+
+Expected result:
+
+The highest priority should appear in the semantic head region.
+
+Actual result:
+
+The orange/red priority maximum appears in the tail-feather region.
+
+The radial priority gradient itself is rendered correctly.
+
+The cause of the incorrect spatial location has not yet been identified.
 
 Current Research Question
 
-Which surface regions contribute most to stable human
-recognition of the Peace Dove?
+Why does the normalized headCenter used by headPriority() map to the
+tail-feather region of the rendered reference model?
 
 Current Task
 
-Replace the first radial priority hypothesis with a new
-Shape Contribution hypothesis.
+Trace the complete coordinate path used by the Head priority model:
 
-Continue using the Visual Priority Layer.
+1. Confirm the point coordinate space generated inside
+   VisualPriorityLayer.
 
-Do not modify the Distribution Engine yet.
+2. Confirm the coordinate space of the calculated bounds.
 
-First validate the new priority model visually.
+3. Confirm how normalized coordinates are converted into the
+   headPriority distance calculation.
 
-Only after validation may the Priority Map be used
-for Emergence Distribution.
+4. Visualize or log the relevant coordinates before changing further
+   priority values.
+
+5. Identify the exact reason why the intended Head center corresponds
+   visually to the tail-feather region.
+
+Do not continue tuning headCenter by trial and error.
+
+Do not implement Wing or Body priority yet.
+
+Do not redesign the Perception Engine or introduce new semantic
+architecture.
+
+Files Currently Involved
+
+src/components/debug/VisualPriorityLayer.jsx
+
+src/core/perception/PriorityModels.js
+
+Current Implementation State
+
+uniformPriority()
+
+Status:
+Validated technical visualization.
+
+silhouettePriority()
+
+Status:
+Validated technical visualization.
+
+headPriority()
+
+Status:
+First radial regional PoC implemented.
+Spatial mapping is not yet understood or validated.
+
+wingPriority()
+
+Status:
+Placeholder returning 0.
+
+bodyPriority()
+
+Status:
+Placeholder returning 0.
+
+Success Criterion
+
+The sprint is complete when the reason for the incorrect Head priority
+location has been identified and reproduced.
+
+After the cause is understood, headPriority() must visibly place its
+highest priority inside the actual semantic head region.
+
+The result must remain stable from the same reproducible camera view.
 
 Important Rule
 
-Perceptual contribution precedes geometric approximation.
+Visible observation takes precedence over intended code meaning.
 
-Project First.
-Science Second.
+Do not interpret the highlighted region from memory.
+
+Always compare the Visual Priority rendering directly with the reference
+model from the identical camera perspective.
+
+One coordinate problem.
+
+One explanation.
+
+One corrected Head priority result.
+
+One commit.

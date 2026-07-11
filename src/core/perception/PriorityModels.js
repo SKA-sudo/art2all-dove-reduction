@@ -23,8 +23,42 @@ export function silhouettePriority(point, bounds) {
   return Math.min(distance / maxRadius, 1);
 }
 
-export function headPriority() {
-  return 0;
+export function headPriority(point, bounds) {
+  const width = Math.max(
+    bounds.max.x - bounds.min.x,
+    Number.EPSILON
+  );
+
+  const height = Math.max(
+    bounds.max.y - bounds.min.y,
+    Number.EPSILON
+  );
+
+  const depth = Math.max(
+    bounds.max.z - bounds.min.z,
+    Number.EPSILON
+  );
+
+  const normalizedPoint = new THREE.Vector3(
+    (point.x - bounds.min.x) / width,
+    (point.y - bounds.min.y) / height,
+    (point.z - bounds.min.z) / depth
+  );
+
+  const headCenter = new THREE.Vector3(
+    0.5,
+    0.72,
+    0.28
+  );
+
+  const distance =
+    normalizedPoint.distanceTo(headCenter);
+
+  return THREE.MathUtils.clamp(
+    1 - distance / 0.22,
+    0,
+    1
+  );
 }
 
 export function wingPriority() {
