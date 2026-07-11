@@ -1119,6 +1119,53 @@ capability while preserving architectural simplicity.
 Continue the current migration strategy and compare its long-term
 maintainability with traditional architectural redesign.
 
+
+------------------------------------------------------------------------
+
+## H-006 ---  Visual Information Organization
+
+### Status
+
+🧪 Active Research Hypothesis Observation
+
+
+Current laboratory experiments indicate that increasing the number of correctly positioned elements alone does not produce a stable perception of the Peace Dove.
+
+In contrast, the outline representation of the identical geometry is immediately recognizable as a dove.
+
+Working Hypothesis
+
+Stable perception of the Peace Dove is primarily determined by the hierarchical organization of visual information, rather than by the number of elements or their purely geometric placement.
+
+Research Question
+
+Which organizational rules contribute most to the stable visual perception of the Peace Dove?
+
+Planned Validation
+
+The hypothesis will be tested by changing one organizational rule at a time while keeping:
+
+identical geometry
+identical element count
+identical element shape
+
+Possible organizational variables include:
+
+Silhouette priority
+Visual hierarchy
+Regional organization
+Size distribution
+Overlap strategy
+Orientation strategy
+Flow organization
+Current Status
+
+Not validated
+
+Further laboratory experiments are required.
+
+The current objective of the Reduction Laboratory is no longer to optimize element placement, but to identify the organizational principles that transform correctly placed elements into a stable perceptual object.
+
 ------------------------------------------------------------------------
 
 ## Summary

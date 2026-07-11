@@ -68,11 +68,11 @@ function createRegionPerceptionState(scene) {
   }, [scene]);
 
   const flow = useMemo(() => {
-    return extractFlow(scene, {
-      sampleStep: 100,
-      normalLength: 1.5,
-    });
-  }, [scene]);
+  return extractFlow(scene, {
+    sampleStep: 100,
+    normalLength: 0.08,
+  });
+}, [scene]);
 
   const bodyWingTransitionRegions = useMemo(() => {
     if (!scene) return [];
