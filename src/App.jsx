@@ -7,22 +7,24 @@ import perceptionState from "./core/testPipeline";
 import PerceptionEngineDebug from "./components/perception/PerceptionEngineDebug";
 
 /* -------------------- APP -------------------- */
+
 export default function App() {
   const [displayMode, setDisplayMode] = useState("wireframe");
   const [emergenceCount, setEmergenceCount] = useState(25);
   const [showPerceptionMonitor, setShowPerceptionMonitor] =
-  useState(false);
+    useState(false);
+
   const [layers, setLayers] = useState({
-      referenceModel: true,
-      animation: false,
-      wireframe: true,
-      landmarks: false,
-      semanticRegions: false,
-      outline: false,
-      flow: false,
-      gesture: false,
-      visualEmergence: false,
-    });
+    referenceModel: true,
+    animation: false,
+    wireframe: true,
+    landmarks: false,
+    semanticRegions: false,
+    outline: false,
+    flow: false,
+    gesture: false,
+    visualEmergence: false,
+  });
 
   const toggleLayer = (layerName) => {
     setLayers((currentLayers) => ({
@@ -30,130 +32,192 @@ export default function App() {
       [layerName]: !currentLayers[layerName],
     }));
   };
+
   const activateEmergenceCleanView = () => {
-  setLayers({
-    referenceModel: false,
-    animation: false,
-    wireframe: false,
-    landmarks: false,
-    semanticRegions: false,
-    outline: false,
-    flow: false,
-    gesture: false,
-    visualEmergence: true,
+    setLayers({
+      referenceModel: false,
+      animation: false,
+      wireframe: false,
+      landmarks: false,
+      semanticRegions: false,
+      outline: false,
+      flow: false,
+      gesture: false,
+      visualEmergence: true,
+    });
+
+    setShowPerceptionMonitor(false);
+  };
+
+   const panelButtonStyle = {
+    minHeight: 20,
+    padding: "2px 6px",
+    border: "1px solid rgba(255, 255, 255, 0.16)",
+    borderRadius: 4,
+    background: "rgba(255, 255, 255, 0.08)",
+    color: "#ffffff",
+    fontFamily: "inherit",
+    fontSize: 9,
+    lineHeight: 1.1,
+    textAlign: "left",
+    cursor: "pointer",
+  };
+
+   const sectionTitleStyle = {
+    marginTop: 2,
+    paddingTop: 4,
+    borderTop: "1px solid rgba(255, 255, 255, 0.16)",
+    fontSize: 8,
+    fontWeight: 700,
+    letterSpacing: "0.05em",
+    textTransform: "uppercase",
+    opacity: 0.65,
+  };
+
+   const presetButtonStyle = {
+    ...panelButtonStyle,
+    minWidth: 28,
+    minHeight: 18,
+    padding: "1px 4px",
+    fontSize: 8,
+    textAlign: "center",
+  };
+
+  const getToggleButtonStyle = (isActive) => ({
+    ...panelButtonStyle,
+    background: isActive
+      ? "rgba(90, 170, 255, 0.25)"
+      : panelButtonStyle.background,
   });
 
-  setShowPerceptionMonitor(false);
-};
-
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       {showPerceptionMonitor && (
-        <PerceptionEngineDebug
-          perceptionState={perceptionState}
-        />
+        <PerceptionEngineDebug perceptionState={perceptionState} />
       )}
+
       <div
         style={{
           position: "absolute",
-          top: 16,
-          left: 16,
+          top: 6,
+          left: 6,
           zIndex: 10,
-          width: 250,
-          maxHeight: "calc(100vh - 32px)",
+          width: 160,
+          maxHeight: "calc(100vh - 12px)",
           overflowY: "auto",
           boxSizing: "border-box",
-          padding: 12,
+          padding: 8,
           display: "flex",
           flexDirection: "column",
-          gap: 8,
-          borderRadius: 10,
-          background: "rgba(12, 14, 20, 0.88)",
+          gap: 2,
+          borderRadius: 6,
+          background: "rgba(12, 14, 20, 0.9)",
           color: "#ffffff",
           fontFamily: "sans-serif",
-          fontSize: 14,
+          fontSize: 9,
+          textAlign: "left",
           boxShadow: "0 6px 24px rgba(0, 0, 0, 0.35)",
         }}
       >
         <div
           style={{
-            marginBottom: 4,
+            marginBottom: 1,
             fontWeight: 700,
-            fontSize: 16,
+            fontSize: 11,
           }}
         >
           Perception Laboratory
         </div>
 
-        <button onClick={activateEmergenceCleanView}>
+        <button
+          type="button"
+          style={getToggleButtonStyle(layers.visualEmergence)}
+          onClick={activateEmergenceCleanView}
+        >
           Emergence Clean View
         </button>
 
-        <div
-          style={{
-            marginTop: 6,
-            paddingTop: 10,
-            borderTop: "1px solid rgba(255,255,255,0.18)",
-            fontSize: 12,
-            fontWeight: 700,
-            textTransform: "uppercase",
-            opacity: 0.7,
-          }}
-        >
+        <div style={sectionTitleStyle}>
           Reference and perception
         </div>
-      <button onClick={() => toggleLayer("referenceModel")}>
-        Reference Model: {layers.referenceModel ? "ON" : "OFF"}
-      </button>
 
-      <button onClick={() => toggleLayer("animation")}>
-        Animation: {layers.animation ? "ON" : "OFF"}
-      </button>
-
-      <button onClick={() => toggleLayer("wireframe")}>
-          Wireframe: {layers.wireframe ? "ON" : "OFF"}
-      </button>
-
-      <button onClick={() => toggleLayer("landmarks")}>
-          Landmarks: {layers.landmarks ? "ON" : "OFF"}
-      </button>
-      
-      <button onClick={() => toggleLayer("semanticRegions")}>
-          Semantic Regions: {layers.semanticRegions ? "ON" : "OFF"}
-       </button>
-
-      <button onClick={() => toggleLayer("outline")}>
-          Outline: {layers.outline ? "ON" : "OFF"}
-       </button>
-
-       <button onClick={() => toggleLayer("flow")}>
-          Flow: {layers.flow ? "ON" : "OFF"}
-       </button>
-
-       <button onClick={() => toggleLayer("gesture")}>
-          Gesture: {layers.gesture ? "ON" : "OFF"}
-       </button>
-      </div>
-        <hr
-          style={{
-            width: "100%",
-            borderColor: "#666666",
-          }}
-        />
-        <div
-          style={{
-            marginTop: 6,
-            paddingTop: 10,
-            borderTop: "1px solid rgba(255,255,255,0.18)",
-            fontSize: 12,
-            fontWeight: 700,
-            textTransform: "uppercase",
-            opacity: 0.7,
-          }}
-        >
-          Visual emergence experiment
-        </div>
         <button
+          type="button"
+          style={getToggleButtonStyle(layers.referenceModel)}
+          onClick={() => toggleLayer("referenceModel")}
+        >
+          Reference Model: {layers.referenceModel ? "ON" : "OFF"}
+        </button>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(layers.animation)}
+          onClick={() => toggleLayer("animation")}
+        >
+          Animation: {layers.animation ? "ON" : "OFF"}
+        </button>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(layers.wireframe)}
+          onClick={() => toggleLayer("wireframe")}
+        >
+          Wireframe: {layers.wireframe ? "ON" : "OFF"}
+        </button>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(layers.landmarks)}
+          onClick={() => toggleLayer("landmarks")}
+        >
+          Landmarks: {layers.landmarks ? "ON" : "OFF"}
+        </button>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(layers.semanticRegions)}
+          onClick={() => toggleLayer("semanticRegions")}
+        >
+          Semantic Regions:{" "}
+          {layers.semanticRegions ? "ON" : "OFF"}
+        </button>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(layers.outline)}
+          onClick={() => toggleLayer("outline")}
+        >
+          Outline: {layers.outline ? "ON" : "OFF"}
+        </button>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(layers.flow)}
+          onClick={() => toggleLayer("flow")}
+        >
+          Flow: {layers.flow ? "ON" : "OFF"}
+        </button>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(layers.gesture)}
+          onClick={() => toggleLayer("gesture")}
+        >
+          Gesture: {layers.gesture ? "ON" : "OFF"}
+        </button>
+
+        <div style={sectionTitleStyle}>Visual emergence</div>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(layers.visualEmergence)}
           onClick={() => toggleLayer("visualEmergence")}
         >
           Visual Emergence:{" "}
@@ -164,15 +228,15 @@ export default function App() {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 4,
-            padding: 6,
-            background: "rgba(0, 0, 0, 0.65)",
+            gap: 2,
+            padding: "4px 6px",
+            borderRadius: 4,
+            background: "rgba(0, 0, 0, 0.35)",
             color: "#ffffff",
-            fontFamily: "sans-serif",
-            fontSize: 13,
+            fontSize: 8,
           }}
         >
-          Elements: {emergenceCount}
+          <span>Elements: {emergenceCount}</span>
 
           <input
             type="range"
@@ -181,25 +245,30 @@ export default function App() {
             step="1"
             value={emergenceCount}
             onChange={(event) =>
-              setEmergenceCount(
-                Number(event.target.value)
-              )
+              setEmergenceCount(Number(event.target.value))
             }
           />
         </label>
 
         <div
           style={{
-            display: "flex",
-            gap: 4,
-            flexWrap: "wrap",
-            maxWidth: 220,
+            display: "grid",
+            gridTemplateColumns: "repeat(5, 1fr)",
+            gap: 2,
           }}
         >
           {[1, 2, 5, 10, 25, 50, 100, 250, 500, 1000].map(
             (value) => (
               <button
+                type="button"
                 key={value}
+                style={{
+                  ...presetButtonStyle,
+                  background:
+                    emergenceCount === value
+                      ? "rgba(90, 170, 255, 0.32)"
+                      : presetButtonStyle.background,
+                }}
                 onClick={() => setEmergenceCount(value)}
               >
                 {value}
@@ -207,28 +276,21 @@ export default function App() {
             )
           )}
         </div>
-          <div
-            style={{
-              marginTop: 6,
-              paddingTop: 10,
-              borderTop: "1px solid rgba(255,255,255,0.18)",
-              fontSize: 12,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              opacity: 0.7,
-            }}
-          >
-            Laboratory tools
-          </div>
 
-          <button
-            onClick={() =>
-              setShowPerceptionMonitor((current) => !current)
-            }
-          >
-            Perception Monitor:{" "}
-            {showPerceptionMonitor ? "ON" : "OFF"}
-          </button>
+        <div style={sectionTitleStyle}>Laboratory tools</div>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(showPerceptionMonitor)}
+          onClick={() =>
+            setShowPerceptionMonitor((current) => !current)
+          }
+        >
+          Perception Monitor:{" "}
+          {showPerceptionMonitor ? "ON" : "OFF"}
+        </button>
+      </div>
+
       <Canvas camera={{ position: [0, 14, 75], fov: 42 }}>
         <Scene
           displayMode={displayMode}
