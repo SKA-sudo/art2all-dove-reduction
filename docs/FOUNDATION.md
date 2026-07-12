@@ -494,7 +494,7 @@ Art2all modelliert nicht primär Objekte. Art2all modelliert die minimale visuel
 
 Die Perception Engine erkennt keine Objekte.
 Sie erkennt die visuellen Eigenschaften, aus denen Identität entsteht.
-
+Regionen sind Träger von Merkmalen. Merkmale erzeugen Identität.
 # Prinzip der Einfachheit
 
 ## Architekturprinzip

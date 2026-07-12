@@ -1,5 +1,8 @@
 import * as THREE from "three";
 
+export const HEAD_PRIORITY_CENTER_NORMALIZED =
+  new THREE.Vector3(0.5, 0.72, 0.28);
+
 export function uniformPriority(point, bounds) {
   const height = Math.max(
     bounds.max.y - bounds.min.y,
@@ -45,14 +48,9 @@ export function headPriority(point, bounds) {
     (point.z - bounds.min.z) / depth
   );
 
-  const headCenter = new THREE.Vector3(
-    0.5,
-    0.72,
-    0.28
+  const distance = normalizedPoint.distanceTo(
+    HEAD_PRIORITY_CENTER_NORMALIZED
   );
-
-  const distance =
-    normalizedPoint.distanceTo(headCenter);
 
   return THREE.MathUtils.clamp(
     1 - distance / 0.22,

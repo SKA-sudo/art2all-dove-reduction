@@ -6,6 +6,7 @@ import {
   headPriority,
   wingPriority,
   bodyPriority,
+  HEAD_PRIORITY_CENTER_NORMALIZED,
 } from "../../core/perception/PriorityModels";
 
 /*
@@ -149,11 +150,95 @@ function getPriorityColor(priority) {
 
     if (points.length === 0) return null;
 
-    const bounds = new THREE.Box3().setFromPoints(points);
-    const height = Math.max(
-      bounds.max.y - bounds.min.y,
-      Number.EPSILON
+        const bounds = new THREE.Box3().setFromPoints(points);
+
+    const boundsSize = new THREE.Vector3();
+    bounds.getSize(boundsSize);
+
+    const headCenterScene = new THREE.Vector3(
+      bounds.min.x +
+        HEAD_PRIORITY_CENTER_NORMALIZED.x *
+          boundsSize.x,
+
+      bounds.min.y +
+        HEAD_PRIORITY_CENTER_NORMALIZED.y *
+          boundsSize.y,
+
+      bounds.min.z +
+        HEAD_PRIORITY_CENTER_NORMALIZED.z *
+          boundsSize.z
     );
+const boundsCenter = new THREE.Vector3();
+bounds.getCenter(boundsCenter);
+
+const minXMarker = new THREE.Vector3(
+  bounds.min.x,
+  boundsCenter.y,
+  boundsCenter.z
+);
+
+const maxXMarker = new THREE.Vector3(
+  bounds.max.x,
+  boundsCenter.y,
+  boundsCenter.z
+);
+
+const minYMarker = new THREE.Vector3(
+  boundsCenter.x,
+  bounds.min.y,
+  boundsCenter.z
+);
+
+const maxYMarker = new THREE.Vector3(
+  boundsCenter.x,
+  bounds.max.y,
+  boundsCenter.z
+);
+
+const minZMarker = new THREE.Vector3(
+  boundsCenter.x,
+  boundsCenter.y,
+  bounds.min.z
+);
+
+const maxZMarker = new THREE.Vector3(
+  boundsCenter.x,
+  boundsCenter.y,
+  bounds.max.z
+);
+
+    if (distributionMode === "head") {
+      console.group(
+        "R5.3c – Head Priority Coordinate Validation"
+      );
+
+      console.log(
+        "Bounds min:",
+        bounds.min.toArray()
+      );
+
+      console.log(
+        "Bounds max:",
+        bounds.max.toArray()
+      );
+
+      console.log(
+        "Bounds size:",
+        boundsSize.toArray()
+      );
+
+      console.log(
+        "Normalized head center:",
+        HEAD_PRIORITY_CENTER_NORMALIZED.toArray()
+      );
+
+      console.log(
+        "Scene-space head center:",
+        headCenterScene.toArray()
+      );
+
+      console.groupEnd();
+    }
 
     const positions = [];
     const colors = [];
@@ -211,24 +296,131 @@ points.forEach((point) => {
       )
     );
 
-    return priorityGeometry;
+    return {
+  priorityGeometry,
+  headCenterScene,
+  minXMarker,
+  maxXMarker,
+  minYMarker,
+  maxYMarker,
+  minZMarker,
+  maxZMarker,
+    };
+
+    
   }, [scene, distributionMode]);
 
   if (!geometry) return null;
 
-  return (
-    <points
-      geometry={geometry}
-      renderOrder={1300}
-    >
-      <pointsMaterial
-        size={POINT_SIZE}
-        sizeAttenuation
-        vertexColors
-        depthTest
-        depthWrite={false}
-        toneMapped={false}
-      />
-    </points>
+    return (
+    <group>
+      <points
+        geometry={geometry.priorityGeometry}
+        renderOrder={1300}
+      >
+        <pointsMaterial
+          size={POINT_SIZE}
+          sizeAttenuation
+          vertexColors
+          depthTest
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </points>
+
+          {distributionMode === "head" && (
+        <>
+          {/* minX */}
+          <mesh
+            position={geometry.minXMarker}
+            renderOrder={1401}
+          >
+            <sphereGeometry args={[0.07, 20, 20]} />
+
+            <meshBasicMaterial
+              color="#ff0000"
+              depthTest={false}
+              depthWrite={false}
+              toneMapped={false}
+            />
+          </mesh>
+
+          {/* maxX */}
+          <mesh
+            position={geometry.maxXMarker}
+            renderOrder={1401}
+          >
+            <sphereGeometry args={[0.07, 20, 20]} />
+
+            <meshBasicMaterial
+              color="#ff8800"
+              depthTest={false}
+              depthWrite={false}
+              toneMapped={false}
+            />
+          </mesh>
+
+          {/* minY */}
+          <mesh
+            position={geometry.minYMarker}
+            renderOrder={1401}
+          >
+            <sphereGeometry args={[0.07, 20, 20]} />
+
+            <meshBasicMaterial
+              color="#00ff00"
+              depthTest={false}
+              depthWrite={false}
+              toneMapped={false}
+            />
+          </mesh>
+
+          {/* maxY */}
+          <mesh
+            position={geometry.maxYMarker}
+            renderOrder={1401}
+          >
+            <sphereGeometry args={[0.07, 20, 20]} />
+
+            <meshBasicMaterial
+              color="#00ffff"
+              depthTest={false}
+              depthWrite={false}
+              toneMapped={false}
+            />
+          </mesh>
+
+          {/* minZ */}
+          <mesh
+            position={geometry.minZMarker}
+            renderOrder={1401}
+          >
+            <sphereGeometry args={[0.07, 20, 20]} />
+
+            <meshBasicMaterial
+              color="#0000ff"
+              depthTest={false}
+              depthWrite={false}
+              toneMapped={false}
+            />
+          </mesh>
+
+          {/* maxZ */}
+          <mesh
+            position={geometry.maxZMarker}
+            renderOrder={1401}
+          >
+            <sphereGeometry args={[0.07, 20, 20]} />
+
+            <meshBasicMaterial
+              color="#ff00ff"
+              depthTest={false}
+              depthWrite={false}
+              toneMapped={false}
+            />
+          </mesh>
+        </>
+      )}
+    </group>
   );
 }
