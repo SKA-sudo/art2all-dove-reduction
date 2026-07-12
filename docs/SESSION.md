@@ -106,36 +106,50 @@ The product remains the primary objective.
 
 ---
 
-
 ################################################################
-Sprint R5.4
+Sprint R5.4 Result
 ################################################################
 
-Titel
+Completed
 
-Semantic Longitudinal Axis
+The Perception Laboratory and the Semantic
+Perception Engine are now connected.
 
-Ziel
+Pipeline
 
-Entwicklung einer semantischen Längsachse
-(Tail → Body → Head) unabhängig von
-Bounding-Box-Koordinaten.
+GLB Model
+    ↓
+Observation
+    ↓
+Semantic Extractors
+    ↓
+Perception State
+    ↓
+Perception Debug Visualization
 
-Hypothese
+This establishes the first runtime semantic
+pipeline based on real model data.
 
-Die visuelle Wahrnehmung orientiert sich
-an der longitudinalen Beziehung der Taube
-und nicht an absoluten XYZ-Koordinaten.
+Research Outcome
 
-Erwartetes Ergebnis
+The current Longitudinal Axis confirms that
+semantic observations can now be generated
+from the runtime model.
 
-Eine neue Semantic Observation
+The next research step is no longer pipeline
+integration but improving semantic region
+generation.
 
-WholeDove HAS_LONGITUDINAL_AXIS
+Current hypothesis:
 
-welche später als Grundlage dient für
+Perception is region-based and depends on
+viewing distance.
 
-- Head Priority
-- Tail Priority
-- Body Priority
-- Visual Hierarchy
+Far Distance:
+Silhouette → Body
+
+Medium Distance:
+Head → Body Relationship
+
+Near Distance:
+Head → Eye → Paper Structure
