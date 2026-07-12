@@ -539,3 +539,308 @@ The engine becomes perception-driven.
 Technical geometry supplies data.
 
 Perception defines structure.
+
+
+################################################################
+# Perception Engine
+################################################################
+
+################################################################
+# Purpose
+################################################################
+
+The Perception Engine is one of the core engines of Art2all.
+
+Its purpose is not object recognition.
+
+Its purpose is to reproduce the way humans visually
+organize information, so that the Peace Dove appears
+to have naturally grown from thousands of children's
+drawings.
+
+Research is not the goal.
+
+A better Peace Dove is the goal.
+
+Scientific insights emerge as a positive consequence
+of building the engine.
+
+
+################################################################
+# Core Principle
+################################################################
+
+The GLB provides geometry.
+
+The Perception Engine provides meaning.
+
+Rendering is no longer driven directly by geometry.
+
+Rendering is driven by semantic understanding.
+
+
+################################################################
+# Architectural Principle
+################################################################
+
+Meaning never emerges from vertices or polygons.
+
+Meaning emerges from semantic regions and the
+relationships between them.
+
+
+GLB
+
+↓
+
+Observation
+
+↓
+
+Semantic Extractors
+
+↓
+
+Semantic Observations
+
+↓
+
+Perception State
+
+↓
+
+Rendering
+
+
+The runtime pipeline is therefore the semantic bridge
+between technical geometry and visual rendering.
+
+
+################################################################
+# Runtime Architecture
+################################################################
+
+                    Observation
+                         │
+                         ▼
+               Semantic Extractors
+                         │
+                         ▼
+              Semantic Observations
+                         │
+                         ▼
+                 Perception State
+                         │
+                         ▼
+                  Rendering Engine
+
+
+Each Extractor contributes exactly one semantic
+hypothesis.
+
+Each hypothesis can be visualized and validated
+inside the Perception Laboratory.
+
+
+################################################################
+# Perception Hierarchy
+################################################################
+
+Attention
+
+↓
+
+Whole Dove
+
+↓
+
+Head
+
+├── Eye
+
+└── Beak
+
+↓
+
+Body
+
+├── Wing
+
+└── Tail
+
+
+This hierarchy represents the current working
+hypothesis of the perception engine.
+
+It is expected to evolve during future research.
+
+
+################################################################
+# Semantic Regions
+################################################################
+
+The Perception Engine does not operate on individual
+polygons.
+
+Every semantic object is represented by a semantic
+region.
+
+Semantic Region
+
+↓
+
+Reference Point
+
+↓
+
+Relationship
+
+↓
+
+Meaning
+
+
+Regions are the fundamental building blocks of
+visual perception.
+
+
+################################################################
+# Distance Dependent Perception
+################################################################
+
+Visual attention changes with viewing distance.
+
+
+Far Distance
+
+Silhouette
+
+↓
+
+Body
+
+
+Medium Distance
+
+Head
+
+↓
+
+Body Relationship
+
+
+Near Distance
+
+Head
+
+↓
+
+Eye
+
+↓
+
+Beak
+
+↓
+
+Paper Structure
+
+↓
+
+Children's Drawings
+
+
+Perception therefore has no globally fixed priority.
+
+Priority depends on viewing distance.
+
+
+################################################################
+# Attention
+################################################################
+
+Attention determines which semantic region is
+processed next.
+
+The Perception Engine therefore models not only
+geometry but also visual attention.
+
+Attention is expected to become the central
+controller of future semantic processing.
+
+
+################################################################
+# Canonical Development Workflow
+################################################################
+
+Every Builder follows the same workflow.
+
+Reference
+
+↓
+
+Observation
+
+↓
+
+Hypothesis
+
+↓
+
+Minimal Builder
+
+↓
+
+Debug Visualization
+
+↓
+
+Artistic Validation
+
+↓
+
+Semantic Runtime
+
+↓
+
+Rendering
+
+
+Only validated hypotheses become part of the runtime.
+
+
+################################################################
+# Long-Term Vision
+################################################################
+
+The long-term objective is not to recognize a bird.
+
+The objective is to model visual perception.
+
+The Peace Dove is the first application.
+
+Future engines should be able to describe visual
+organization itself.
+
+The Perception Engine therefore becomes a semantic
+grammar of visual perception.
+
+
+################################################################
+# Design Philosophy
+################################################################
+
+The project follows one fundamental rule.
+
+Geometry supplies data.
+
+Perception defines structure.
+
+Structure creates meaning.
+
+Meaning guides rendering.
+
+
+The final benchmark is never mathematical accuracy.
+
+The final benchmark is human visual perception.

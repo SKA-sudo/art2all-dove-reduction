@@ -105,51 +105,59 @@ The product remains the primary objective.
 
 
 ---
+################################################################
+Perception Principle Progress
+################################################################
+
+PP-001  ✓ Hierarchical Perception
+
+PP-002  ✓ Distance Dependent Perception
+
+PP-003  ✓ Semantic Meaning emerges from Relationships
+
+PP-004  ✓ Semantic Regions instead of Polygons
+
+PP-005  ✓ Research discovers. Production applies.
+
+---------------------------------------------
+
+PP-006  ☐ Semantic Head Region
+
+PP-007  ☐ Eye Priority
+
+PP-008  ☐ Beak Priority
+
+PP-009  ☐ Body Relationship
+
+PP-010  ☐ Wing Salience
+
+PP-011  ☐ Tail Confirmation
+
+PP-012  ☐ Dynamic Attention
+
 
 ################################################################
-Sprint R5.4 Result
+Sprint R5.5
+
+Perception Principle PP-006
+
+Semantic Head Region
+
+Goal
+
+Discover the minimal semantic region that humans
+consistently perceive as the head of the Peace Dove.
+
+The objective is not geometric accuracy.
+
+The objective is perceptual stability.
+
+Success Criterion
+
+Independent observers consistently identify the
+generated semantic head region as the visual head
+of the Peace Dove.
+
+Only after successful validation may PP-006 become
+part of the Production Engine.
 ################################################################
-
-Completed
-
-The Perception Laboratory and the Semantic
-Perception Engine are now connected.
-
-Pipeline
-
-GLB Model
-    ↓
-Observation
-    ↓
-Semantic Extractors
-    ↓
-Perception State
-    ↓
-Perception Debug Visualization
-
-This establishes the first runtime semantic
-pipeline based on real model data.
-
-Research Outcome
-
-The current Longitudinal Axis confirms that
-semantic observations can now be generated
-from the runtime model.
-
-The next research step is no longer pipeline
-integration but improving semantic region
-generation.
-
-Current hypothesis:
-
-Perception is region-based and depends on
-viewing distance.
-
-Far Distance:
-Silhouette → Body
-
-Medium Distance:
-Head → Body Relationship
-
-Near Distance:
-Head → Eye → Paper Structure
