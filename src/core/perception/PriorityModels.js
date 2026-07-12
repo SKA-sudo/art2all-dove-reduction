@@ -1,7 +1,21 @@
 import * as THREE from "three";
 
+/*
+ * R5.3c – validated reference-model orientation
+ *
+ * X: left wing <-> right wing
+ * Y: belly <-> back
+ * Z: tail <-> head
+ *
+ * The longitudinal debug validation showed:
+ * minZ = tail side
+ * maxZ = head side
+ *
+ * This reference therefore represents the head-side
+ * endpoint of the validated longitudinal axis.
+ */
 export const HEAD_PRIORITY_CENTER_NORMALIZED =
-  new THREE.Vector3(0.5, 0.72, 0.28);
+  new THREE.Vector3(0.5, 0.5, 1.0);
 
 export function uniformPriority(point, bounds) {
   const height = Math.max(

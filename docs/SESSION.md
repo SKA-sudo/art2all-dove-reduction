@@ -108,125 +108,34 @@ The product remains the primary objective.
 
 
 ################################################################
-Sprint: R5.3c – Head Priority Coordinate Validation
+Sprint R5.4
 ################################################################
 
-Sprint Goal
+Titel
 
-Continue the Visual Priority implementation by resolving the first
-regional priority model.
+Semantic Longitudinal Axis
 
-The Head distribution currently calls headPriority(), but the visible
-priority maximum appears in the tail-feather region of the reference
-model.
+Ziel
 
-The visual observation is considered authoritative regardless of the
-function name or intended implementation.
+Entwicklung einer semantischen Längsachse
+(Tail → Body → Head) unabhängig von
+Bounding-Box-Koordinaten.
 
-Current Reproducible Observation
+Hypothese
 
-Visual Priority: ON
-Distribution: Head
+Die visuelle Wahrnehmung orientiert sich
+an der longitudinalen Beziehung der Taube
+und nicht an absoluten XYZ-Koordinaten.
 
-Expected result:
+Erwartetes Ergebnis
 
-The highest priority should appear in the semantic head region.
+Eine neue Semantic Observation
 
-Actual result:
+WholeDove HAS_LONGITUDINAL_AXIS
 
-The orange/red priority maximum appears in the tail-feather region.
+welche später als Grundlage dient für
 
-The radial priority gradient itself is rendered correctly.
-
-The cause of the incorrect spatial location has not yet been identified.
-
-Current Research Question
-
-Why does the normalized headCenter used by headPriority() map to the
-tail-feather region of the rendered reference model?
-
-Current Task
-
-Trace the complete coordinate path used by the Head priority model:
-
-1. Confirm the point coordinate space generated inside
-   VisualPriorityLayer.
-
-2. Confirm the coordinate space of the calculated bounds.
-
-3. Confirm how normalized coordinates are converted into the
-   headPriority distance calculation.
-
-4. Visualize or log the relevant coordinates before changing further
-   priority values.
-
-5. Identify the exact reason why the intended Head center corresponds
-   visually to the tail-feather region.
-
-Do not continue tuning headCenter by trial and error.
-
-Do not implement Wing or Body priority yet.
-
-Do not redesign the Perception Engine or introduce new semantic
-architecture.
-
-Files Currently Involved
-
-src/components/debug/VisualPriorityLayer.jsx
-
-src/core/perception/PriorityModels.js
-
-Current Implementation State
-
-uniformPriority()
-
-Status:
-Validated technical visualization.
-
-silhouettePriority()
-
-Status:
-Validated technical visualization.
-
-headPriority()
-
-Status:
-First radial regional PoC implemented.
-Spatial mapping is not yet understood or validated.
-
-wingPriority()
-
-Status:
-Placeholder returning 0.
-
-bodyPriority()
-
-Status:
-Placeholder returning 0.
-
-Success Criterion
-
-The sprint is complete when the reason for the incorrect Head priority
-location has been identified and reproduced.
-
-After the cause is understood, headPriority() must visibly place its
-highest priority inside the actual semantic head region.
-
-The result must remain stable from the same reproducible camera view.
-
-Important Rule
-
-Visible observation takes precedence over intended code meaning.
-
-Do not interpret the highlighted region from memory.
-
-Always compare the Visual Priority rendering directly with the reference
-model from the identical camera perspective.
-
-One coordinate problem.
-
-One explanation.
-
-One corrected Head priority result.
-
-One commit.
+- Head Priority
+- Tail Priority
+- Body Priority
+- Visual Hierarchy
