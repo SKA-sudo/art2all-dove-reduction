@@ -4,121 +4,66 @@ import * as THREE from "three";
 const MARKER_SIZE = 0.08;
 
 const HEAD_COLOR = "#ff00ff";
+const BODY_COLOR = "#ffff00";
 const TAIL_COLOR = "#0000ff";
 const AXIS_COLOR = "#ffffff";
 
 /*
- * R5.3d – Head–Tail Axis Debug
+ * R5.4 – Semantic Longitudinal Axis Debug
  *
- * Visualisiert die semantische Längsrichtung
- * des aktuellen Referenzmodells.
+ * Visualisiert ausschließlich die validierte
+ * Semantic Observation:
  *
- * Validierte Koordinatenbeobachtung:
+ * WholeDove HAS_LONGITUDINAL_AXIS
  *
- * minZ -> Schwanzseite
- * maxZ -> Kopfseite
- *
- * Die Marker stellen vorläufige semantische
- * Referenzpunkte dar. Sie sind noch keine
- * automatisch extrahierten Kopf- oder Schwanzzentren.
+ * Keine Bounding-Box-Auswertung.
+ * Keine eigene Head- oder Tail-Heuristik.
  */
 
 export default function HeadTailAxisDebug({
-  scene,
+  axis,
 }) {
   const debugGeometry = useMemo(() => {
-    if (!scene) return null;
+    const headCenter =
+      axis?.headReference?.center;
 
-    scene.updateMatrixWorld(true);
+    const bodyCenter =
+      axis?.bodyReference?.center;
 
-    const worldToScene = new THREE.Matrix4()
-      .copy(scene.matrixWorld)
-      .invert();
+    const tailCenter =
+      axis?.tailReference?.center;
 
-    const points = [];
-
-    scene.traverse((child) => {
-      if (!child.isMesh || !child.geometry) {
-        return;
-      }
-
-      const positionAttribute =
-        child.geometry.getAttribute("position");
-
-      if (!positionAttribute) {
-        return;
-      }
-
-      const point = new THREE.Vector3();
-
-      for (
-        let vertexIndex = 0;
-        vertexIndex < positionAttribute.count;
-        vertexIndex += 12
-      ) {
-        if (
-          typeof child.getVertexPosition ===
-          "function"
-        ) {
-          child.getVertexPosition(
-            vertexIndex,
-            point
-          );
-        } else {
-          point.fromBufferAttribute(
-            positionAttribute,
-            vertexIndex
-          );
-        }
-
-        point
-          .applyMatrix4(child.matrixWorld)
-          .applyMatrix4(worldToScene);
-
-        points.push(point.clone());
-      }
-    });
-
-    if (points.length === 0) {
+    if (
+      !headCenter ||
+      !bodyCenter ||
+      !tailCenter
+    ) {
       return null;
     }
 
-    const bounds =
-      new THREE.Box3().setFromPoints(points);
+    const headReference =
+      headCenter.clone();
 
-    const boundsCenter = new THREE.Vector3();
-    bounds.getCenter(boundsCenter);
+    const bodyReference =
+      bodyCenter.clone();
 
-    /*
-     * Vorläufige semantische Referenzen:
-     *
-     * Tail Reference = minZ
-     * Head Reference = maxZ
-     */
-    const tailReference = new THREE.Vector3(
-      boundsCenter.x,
-      boundsCenter.y,
-      bounds.min.z
-    );
-
-    const headReference = new THREE.Vector3(
-      boundsCenter.x,
-      boundsCenter.y,
-      bounds.max.z
-    );
+    const tailReference =
+      tailCenter.clone();
 
     const axisGeometry =
       new THREE.BufferGeometry().setFromPoints([
         tailReference,
+        bodyReference,
         headReference,
       ]);
 
     return {
       axisGeometry,
-      tailReference,
       headReference,
+      bodyReference,
+      tailReference,
     };
-  }, [scene]);
+  }, [axis]);
 
   if (!debugGeometry) {
     return null;
@@ -126,7 +71,7 @@ export default function HeadTailAxisDebug({
 
   return (
     <group>
-      {/* Head–Tail Axis */}
+      {/* Semantic longitudinal axis */}
       <line
         geometry={debugGeometry.axisGeometry}
         renderOrder={1500}
@@ -150,6 +95,23 @@ export default function HeadTailAxisDebug({
 
         <meshBasicMaterial
           color={TAIL_COLOR}
+          depthTest={false}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
+
+      {/* Body Reference */}
+      <mesh
+        position={debugGeometry.bodyReference}
+        renderOrder={1501}
+      >
+        <sphereGeometry
+          args={[MARKER_SIZE, 20, 20]}
+        />
+
+        <meshBasicMaterial
+          color={BODY_COLOR}
           depthTest={false}
           depthWrite={false}
           toneMapped={false}

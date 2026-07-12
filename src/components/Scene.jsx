@@ -12,7 +12,10 @@ export default function Scene({
   layers,
   emergenceCount,
   distributionMode,
+  onPerceptionStateChange,
 }) {
+
+
   const flapRef = useRef(0);
 
   return (
@@ -33,13 +36,16 @@ export default function Scene({
 
       <SpatialGrid />
 
-      <DoveModel
-        flapRef={flapRef}
-        displayMode={displayMode}
-        layers={layers}
-        emergenceCount={emergenceCount}
-        distributionMode={distributionMode}
-      />
+  <DoveModel
+    flapRef={flapRef}
+    displayMode={displayMode}
+    layers={layers}
+    emergenceCount={emergenceCount}
+    distributionMode={distributionMode}
+    onPerceptionStateChange={
+      onPerceptionStateChange
+    }
+  />
     </>
   );
 }

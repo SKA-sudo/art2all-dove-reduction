@@ -3,7 +3,7 @@ import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useState } from "react";
 
 import Scene from "./components/Scene";
-import perceptionState from "./core/testPipeline";
+
 import PerceptionEngineDebug from "./components/perception/PerceptionEngineDebug";
 
 /* -------------------- APP -------------------- */
@@ -17,6 +17,9 @@ export default function App() {
 
   const [showPerceptionMonitor, setShowPerceptionMonitor] =
     useState(false);
+
+    const [perceptionState, setPerceptionState] =
+  useState(null);
 
   const [layers, setLayers] = useState({
     referenceModel: true,
@@ -388,13 +391,14 @@ export default function App() {
           fov: 42,
         }}
       >
-        <Scene
-          displayMode={displayMode}
-          onDisplayModeChange={setDisplayMode}
-          layers={layers}
-          emergenceCount={emergenceCount}
-          distributionMode={distributionMode}
-        />
+      <Scene
+        displayMode={displayMode}
+        onDisplayModeChange={setDisplayMode}
+        layers={layers}
+        emergenceCount={emergenceCount}
+        distributionMode={distributionMode}
+        onPerceptionStateChange={setPerceptionState}
+      />
 
         <EffectComposer>
           <Bloom

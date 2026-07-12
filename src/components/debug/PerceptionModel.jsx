@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import {useEffect, useMemo, useRef, useState,} from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -11,6 +11,9 @@ import HeadTailAxisDebug from "./HeadTailAxisDebug";
 
 import { extractFlow } from "../../core/perception/FlowExtractor";
 import { extractFaceCenters } from "../../core/perception/RegionExtractor";
+
+import ReferenceModel from "../../core/ReferenceModel";
+import LongitudinalAxisExtractor from "../../core/perception/LongitudinalAxisExtractor";
 
 function createRegionPerceptionState(scene) {
   if (!scene) {
@@ -39,6 +42,7 @@ export default function PerceptionModel({
   layers,
   emergenceCount,
   distributionMode,
+  onPerceptionStateChange,
 }) {
   const bodyCenterMeshRef = useRef();
   const bodyCenterBoxRef = useRef(new THREE.Box3());
@@ -87,6 +91,73 @@ export default function PerceptionModel({
       reduction: 1,
     });
   }, [scene]);
+
+const runtimePerceptionState = useMemo(() => {
+  if (
+    !scene ||
+    bodyWingTransitionRegions.length === 0
+  ) {
+    return null;
+  }
+
+  const canonicalFaces =
+    bodyWingTransitionRegions
+      .filter((faceCenter) =>
+        Boolean(faceCenter?.position)
+      )
+      .map((faceCenter) => ({
+        id: faceCenter.id,
+        center: faceCenter.position.clone(),
+      }));
+
+  if (canonicalFaces.length === 0) {
+    return null;
+  }
+
+  const referenceModel = new ReferenceModel({
+    id: "runtime-dove-reference",
+    type: "glb",
+    source: scene,
+  });
+
+  const observation =
+    referenceModel.createObservation({
+      faces: canonicalFaces,
+    });
+
+  const extractor =
+    new LongitudinalAxisExtractor();
+
+  const semanticObservations = [
+    extractor.extract(observation),
+  ];
+
+  return observation.createPerceptionState({
+    semanticObservations,
+  });
+}, [scene, bodyWingTransitionRegions]);
+
+
+useEffect(() => {
+  if (!runtimePerceptionState) return;
+
+  onPerceptionStateChange?.(
+    runtimePerceptionState
+  );
+}, [
+  runtimePerceptionState,
+  onPerceptionStateChange,
+]);
+
+
+const longitudinalAxis =
+  runtimePerceptionState?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_LONGITUDINAL_AXIS"
+    )
+    ?.value ?? null;
 
   useFrame(() => {
     if (!scene || !bodyCenterMeshRef.current) return;
@@ -140,9 +211,12 @@ export default function PerceptionModel({
   />
 )}
 
-{layers?.visualPriority && (
-  <HeadTailAxisDebug scene={scene} />
-)}
+{layers?.visualPriority &&
+  longitudinalAxis && (
+    <HeadTailAxisDebug
+      axis={longitudinalAxis}
+    />
+  )}
 
       {layers?.wireframe && (
         <primitive object={perceptionScene} />

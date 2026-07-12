@@ -2,6 +2,8 @@ import ReferenceModel from "./ReferenceModel";
 import IdentityExtractor from "./perception/IdentityExtractor";
 import BodyCenterExtractor from "./perception/BodyCenterExtractor";
 import GestureExtractor from "./perception/GestureExtractor";
+import LongitudinalAxisExtractor from "./perception/LongitudinalAxisExtractor";
+
 import * as THREE from "three";
 import OutlineExtractor from "./perception/OutlineExtractor";
 import FaceCenterExtractor from "./perception/FaceCenterExtractor";
@@ -19,15 +21,15 @@ const reference = new ReferenceModel({
 
 const testFaces = [
   {
+    center: new THREE.Vector3(0, 0, -2),
+    normal: new THREE.Vector3(0, 0, 1),
+  },
+  {
     center: new THREE.Vector3(0, 0, 0),
     normal: new THREE.Vector3(0, 0, 1),
   },
   {
-    center: new THREE.Vector3(2, 0, 0),
-    normal: new THREE.Vector3(0, 0, 1),
-  },
-  {
-    center: new THREE.Vector3(0, 2, 0),
+    center: new THREE.Vector3(0, 0, 2),
     normal: new THREE.Vector3(0, 0, 1),
   },
 ];
@@ -57,6 +59,7 @@ const extractors = [
   new IdentityExtractor(),
   new FaceCenterExtractor(),
   new BodyCenterExtractor(),
+  new LongitudinalAxisExtractor(),
   new GestureExtractor(),
   new OutlineExtractor(),
   new FlowExtractor(),
@@ -68,11 +71,18 @@ const extractors = [
     side: "right",
   }),
 ];
-
 console.log("FaceCenterExtractor:", FaceCenterExtractor);
 console.log("Extractors count:", extractors.length);
 const semanticObservations = extractors.map((extractor) =>
   extractor.extract(observation)
+);
+
+console.log(
+  "Semantic predicates:",
+  semanticObservations.map(
+    (semanticObservation) =>
+      semanticObservation.predicate
+  )
 );
 
 const perceptionState = observation.createPerceptionState({
