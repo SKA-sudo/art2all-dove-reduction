@@ -1,5 +1,8 @@
-export default function PerceptionEngineDebug({ perceptionState }) {
-  const observations = perceptionState?.semanticObservations ?? [];
+export default function PerceptionEngineDebug({
+  perceptionState,
+}) {
+  const observations =
+    perceptionState?.semanticObservations ?? [];
 
   return (
     <div
@@ -19,11 +22,12 @@ export default function PerceptionEngineDebug({ perceptionState }) {
         fontFamily: "monospace",
         fontSize: 13,
         borderRadius: 8,
-        boxShadow: "0 6px 24px rgba(0, 0, 0, 0.35)",
+        boxShadow:
+          "0 6px 24px rgba(0, 0, 0, 0.35)",
       }}
     >
       <div style={{ marginBottom: 8 }}>
-        <strong>Perception Engine</strong>
+        <strong>Semantic Observations</strong>
       </div>
 
       {observations.length === 0 && (
@@ -34,71 +38,98 @@ export default function PerceptionEngineDebug({ perceptionState }) {
         <div
           key={observation.id}
           style={{
-            marginBottom: 6,
-            borderBottom: "1px solid rgba(255,255,255,.15)",
-            paddingBottom: 4,
+            marginBottom: 8,
+            borderBottom:
+              "1px solid rgba(255,255,255,.15)",
+            paddingBottom: 8,
           }}
         >
-          <div>
-            <strong>{observation.subject}</strong>
+          <div
+            style={{
+              color: "#7fd4ff",
+              fontWeight: "bold",
+              marginBottom: 4,
+            }}
+          >
+            {observation.predicate}
           </div>
 
           <div>
-            <strong>{observation.predicate}</strong>
+            Subject: {observation.subject}
           </div>
 
-          {observation.value?.faces && (
+          <div>
+            Source: {observation.source}
+          </div>
+
+          {observation.value?.faceCount !==
+            undefined && (
             <div>
-              Faces: {observation.value.faces.length}
+              Faces:{" "}
+              {observation.value.faceCount}
             </div>
           )}
+
           {observation.value?.faces && (
             <div>
               Coverage:{" "}
               {(
-                (observation.value.faces.length / 9339) *
+                (observation.value.faces.length /
+                  9339) *
                 100
               ).toFixed(1)}
               %
             </div>
           )}
-          {observation.value?.faceCount && (
-            <div>
-              Region Center Faces:{" "}
-              {observation.value.faceCount}
-            </div>
-          )}
 
-        <div>
-          Type:{" "}
-          {observation.value?.constructor?.name ??
-            "Semantic Region"}
-        </div>
-        {observation.value?.progressMin !== undefined && (
-          <div>
-            Range:{" "}
-            {observation.value.progressMin.toFixed(2)}
-            {" - "}
-            {observation.value.progressMax.toFixed(2)}
-          </div>
-        )}
-          <div>
-            confidence:
-            {" "}
-            {observation.value?.faceCount && (
+          {observation.value?.progressMin !==
+            undefined && (
             <div>
-              Faces: {observation.value.faceCount}
-            </div>
-          )}
-
-          {observation.value?.progressMin !== undefined && (
-            <div>
-              Range: {observation.value.progressMin.toFixed(2)}
+              Range:{" "}
+              {observation.value.progressMin.toFixed(
+                2
+              )}
               {" - "}
-              {observation.value.progressMax.toFixed(2)}
+              {observation.value.progressMax.toFixed(
+                2
+              )}
             </div>
           )}
+
+          <div>
+            Type:{" "}
+            {observation.value?.constructor?.name ??
+              "Semantic Region"}
+          </div>
+
+          <div>
+            Confidence:{" "}
             {observation.confidence}
+          </div>
+
+          <div
+            style={{
+              color:
+                observation.confidence >= 1
+                  ? "#66ff99"
+                  : "#ffcc66",
+            }}
+          >
+            Status:{" "}
+            {observation.confidence >= 1
+              ? "VALIDATED"
+              : "DISCOVERED"}
+          </div>
+          <div>
+            Progress:
+            {" "}
+            {observation.value?.progressMin !== undefined
+              ? `${(
+                  observation.value.progressMin * 100
+                ).toFixed(0)}% - ${(
+                  observation.value.progressMax * 100
+                ).toFixed(0)}%`
+              : "-"}
           </div>
         </div>
       ))}
