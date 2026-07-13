@@ -1180,7 +1180,7 @@ Working hypothesis:
 Visual priority increases with geometric distance from the model center.
 
 Result:
-
+        
 The resulting priority map does not correspond to human perception of the
 Peace Dove.
 

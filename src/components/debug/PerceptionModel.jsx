@@ -14,6 +14,8 @@ import { extractFaceCenters } from "../../core/perception/RegionExtractor";
 
 import ReferenceModel from "../../core/ReferenceModel";
 import LongitudinalAxisExtractor from "../../core/perception/LongitudinalAxisExtractor";
+import HeadRegionExtractor from "../../core/perception/HeadRegionExtractor";
+import HeadRegionDebug from "./HeadRegionDebug";
 
 function createRegionPerceptionState(scene) {
   if (!scene) {
@@ -125,11 +127,19 @@ const runtimePerceptionState = useMemo(() => {
       faces: canonicalFaces,
     });
 
-  const extractor =
+  const longitudinalAxisExtractor =
     new LongitudinalAxisExtractor();
 
+  const headRegionExtractor =
+    new HeadRegionExtractor();
+
   const semanticObservations = [
-    extractor.extract(observation),
+    longitudinalAxisExtractor.extract(
+      observation
+    ),
+    headRegionExtractor.extract(
+      observation
+    ),
   ];
 
   return observation.createPerceptionState({
@@ -159,8 +169,20 @@ const longitudinalAxis =
     )
     ?.value ?? null;
 
+  const headRegion =
+  runtimePerceptionState?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_HEAD_REGION"
+    )
+    ?.value ?? null;
+
   useFrame(() => {
     if (!scene || !bodyCenterMeshRef.current) return;
+
+
+    
 
     bodyCenterBoxRef.current.setFromObject(scene);
 
@@ -195,6 +217,7 @@ const longitudinalAxis =
   if (!perceptionScene) return null;
 
  return (
+  
     <group>
       {layers?.visualEmergence && (
         <DebugVisualEmergence
@@ -218,9 +241,16 @@ const longitudinalAxis =
     />
   )}
 
-      {layers?.wireframe && (
-        <primitive object={perceptionScene} />
-      )}
+{layers?.visualPriority &&
+  headRegion && (
+    <HeadRegionDebug
+      region={headRegion}
+    />
+  )}
+
+{layers?.wireframe && (
+    <primitive object={perceptionScene} />
+  )}
 
       <mesh
         ref={bodyCenterMeshRef}
@@ -269,6 +299,10 @@ const longitudinalAxis =
           />
         </mesh>
       )}
+    
     </group>
-  );
+  
+  
+);
+  
 }

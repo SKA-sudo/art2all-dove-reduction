@@ -1,10 +1,15 @@
 import * as THREE from "three";
 
-const HEAD_REGION_START = 0.92;
-const HEAD_REGION_END = 1.0;
+export let HEAD_REGION_START = 0.92;
+export let HEAD_REGION_END = 1.0;
 
 const TAIL_REGION_START = 0.0;
 const TAIL_REGION_END = 0.08;
+
+export function setHeadRegion(start, end) {
+  HEAD_REGION_START = start;
+  HEAD_REGION_END = end;
+}
 
 /*
  * R5.5 – Semantic Regions on the Longitudinal Axis

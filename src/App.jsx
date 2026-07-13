@@ -5,6 +5,7 @@ import { useState } from "react";
 import Scene from "./components/Scene";
 
 import PerceptionEngineDebug from "./components/perception/PerceptionEngineDebug";
+// import HeadRegionControl from "./components/debug/HeadRegionControl";
 
 /* -------------------- APP -------------------- */
 
@@ -364,7 +365,17 @@ export default function App() {
             </button>
           ))}
         </div>
+ {/* 
+{layers.visualPriority && (
+  <>
+    <div style={sectionTitleStyle}>
+      Head Region Experiment
+    </div>
 
+    <HeadRegionControl />
+  </>
+)}
+*/}
         <div style={sectionTitleStyle}>
           Laboratory tools
         </div>
