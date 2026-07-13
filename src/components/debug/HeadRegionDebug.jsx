@@ -1,10 +1,18 @@
 const HEAD_REGION_COLOR = "#ff00ff";
-const FACE_MARKER_SIZE = 0.035;
+const FACE_MARKER_SIZE = 0.012;
 
 export default function HeadRegionDebug({
   region,
 }) {
   const faces = region?.faces ?? [];
+
+  console.log(
+    "R5.5 HEAD REGION DEBUG",
+    {
+      region,
+      faceCount: faces.length,
+    }
+  );
 
   if (faces.length === 0) {
     return null;

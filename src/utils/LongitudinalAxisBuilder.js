@@ -63,20 +63,21 @@ export function buildLongitudinalAxis({ faces }) {
   });
 
   const tailRegion = buildSemanticRegion({
-    faces: validFaces,
-    axisStart: initialTailReference.center,
-    axis: initialAxis,
-    axisLengthSq,
-    progressMin: TAIL_REGION_START,
-    progressMax: TAIL_REGION_END,
-  });
+  faces: validFaces,
+  axisStart: initialTailReference.center,
+  axis: initialAxis,
+  axisLengthSq,
+  progressMin: TAIL_REGION_START,
+  progressMax: TAIL_REGION_END,
+});
 
-  if (
-    headRegion.faces.length === 0 ||
-    tailRegion.faces.length === 0
-  ) {
-    return null;
-  }
+
+if (
+  headRegion.faces.length === 0 ||
+  tailRegion.faces.length === 0
+) {
+  return null;
+}
 
   const headReference =
     createRegionReference(headRegion);
