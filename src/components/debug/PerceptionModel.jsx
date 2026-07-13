@@ -249,7 +249,7 @@ const longitudinalAxis =
     />
   )}
 
-{layers?.visualPriority &&
+{layers?.headRegion &&
   headRegion && (
     <HeadRegionDebug
       region={headRegion}

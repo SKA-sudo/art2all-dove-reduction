@@ -137,27 +137,53 @@ PP-012  ☐ Dynamic Attention
 
 
 ################################################################
-Sprint R5.5
+Sprint R5.6
 
 Perception Principle PP-006
 
-Semantic Head Region
+Semantic Head Region Validation
 
 Goal
 
-Discover the minimal semantic region that humans
-consistently perceive as the head of the Peace Dove.
+Validate that the generated Semantic Head Region
+is consistently perceived by humans as the head
+of the Peace Dove.
 
-The objective is not geometric accuracy.
+The objective is not improving the algorithm.
 
-The objective is perceptual stability.
+The objective is validating perceptual stability.
+
+Implementation Goal
+
+The Perception Laboratory now provides an isolated
+Head Region View.
+
+This sprint focuses exclusively on observation,
+comparison and validation.
+
+No new semantic extractors shall be implemented.
+
+Research Tasks
+
+- Validate different Head Region thresholds.
+
+- Compare perceptual stability.
+
+- Document the observed semantic boundaries.
+
+- Identify the minimal stable Head Region.
 
 Success Criterion
 
-Independent observers consistently identify the
-generated semantic head region as the visual head
+Independent observers consistently identify
+the isolated semantic region as the visual head
 of the Peace Dove.
 
-Only after successful validation may PP-006 become
-part of the Production Engine.
+After successful validation:
+
+PP-006 becomes validated.
+
+The resulting semantic rule becomes eligible
+for transfer into the Art2all Production Engine.
+
 ################################################################

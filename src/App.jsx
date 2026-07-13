@@ -22,18 +22,19 @@ export default function App() {
     const [perceptionState, setPerceptionState] =
   useState(null);
 
-  const [layers, setLayers] = useState({
-    referenceModel: true,
-    animation: false,
-    wireframe: true,
-    landmarks: false,
-    semanticRegions: false,
-    outline: false,
-    flow: false,
-    gesture: false,
-    visualEmergence: false,
-    visualPriority: false,
-  });
+    const [layers, setLayers] = useState({
+      referenceModel: true,
+      animation: false,
+      wireframe: true,
+      landmarks: false,
+      semanticRegions: false,
+      outline: false,
+      flow: false,
+      gesture: false,
+      visualEmergence: false,
+      visualPriority: false,
+      headRegion: false,
+    });
 
   const toggleLayer = (layerName) => {
     setLayers((currentLayers) => ({
@@ -43,21 +44,40 @@ export default function App() {
   };
 
   const activateEmergenceCleanView = () => {
-    setLayers({
-      referenceModel: false,
-      animation: false,
-      wireframe: false,
-      landmarks: false,
-      semanticRegions: false,
-      outline: false,
-      flow: false,
-      gesture: false,
-      visualEmergence: true,
-      visualPriority: false,
-    });
+  setLayers({
+    referenceModel: false,
+    animation: false,
+    wireframe: false,
+    landmarks: false,
+    semanticRegions: false,
+    outline: false,
+    flow: false,
+    gesture: false,
+    visualEmergence: true,
+    visualPriority: false,
+    headRegion: false,
+  });
 
-    setShowPerceptionMonitor(false);
-  };
+  setShowPerceptionMonitor(false);
+};
+
+  const activateHeadRegionCleanView = () => {
+  setLayers({
+    referenceModel: false,
+    animation: false,
+    wireframe: false,
+    landmarks: false,
+    semanticRegions: false,
+    outline: false,
+    flow: false,
+    gesture: false,
+    visualEmergence: false,
+    visualPriority: false,
+    headRegion: true,
+  });
+
+  setShowPerceptionMonitor(false);
+};
 
   const panelButtonStyle = {
     minHeight: 20,
@@ -165,7 +185,15 @@ export default function App() {
         >
           Emergence Clean View
         </button>
-        
+        <button
+          type="button"
+          style={getToggleButtonStyle(
+            layers.headRegion
+          )}
+          onClick={activateHeadRegionCleanView}
+        >
+          Head Region Clean View
+        </button>
         <button
           type="button"
           style={getToggleButtonStyle(
@@ -228,7 +256,16 @@ export default function App() {
           Semantic Regions:{" "}
           {layers.semanticRegions ? "ON" : "OFF"}
         </button>
-
+        <button
+          type="button"
+          style={getToggleButtonStyle(
+            layers.headRegion
+          )}
+          onClick={() => toggleLayer("headRegion")}
+        >
+          Head Region:{" "}
+          {layers.headRegion ? "ON" : "OFF"}
+        </button>
         <button
           type="button"
           style={getToggleButtonStyle(layers.outline)}
