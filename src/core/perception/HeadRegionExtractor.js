@@ -18,13 +18,18 @@ export default class HeadRegionExtractor {
       Array.isArray(value?.faces) &&
       value.faces.length > 0;
 
-    return new SemanticObservation({
-      id: crypto.randomUUID(),
-      subject: "WholeDove",
-      predicate: "HAS_HEAD_REGION",
-      value,
-      source: this.id,
-      confidence: hasFaces ? 1.0 : 0.0,
-    });
+      return new SemanticObservation({
+        id: crypto.randomUUID(),
+        subject: "WholeDove",
+        predicate: "HAS_HEAD_REGION",
+
+        value: {
+          ...value,
+          faceCount: value?.faces?.length ?? 0,
+        },
+
+        source: this.id,
+        confidence: hasFaces ? 1.0 : 0.0,
+      });
   }
 }

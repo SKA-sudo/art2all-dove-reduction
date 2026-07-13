@@ -6,14 +6,6 @@ export default function HeadRegionDebug({
 }) {
   const faces = region?.faces ?? [];
 
-  console.log(
-    "R5.5 HEAD REGION DEBUG",
-    {
-      region,
-      faceCount: faces.length,
-    }
-  );
-
   if (faces.length === 0) {
     return null;
   }

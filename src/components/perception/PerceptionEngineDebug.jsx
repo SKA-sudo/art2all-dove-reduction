@@ -43,18 +43,61 @@ export default function PerceptionEngineDebug({ perceptionState }) {
             <strong>{observation.subject}</strong>
           </div>
 
-          <div>{observation.predicate}</div>
-
           <div>
-            value:
-            {" "}
-            {observation.value?.constructor?.name ??
-              String(observation.value)}
+            <strong>{observation.predicate}</strong>
           </div>
 
+          {observation.value?.faces && (
+            <div>
+              Faces: {observation.value.faces.length}
+            </div>
+          )}
+          {observation.value?.faces && (
+            <div>
+              Coverage:{" "}
+              {(
+                (observation.value.faces.length / 9339) *
+                100
+              ).toFixed(1)}
+              %
+            </div>
+          )}
+          {observation.value?.faceCount && (
+            <div>
+              Region Center Faces:{" "}
+              {observation.value.faceCount}
+            </div>
+          )}
+
+        <div>
+          Type:{" "}
+          {observation.value?.constructor?.name ??
+            "Semantic Region"}
+        </div>
+        {observation.value?.progressMin !== undefined && (
+          <div>
+            Range:{" "}
+            {observation.value.progressMin.toFixed(2)}
+            {" - "}
+            {observation.value.progressMax.toFixed(2)}
+          </div>
+        )}
           <div>
             confidence:
             {" "}
+            {observation.value?.faceCount && (
+            <div>
+              Faces: {observation.value.faceCount}
+            </div>
+          )}
+
+          {observation.value?.progressMin !== undefined && (
+            <div>
+              Range: {observation.value.progressMin.toFixed(2)}
+              {" - "}
+              {observation.value.progressMax.toFixed(2)}
+            </div>
+          )}
             {observation.confidence}
           </div>
         </div>

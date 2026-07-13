@@ -177,16 +177,8 @@ const longitudinalAxis =
         "HAS_HEAD_REGION"
     )
     ?.value ?? null;
-    console.log(
-  "R5.5 HAS_HEAD_REGION",
-  {
-    headRegion,
-    faceCount:
-      headRegion?.faces?.length ?? 0,
-  }
-);
-
-  useFrame(() => {
+  
+   useFrame(() => {
     if (!scene || !bodyCenterMeshRef.current) return;
 
 
