@@ -136,6 +136,7 @@ PP-011  ☐ Tail Confirmation
 PP-012  ☐ Dynamic Attention
 
 
+
 ################################################################
 Sprint R5.7
 
@@ -143,34 +144,89 @@ Perception Principle PP-007
 
 Eye Priority
 
+Status
+
+Implementation in Progress
+
 Goal
 
-Identify the minimal semantic region that humans
-consistently perceive as the eye of the Peace Dove.
+Discover the minimal semantic relationship required
+for humans to consistently perceive the eye of the
+Peace Dove.
 
-The objective is not anatomical accuracy.
+The objective is not anatomical correctness.
 
 The objective is perceptual importance.
 
+Current State
+
+Completed
+
+✓ Semantic Head Region (PP-006)
+
+✓ Head Axis Builder
+
+✓ Head Axis Visualization
+
+✓ Semantic Observation Inspector
+
+✓ First Eye Candidate Visualization
+
+Current Hypothesis
+
+The eye is not defined by an absolute position.
+
+The eye emerges from a stable semantic relationship
+within the Head Region.
+
+Current Research Direction
+
+Head Region
+
+↓
+
+Head Axis
+
+↓
+
+Eye Candidate
+
+↓
+
+Eye Region
+
 Implementation Goal
 
-Reuse the Semantic Observation Pipeline.
+Continue experimenting with the Eye Candidate
+relative to the Head Axis.
 
-No architectural changes.
+Do not implement an Eye Extractor yet.
 
-Implement one additional semantic observation:
+First validate the semantic hypothesis.
 
-HAS_EYE_REGION
+Research Questions
 
-The observation shall automatically appear inside
-the Semantic Observation Inspector.
+- Is the Eye Candidate consistently perceived
+  as belonging to the eye region?
+
+- Which semantic relationship best predicts
+  human perception?
+
+- Does the eye emerge relative to the
+  Head Axis rather than world coordinates?
 
 Success Criterion
 
-Independent observers consistently identify the
-generated semantic eye region.
+A stable semantic rule can be formulated that
+predicts the perceived eye location.
 
-After validation:
+Only then shall
 
-PP-007 becomes eligible for the Production Engine.
+HAS_EYE_REGION
+
+be implemented as a Semantic Observation.
+
+Research supports the product.
+
+The product remains the primary objective.
 ################################################################
