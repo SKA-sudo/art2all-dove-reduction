@@ -206,6 +206,7 @@ export default function App() {
         >
           Emergence Clean View
         </button>
+        
         <button
           type="button"
           style={getToggleButtonStyle(

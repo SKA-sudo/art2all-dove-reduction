@@ -262,8 +262,8 @@ const headRegion =
       region={bodyRegion}
     />
   )}
-  
-    
+
+
 {layers?.wireframe && (
     <primitive object={perceptionScene} />
   )}
@@ -283,7 +283,7 @@ const headRegion =
         />
       </mesh>
 
-      {layers?.semanticRegions && (
+  {layers?.semanticRegions && (
         <BodyWingTransitionLayer
           regions={
             layers?.animation
@@ -293,7 +293,7 @@ const headRegion =
         />
       )}
 
-      {layers?.outline && (
+  {layers?.outline && (
         <OutlineLayer scene={scene} />
       )}
 
