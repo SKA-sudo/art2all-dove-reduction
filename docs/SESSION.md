@@ -137,103 +137,26 @@ PP-012  ☐ Dynamic Attention
 
 
 
-################################################################
-Sprint R5.8
+Sprint R6.3 – Body / Wing Boundary
+Ziel
 
-Perception Principle PP-007
+Die semantische Grenze zwischen Körper und Flügel identifizieren und visualisieren.
 
-Semantic Head Space
+Hintergrund
 
-Status
+Mit der ersten Body Region wurde sichtbar, dass der Körper noch Bereiche der Flügel einschließt. Das bestätigt die Hypothese, dass zwischen beiden keine harte geometrische Trennung existiert, sondern eine semantische Übergangszone.
 
-Ready
+Sprintziel
+Die Übergangszone zwischen Body und Wings untersuchen.
+Kriterien entwickeln, wann ein Face noch zum Körper und wann bereits zum Flügel gehört.
+Die Grenze zunächst ausschließlich visualisieren und validieren.
+Keine Optimierung der Paper-Platzierung oder weiterer Details.
+Erfolgskriterium
 
-Goal
+Am Ende des Sprints soll die semantische Trennung zwischen:
 
-Discover the minimal semantic orientation required
-to establish a stable local coordinate system
-inside the Head Region.
+Head
+Body
+Body/Wing Boundary
 
-Current State
-
-Completed
-
-✓ Semantic Head Region
-
-✓ Head Axis
-
-✓ Head Axis Visualization
-
-✓ Eye Candidate Experiment Panel
-
-✓ Local Coordinate System Visualization
-
-Validated Finding
-
-The Head Axis alone cannot define
-a stable semantic eye position.
-
-Current Hypothesis
-
-A semantic region requires not only
-a longitudinal axis but also a semantic
-orientation before stable semantic
-subregions can emerge.
-
-Research Direction
-
-Head Region
-
-↓
-
-Semantic Head Space
-
-↓
-
-Head Axis
-
-+
-
-Semantic Orientation
-
-↓
-
-Eye Candidate
-
-↓
-
-Eye Region
-
-Implementation Goal
-
-Continue investigating the semantic
-orientation of the Head Region.
-
-Do not implement Eye Region.
-
-Do not implement Eye Extractor.
-
-First identify the semantic coordinate
-system of the Head Region.
-
-Research Questions
-
-- Which semantic relationship defines
-  the perceptual "top" of the Head Region?
-
-- Can semantic orientation emerge from
-  the distribution of semantic faces?
-
-- Which minimal relationship allows
-  stable Eye Candidate prediction?
-
-Success Criterion
-
-A stable semantic coordinate system
-can be formulated for the Head Region.
-
-Only then shall Eye Region research continue.
-
-Research supports the product.
-
-The product remains the primary objective.
+klar sichtbar und reproduzierbar sein.

@@ -45,6 +45,7 @@ export default function App() {
       visualEmergence: false,
       visualPriority: false,
       headRegion: false,
+      bodyRegion: false,
     });
 
   const toggleLayer = (layerName) => {
@@ -75,6 +76,7 @@ export default function App() {
     visualEmergence: true,
     visualPriority: false,
     headRegion: false,
+    bodyRegion: false,
   });
 
   setShowPerceptionMonitor(false);
@@ -213,6 +215,17 @@ export default function App() {
         >
           Head Region Clean View
         </button>
+
+        <button
+            type="button"
+            style={getToggleButtonStyle(
+              layers.bodyRegion
+            )}
+            onClick={() => toggleLayer("bodyRegion")}
+          >
+            Body Region:{" "}
+            {layers.bodyRegion ? "ON" : "OFF"}
+          </button>
         <button
           type="button"
           style={getToggleButtonStyle(

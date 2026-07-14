@@ -5,6 +5,9 @@ export let HEAD_REGION_END = 1.0;
 
 const TAIL_REGION_START = 0.0;
 const TAIL_REGION_END = 0.08;
+const BODY_REGION_START = 0.16;
+const BODY_REGION_END = 0.84;
+const BODY_RADIUS_PERCENTILE = 0.45;
 
 export function setHeadRegion(start, end) {
   HEAD_REGION_START = start;
@@ -62,7 +65,7 @@ export function buildLongitudinalAxis({ faces }) {
     progressMax: HEAD_REGION_END,
   });
 
-  const tailRegion = buildSemanticRegion({
+const tailRegion = buildSemanticRegion({
   faces: validFaces,
   axisStart: initialTailReference.center,
   axis: initialAxis,
@@ -71,9 +74,17 @@ export function buildLongitudinalAxis({ faces }) {
   progressMax: TAIL_REGION_END,
 });
 
+const bodyRegion = buildBodyRegion({
+  faces: validFaces,
+  axisStart: initialTailReference.center,
+  axis: initialAxis,
+  axisLengthSq,
+});
+
 
 if (
   headRegion.faces.length === 0 ||
+  bodyRegion.faces.length === 0 ||
   tailRegion.faces.length === 0
 ) {
   return null;
@@ -91,15 +102,16 @@ if (
     .normalize();
 
   return {
-    bodyReference,
+      bodyReference,
+      bodyRegion,
 
-    headRegion,
-    headReference,
+      headRegion,
+      headReference,
 
-    tailRegion,
-    tailReference,
+      tailRegion,
+      tailReference,
 
-    direction,
+      direction,
   };
 }
 
@@ -174,6 +186,93 @@ function buildSemanticRegion({
     faces: regionFaces,
   };
 }
+
+function buildBodyRegion({
+  faces,
+  axisStart,
+  axis,
+  axisLengthSq,
+}) {
+  const normalizedAxis = axis
+    .clone()
+    .normalize();
+
+  const centralFaces = faces.filter((face) => {
+    const relativePosition = face.center
+      .clone()
+      .sub(axisStart);
+
+    const progress =
+      relativePosition.dot(axis) /
+      axisLengthSq;
+
+    return (
+      progress >= BODY_REGION_START &&
+      progress <= BODY_REGION_END
+    );
+  });
+
+  if (centralFaces.length === 0) {
+    return {
+      progressMin: BODY_REGION_START,
+      progressMax: BODY_REGION_END,
+      faces: [],
+    };
+  }
+
+  const facesWithRadius = centralFaces.map((face) => {
+    const relativePosition = face.center
+      .clone()
+      .sub(axisStart);
+
+    const axisDistance =
+      relativePosition.dot(normalizedAxis);
+
+    const axisPoint = axisStart
+      .clone()
+      .addScaledVector(
+        normalizedAxis,
+        axisDistance
+      );
+
+    return {
+      face,
+      radiusSq:
+        face.center.distanceToSquared(axisPoint),
+    };
+  });
+
+  const sortedRadii = facesWithRadius
+    .map(({ radiusSq }) => radiusSq)
+    .sort((a, b) => a - b);
+
+  const radiusIndex = Math.min(
+    sortedRadii.length - 1,
+    Math.floor(
+      sortedRadii.length *
+        BODY_RADIUS_PERCENTILE
+    )
+  );
+
+  const radiusLimitSq =
+    sortedRadii[radiusIndex];
+
+  const bodyFaces = facesWithRadius
+    .filter(
+      ({ radiusSq }) =>
+        radiusSq <= radiusLimitSq
+    )
+    .map(({ face }) => face);
+
+  return {
+    progressMin: BODY_REGION_START,
+    progressMax: BODY_REGION_END,
+    radiusPercentile:
+      BODY_RADIUS_PERCENTILE,
+    faces: bodyFaces,
+  };
+}
+
 
 function createRegionReference(region) {
   const center = new THREE.Vector3();

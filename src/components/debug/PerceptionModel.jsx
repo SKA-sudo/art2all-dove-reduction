@@ -16,6 +16,7 @@ import ReferenceModel from "../../core/ReferenceModel";
 import LongitudinalAxisExtractor from "../../core/perception/LongitudinalAxisExtractor";
 import HeadRegionExtractor from "../../core/perception/HeadRegionExtractor";
 import HeadRegionDebug from "./HeadRegionDebug";
+import BodyRegionDebug from "./BodyRegionDebug";
 
 function createRegionPerceptionState(scene) {
   if (!scene) {
@@ -171,7 +172,10 @@ const longitudinalAxis =
     )
     ?.value ?? null;
 
-  const headRegion =
+const bodyRegion =
+  longitudinalAxis?.bodyRegion ?? null;    
+
+const headRegion =
   runtimePerceptionState?.semanticObservations
     ?.find(
       (semanticObservation) =>
@@ -250,6 +254,16 @@ const longitudinalAxis =
       eyeExperiment={eyeExperiment}
     />
   )}
+
+
+{layers?.bodyRegion &&
+  bodyRegion && (
+    <BodyRegionDebug
+      region={bodyRegion}
+    />
+  )}
+  
+    
 {layers?.wireframe && (
     <primitive object={perceptionScene} />
   )}
