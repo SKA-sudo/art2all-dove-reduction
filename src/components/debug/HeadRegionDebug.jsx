@@ -6,32 +6,85 @@ import { buildHeadAxis } from "../../utils/HeadAxisBuilder";
 const HEAD_REGION_COLOR = "#ff00ff";
 const FACE_MARKER_SIZE = 0.012;
 const AXIS_MARKER_SIZE = 0.06;
-const EYE_MARKER_SIZE = 0.04;
+const LOCAL_AXIS_LENGTH = 0.4;
 
 export default function HeadRegionDebug({
   region,
+  eyeExperiment,
 }) {
   const faces = region?.faces ?? [];
+
+  const {
+    visible: eyeVisible = true,
+    axisOffset = 0.35,
+    verticalOffset = 0.05,
+    size: eyeSize = 0.04,
+  } = eyeExperiment ?? {};
 
   const markers = buildHeadAxis({
     faces,
   });
 
-  const eyeCandidate = useMemo(() => {
+  const localHeadSpace = useMemo(() => {
     if (!markers) {
       return null;
     }
 
-    const direction = markers.direction.clone();
-
-    const eye = markers.center
+    const direction = markers.direction
       .clone()
-      .add(direction.multiplyScalar(0.35));
+      .normalize();
 
-    eye.y += 0.05;
+    const worldUp = new THREE.Vector3(0, 1, 0);
 
-    return eye;
+    let localRight = new THREE.Vector3()
+      .crossVectors(direction, worldUp);
+
+    /*
+     * Falls Head Axis und World Up fast parallel sind,
+     * wäre das Kreuzprodukt nahezu null.
+     */
+    if (localRight.lengthSq() < 0.000001) {
+      localRight = new THREE.Vector3()
+        .crossVectors(
+          direction,
+          new THREE.Vector3(0, 0, 1)
+        );
+    }
+
+    localRight.normalize();
+
+    const localUp = new THREE.Vector3()
+      .crossVectors(localRight, direction)
+      .normalize();
+
+    return {
+      direction,
+      localRight,
+      localUp,
+    };
   }, [markers]);
+
+  const eyeCandidate = useMemo(() => {
+    if (!markers || !localHeadSpace) {
+      return null;
+    }
+
+    return markers.center
+      .clone()
+      .addScaledVector(
+        localHeadSpace.direction,
+        axisOffset
+      )
+      .addScaledVector(
+        localHeadSpace.localUp,
+        verticalOffset
+      );
+  }, [
+    markers,
+    localHeadSpace,
+    axisOffset,
+    verticalOffset,
+  ]);
 
   const axisGeometry = useMemo(() => {
     if (!markers) {
@@ -44,6 +97,38 @@ export default function HeadRegionDebug({
       markers.front,
     ]);
   }, [markers]);
+
+  const localUpGeometry = useMemo(() => {
+    if (!markers || !localHeadSpace) {
+      return null;
+    }
+
+    return new THREE.BufferGeometry().setFromPoints([
+      markers.center,
+      markers.center
+        .clone()
+        .addScaledVector(
+          localHeadSpace.localUp,
+          LOCAL_AXIS_LENGTH
+        ),
+    ]);
+  }, [markers, localHeadSpace]);
+
+  const localRightGeometry = useMemo(() => {
+    if (!markers || !localHeadSpace) {
+      return null;
+    }
+
+    return new THREE.BufferGeometry().setFromPoints([
+      markers.center,
+      markers.center
+        .clone()
+        .addScaledVector(
+          localHeadSpace.localRight,
+          LOCAL_AXIS_LENGTH
+        ),
+    ]);
+  }, [markers, localHeadSpace]);
 
   if (faces.length === 0) {
     return null;
@@ -99,14 +184,42 @@ export default function HeadRegionDebug({
         </line>
       )}
 
-      {eyeCandidate && (
+      {localUpGeometry && (
+        <line
+          geometry={localUpGeometry}
+          renderOrder={2600}
+        >
+          <lineBasicMaterial
+            color="lime"
+            depthTest={false}
+            depthWrite={false}
+            toneMapped={false}
+          />
+        </line>
+      )}
+
+      {localRightGeometry && (
+        <line
+          geometry={localRightGeometry}
+          renderOrder={2600}
+        >
+          <lineBasicMaterial
+            color="cyan"
+            depthTest={false}
+            depthWrite={false}
+            toneMapped={false}
+          />
+        </line>
+      )}
+
+      {eyeVisible && eyeCandidate && (
         <mesh
           position={eyeCandidate}
           renderOrder={3100}
         >
           <sphereGeometry
             args={[
-              EYE_MARKER_SIZE,
+              eyeSize,
               20,
               20,
             ]}

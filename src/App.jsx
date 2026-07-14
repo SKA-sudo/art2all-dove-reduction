@@ -13,8 +13,16 @@ export default function App() {
   const [displayMode, setDisplayMode] = useState("wireframe");
   const [emergenceCount, setEmergenceCount] = useState(25);
 
+  const [eyeExperiment, setEyeExperiment] = useState({
+    visible: true,
+    axisOffset: 0.35,
+    verticalOffset: 0.05,
+    size: 0.04,
+  });
+
   const [distributionMode, setDistributionMode] =
     useState("uniform");
+
 
   const [showPerceptionMonitor, setShowPerceptionMonitor] =
     useState(false);
@@ -40,6 +48,14 @@ export default function App() {
     setLayers((currentLayers) => ({
       ...currentLayers,
       [layerName]: !currentLayers[layerName],
+    }));
+  };
+
+
+  const updateEyeExperiment = (property, value) => {
+    setEyeExperiment((currentExperiment) => ({
+      ...currentExperiment,
+      [property]: value,
     }));
   };
 
@@ -402,17 +418,139 @@ export default function App() {
             </button>
           ))}
         </div>
- {/* 
-{layers.visualPriority && (
+ {layers.headRegion && (
   <>
     <div style={sectionTitleStyle}>
-      Head Region Experiment
+      Eye Candidate Experiment
     </div>
 
-    <HeadRegionControl />
+    <button
+      type="button"
+      style={getToggleButtonStyle(
+        eyeExperiment.visible
+      )}
+      onClick={() =>
+        updateEyeExperiment(
+          "visible",
+          !eyeExperiment.visible
+        )
+      }
+    >
+      Eye Candidate:{" "}
+      {eyeExperiment.visible ? "ON" : "OFF"}
+    </button>
+
+    <label
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        padding: "4px 6px",
+        borderRadius: 4,
+        background: "rgba(0, 0, 0, 0.35)",
+        color: "#ffffff",
+        fontSize: 8,
+      }}
+    >
+      <span>
+        Axis Offset:{" "}
+        {eyeExperiment.axisOffset.toFixed(2)}
+      </span>
+
+      <input
+        type="range"
+        min="-0.25"
+        max="0.75"
+        step="0.01"
+        value={eyeExperiment.axisOffset}
+        onChange={(event) =>
+          updateEyeExperiment(
+            "axisOffset",
+            Number(event.target.value)
+          )
+        }
+      />
+    </label>
+
+    <label
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        padding: "4px 6px",
+        borderRadius: 4,
+        background: "rgba(0, 0, 0, 0.35)",
+        color: "#ffffff",
+        fontSize: 8,
+      }}
+    >
+      <span>
+        Vertical Offset:{" "}
+        {eyeExperiment.verticalOffset.toFixed(2)}
+      </span>
+
+      <input
+        type="range"
+        min="-0.25"
+        max="0.25"
+        step="0.01"
+        value={eyeExperiment.verticalOffset}
+        onChange={(event) =>
+          updateEyeExperiment(
+            "verticalOffset",
+            Number(event.target.value)
+          )
+        }
+      />
+    </label>
+
+    <label
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        padding: "4px 6px",
+        borderRadius: 4,
+        background: "rgba(0, 0, 0, 0.35)",
+        color: "#ffffff",
+        fontSize: 8,
+      }}
+    >
+      <span>
+        Eye Size: {eyeExperiment.size.toFixed(3)}
+      </span>
+
+      <input
+        type="range"
+        min="0.005"
+        max="0.12"
+        step="0.005"
+        value={eyeExperiment.size}
+        onChange={(event) =>
+          updateEyeExperiment(
+            "size",
+            Number(event.target.value)
+          )
+        }
+      />
+    </label>
+
+    <button
+      type="button"
+      style={panelButtonStyle}
+      onClick={() =>
+        setEyeExperiment({
+          visible: true,
+          axisOffset: 0.35,
+          verticalOffset: 0.05,
+          size: 0.04,
+        })
+      }
+    >
+      Reset Eye Experiment
+    </button>
   </>
 )}
-*/}
         <div style={sectionTitleStyle}>
           Laboratory tools
         </div>
@@ -439,14 +577,15 @@ export default function App() {
           fov: 42,
         }}
       >
-      <Scene
-        displayMode={displayMode}
-        onDisplayModeChange={setDisplayMode}
-        layers={layers}
-        emergenceCount={emergenceCount}
-        distributionMode={distributionMode}
-        onPerceptionStateChange={setPerceptionState}
-      />
+<Scene
+  displayMode={displayMode}
+  onDisplayModeChange={setDisplayMode}
+  layers={layers}
+  emergenceCount={emergenceCount}
+  distributionMode={distributionMode}
+  eyeExperiment={eyeExperiment}
+  onPerceptionStateChange={setPerceptionState}
+/>
 
         <EffectComposer>
           <Bloom

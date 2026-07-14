@@ -44,8 +44,10 @@ export default function PerceptionModel({
   layers,
   emergenceCount,
   distributionMode,
+  eyeExperiment,
   onPerceptionStateChange,
 }) {
+
   const bodyCenterMeshRef = useRef();
   const bodyCenterBoxRef = useRef(new THREE.Box3());
   const bodyCenterVectorRef = useRef(new THREE.Vector3());
@@ -245,9 +247,9 @@ const longitudinalAxis =
   headRegion && (
     <HeadRegionDebug
       region={headRegion}
+      eyeExperiment={eyeExperiment}
     />
   )}
-
 {layers?.wireframe && (
     <primitive object={perceptionScene} />
   )}

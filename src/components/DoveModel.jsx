@@ -8,12 +8,13 @@ const DOVE_SCALE = 28;
 const DOVE_POSITION = [0, 6, 0];
 
 export default function DoveModel({
-    flapRef,
-    displayMode,
-    layers,
-    emergenceCount,
-    distributionMode,
-    onPerceptionStateChange,
+  flapRef,
+  displayMode,
+  layers,
+  emergenceCount,
+  distributionMode,
+  eyeExperiment,
+  onPerceptionStateChange,
 }) {
   const group = useRef();
 
@@ -80,15 +81,16 @@ export default function DoveModel({
       )}
 
       {/* Wahrnehmungsmodell */}
-        <PerceptionModel
-          scene={scene}
-          layers={layers}
-          emergenceCount={emergenceCount}
-          distributionMode={distributionMode}
-          onPerceptionStateChange={
-            onPerceptionStateChange
-          }
-        />
+      <PerceptionModel
+        scene={scene}
+        layers={layers}
+        emergenceCount={emergenceCount}
+        distributionMode={distributionMode}
+        eyeExperiment={eyeExperiment}
+        onPerceptionStateChange={
+          onPerceptionStateChange
+        }
+      />
     </group>
   );
 }

@@ -138,54 +138,63 @@ PP-012  ☐ Dynamic Attention
 
 
 ################################################################
-Sprint R5.7
+Sprint R5.8
 
 Perception Principle PP-007
 
-Eye Priority
+Semantic Head Space
 
 Status
 
-Implementation in Progress
+Ready
 
 Goal
 
-Discover the minimal semantic relationship required
-for humans to consistently perceive the eye of the
-Peace Dove.
-
-The objective is not anatomical correctness.
-
-The objective is perceptual importance.
+Discover the minimal semantic orientation required
+to establish a stable local coordinate system
+inside the Head Region.
 
 Current State
 
 Completed
 
-✓ Semantic Head Region (PP-006)
+✓ Semantic Head Region
 
-✓ Head Axis Builder
+✓ Head Axis
 
 ✓ Head Axis Visualization
 
-✓ Semantic Observation Inspector
+✓ Eye Candidate Experiment Panel
 
-✓ First Eye Candidate Visualization
+✓ Local Coordinate System Visualization
+
+Validated Finding
+
+The Head Axis alone cannot define
+a stable semantic eye position.
 
 Current Hypothesis
 
-The eye is not defined by an absolute position.
+A semantic region requires not only
+a longitudinal axis but also a semantic
+orientation before stable semantic
+subregions can emerge.
 
-The eye emerges from a stable semantic relationship
-within the Head Region.
-
-Current Research Direction
+Research Direction
 
 Head Region
 
 ↓
 
+Semantic Head Space
+
+↓
+
 Head Axis
+
++
+
+Semantic Orientation
 
 ↓
 
@@ -197,36 +206,34 @@ Eye Region
 
 Implementation Goal
 
-Continue experimenting with the Eye Candidate
-relative to the Head Axis.
+Continue investigating the semantic
+orientation of the Head Region.
 
-Do not implement an Eye Extractor yet.
+Do not implement Eye Region.
 
-First validate the semantic hypothesis.
+Do not implement Eye Extractor.
+
+First identify the semantic coordinate
+system of the Head Region.
 
 Research Questions
 
-- Is the Eye Candidate consistently perceived
-  as belonging to the eye region?
+- Which semantic relationship defines
+  the perceptual "top" of the Head Region?
 
-- Which semantic relationship best predicts
-  human perception?
+- Can semantic orientation emerge from
+  the distribution of semantic faces?
 
-- Does the eye emerge relative to the
-  Head Axis rather than world coordinates?
+- Which minimal relationship allows
+  stable Eye Candidate prediction?
 
 Success Criterion
 
-A stable semantic rule can be formulated that
-predicts the perceived eye location.
+A stable semantic coordinate system
+can be formulated for the Head Region.
 
-Only then shall
-
-HAS_EYE_REGION
-
-be implemented as a Semantic Observation.
+Only then shall Eye Region research continue.
 
 Research supports the product.
 
 The product remains the primary objective.
-################################################################

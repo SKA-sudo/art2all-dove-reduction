@@ -1951,3 +1951,51 @@ Implementation complete.
 
 Pending:
 Independent perceptual validation.
+
+
+### Research Update (Sprint R5.7)
+
+Status
+
+Validated Observation
+
+The Eye Experiment Panel and Local Head Coordinate System
+were implemented to investigate whether a stable Eye Candidate
+can be derived solely from the Head Axis.
+
+Result
+
+The experiments demonstrate that the Head Axis alone is
+insufficient to establish a perceptually stable eye location.
+
+Although mathematically valid local coordinate vectors can be
+constructed from the Head Axis, these vectors do not correspond
+to the semantic orientation perceived by humans.
+
+The resulting Eye Candidate therefore changes according to
+mathematical orientation rather than perceptual meaning.
+
+Conclusion
+
+The Head Axis provides longitudinal orientation only.
+
+It does not define the semantic "top", "bottom",
+"left" or "right" of the Head Region.
+
+A second semantic orientation is required before
+Eye Region can emerge consistently.
+
+Research Impact
+
+The current research focus shifts from
+
+Head Axis → Eye Candidate
+
+towards
+
+Semantic Head Space → Eye Candidate
+
+This finding does not invalidate PP-007.
+
+It refines the current hypothesis and identifies
+the next required research step.
