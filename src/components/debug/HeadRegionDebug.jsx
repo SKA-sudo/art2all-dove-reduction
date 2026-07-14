@@ -21,9 +21,11 @@ export default function HeadRegionDebug({
     size: eyeSize = 0.04,
   } = eyeExperiment ?? {};
 
-  const markers = buildHeadAxis({
-    faces,
-  });
+  const markers = useMemo(() => {
+    return buildHeadAxis({
+      faces,
+    });
+  }, [faces]);
 
   const localHeadSpace = useMemo(() => {
     if (!markers) {
@@ -39,10 +41,6 @@ export default function HeadRegionDebug({
     let localRight = new THREE.Vector3()
       .crossVectors(direction, worldUp);
 
-    /*
-     * Falls Head Axis und World Up fast parallel sind,
-     * wäre das Kreuzprodukt nahezu null.
-     */
     if (localRight.lengthSq() < 0.000001) {
       localRight = new THREE.Vector3()
         .crossVectors(
@@ -76,7 +74,7 @@ export default function HeadRegionDebug({
         axisOffset
       )
       .addScaledVector(
-        localHeadSpace.localUp,
+        localHeadSpace.localRight,
         verticalOffset
       );
   }, [
@@ -85,6 +83,97 @@ export default function HeadRegionDebug({
     axisOffset,
     verticalOffset,
   ]);
+
+  const projectedEyeCandidate = useMemo(() => {
+    if (!eyeCandidate || faces.length === 0) {
+      return null;
+    }
+
+    const validFaces = faces.filter(
+      (face) =>
+        face?.center instanceof THREE.Vector3
+    );
+
+    if (validFaces.length === 0) {
+      return null;
+    }
+
+    const bounds = new THREE.Box3();
+
+    validFaces.forEach((face) => {
+      bounds.expandByPoint(face.center);
+    });
+
+    const size = bounds.getSize(
+      new THREE.Vector3()
+    );
+
+    if (
+      size.y <= Number.EPSILON ||
+      size.z <= Number.EPSILON
+    ) {
+      return null;
+    }
+
+    let nearestFace = null;
+    let nearestDistance = Infinity;
+
+    for (const face of validFaces) {
+      /*
+       * Relative Position innerhalb der Head Region.
+       *
+       * yRatio:
+       * 0 = unterer Rand
+       * 1 = oberer Rand
+       *
+       * zRatio:
+       * 0 und 1 = äußere Längsenden
+       * 0.5 = mittlerer Kopfbereich
+       */
+      const yRatio =
+        (face.center.y - bounds.min.y) /
+        size.y;
+
+      const zRatio =
+        (face.center.z - bounds.min.z) /
+        size.z;
+
+      /*
+       * Nur obere und mittlere Head-Region.
+       *
+       * Dadurch werden der untere Ansatz sowie
+       * die extremen Endbereiche ausgeschlossen.
+       */
+      if (yRatio < 0.55) {
+        continue;
+      }
+
+      if (zRatio < 0.35 || zRatio > 0.65) {
+        continue;
+      }
+
+      const distance =
+        face.center.distanceTo(eyeCandidate);
+
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestFace = face;
+      }
+    }
+
+    if (!nearestFace?.center) {
+        return null;
+      }
+
+      const outwardDirection = nearestFace.center
+        .clone()
+        .sub(markers.center)
+        .normalize();
+
+      return nearestFace.center
+        .clone()
+        .addScaledVector(outwardDirection, 0.03);
+  }, [eyeCandidate, faces, markers]);
 
   const axisGeometry = useMemo(() => {
     if (!markers) {
@@ -130,7 +219,7 @@ export default function HeadRegionDebug({
     ]);
   }, [markers, localHeadSpace]);
 
-  if (faces.length === 0) {
+  if (faces.length === 0 || !markers) {
     return null;
   }
 
@@ -212,9 +301,9 @@ export default function HeadRegionDebug({
         </line>
       )}
 
-      {eyeVisible && eyeCandidate && (
+      {eyeVisible && projectedEyeCandidate && (
         <mesh
-          position={eyeCandidate}
+          position={projectedEyeCandidate}
           renderOrder={3100}
         >
           <sphereGeometry
@@ -234,69 +323,65 @@ export default function HeadRegionDebug({
         </mesh>
       )}
 
-      {markers && (
-        <>
-          <mesh
-            position={markers.rear}
-            renderOrder={3000}
-          >
-            <sphereGeometry
-              args={[
-                AXIS_MARKER_SIZE,
-                20,
-                20,
-              ]}
-            />
+      <mesh
+        position={markers.rear}
+        renderOrder={3000}
+      >
+        <sphereGeometry
+          args={[
+            AXIS_MARKER_SIZE,
+            20,
+            20,
+          ]}
+        />
 
-            <meshBasicMaterial
-              color="red"
-              depthTest={false}
-              depthWrite={false}
-              toneMapped={false}
-            />
-          </mesh>
+        <meshBasicMaterial
+          color="red"
+          depthTest={false}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
 
-          <mesh
-            position={markers.center}
-            renderOrder={3000}
-          >
-            <sphereGeometry
-              args={[
-                AXIS_MARKER_SIZE,
-                20,
-                20,
-              ]}
-            />
+      <mesh
+        position={markers.center}
+        renderOrder={3000}
+      >
+        <sphereGeometry
+          args={[
+            AXIS_MARKER_SIZE,
+            20,
+            20,
+          ]}
+        />
 
-            <meshBasicMaterial
-              color="yellow"
-              depthTest={false}
-              depthWrite={false}
-              toneMapped={false}
-            />
-          </mesh>
+        <meshBasicMaterial
+          color="yellow"
+          depthTest={false}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
 
-          <mesh
-            position={markers.front}
-            renderOrder={3000}
-          >
-            <sphereGeometry
-              args={[
-                AXIS_MARKER_SIZE,
-                20,
-                20,
-              ]}
-            />
+      <mesh
+        position={markers.front}
+        renderOrder={3000}
+      >
+        <sphereGeometry
+          args={[
+            AXIS_MARKER_SIZE,
+            20,
+            20,
+          ]}
+        />
 
-            <meshBasicMaterial
-              color="blue"
-              depthTest={false}
-              depthWrite={false}
-              toneMapped={false}
-            />
-          </mesh>
-        </>
-      )}
+        <meshBasicMaterial
+          color="blue"
+          depthTest={false}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
     </group>
   );
 }
