@@ -20,6 +20,9 @@
       axisOffset = 0.35,
       verticalOffset = 0.05,
       size: eyeSize = 0.04,
+      zoneHeight = 0.38,
+      zoneFront = 0.11,
+      zoneBack = 0.40,
     } = eyeExperiment ?? {};
 
     const markers = useMemo(() => {
@@ -86,93 +89,109 @@
     ]);
 
     const eyeZoneFaces = useMemo(() => {
-    const validFaces = faces.filter(
-      (face) =>
-        face?.center instanceof THREE.Vector3
-    );
+  const validFaces = faces.filter(
+    (face) =>
+      face?.center instanceof THREE.Vector3
+  );
 
-    if (validFaces.length === 0) {
-      return [];
-    }
+  if (validFaces.length === 0) {
+    return [];
+  }
 
-    const bounds = new THREE.Box3();
+  const bounds = new THREE.Box3();
 
-    validFaces.forEach((face) => {
-      bounds.expandByPoint(face.center);
-    });
+  validFaces.forEach((face) => {
+    bounds.expandByPoint(face.center);
+  });
 
-    const size = bounds.getSize(
-      new THREE.Vector3()
-    );
+  const size = bounds.getSize(
+    new THREE.Vector3()
+  );
 
-    if (
-      size.y <= Number.EPSILON ||
-      size.z <= Number.EPSILON
-    ) {
-      return [];
-    }
+  if (
+    size.y <= Number.EPSILON ||
+    size.z <= Number.EPSILON
+  ) {
+    return [];
+  }
 
-    return validFaces.filter((face) => {
-      const yRatio =
-        (face.center.y - bounds.min.y) /
-        size.y;
+  return validFaces.filter((face) => {
+    const yRatio =
+      (face.center.y - bounds.min.y) /
+      size.y;
 
-      const zRatio =
-        (face.center.z - bounds.min.z) /
-        size.z;
-
-      return (
-        yRatio >= 0.55 &&
-        zRatio >= 0.2 &&
-        zRatio <= 0.8
-      );
-    });
-  }, [faces]);
-
-    const projectedEyeCandidate = useMemo(() => {
-    if (
-      !eyeCandidate ||
-      !markers ||
-      eyeZoneFaces.length === 0
-    ) {
-      return null;
-    }
-
-    let nearestFace = null;
-    let nearestDistance = Infinity;
-
-    for (const face of eyeZoneFaces) {
-      const distance =
-        face.center.distanceTo(eyeCandidate);
-
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        nearestFace = face;
-      }
-    }
-
-    if (!nearestFace?.center) {
-      return null;
-    }
-
-    const outwardDirection = nearestFace.center
+    const zRatio =
+      (face.center.z - bounds.min.z) /
+      size.z;
+    const sidePosition = face.center
       .clone()
       .sub(markers.center)
-      .normalize();
+      .dot(localHeadSpace.localRight);
 
-    return nearestFace.center
-      .clone()
-      .addScaledVector(
-        outwardDirection,
-        0.03
-      );
-  }, [
-    eyeCandidate,
-    eyeZoneFaces,
-    markers,
-  ]);
+    return (
+    yRatio >= zoneHeight &&
+    zRatio >= zoneFront &&
+    zRatio <= zoneBack &&
+    sidePosition > 0
+    );
+  });
+    }, [
+      faces,
+      markers,
+      localHeadSpace,
+      zoneHeight,
+      zoneFront,
+      zoneBack,
+    ]);
 
-    const axisGeometry = useMemo(() => {
+const eyeZoneCentroid = useMemo(() => {
+  if (eyeZoneFaces.length === 0) {
+    return null;
+  }
+
+  const centroid = new THREE.Vector3();
+
+  for (const face of eyeZoneFaces) {
+    centroid.add(face.center);
+  }
+
+  centroid.divideScalar(eyeZoneFaces.length);
+
+  return centroid;
+}, [eyeZoneFaces]);
+
+
+  const projectedEyeCandidate = useMemo(() => {
+  if (!eyeZoneCentroid || !markers) {
+    return null;
+  }
+
+  const outwardDirection = eyeZoneCentroid
+        .clone()
+        .sub(markers.center);
+
+      /*
+      * Falls Schwerpunkt und Head Center nahezu
+      * identisch sind, wird kein Offset angewendet.
+      */
+      if (outwardDirection.lengthSq() < 0.000001) {
+        return eyeZoneCentroid.clone();
+      }
+
+      outwardDirection.normalize();
+
+      return eyeZoneCentroid
+        .clone()
+        .addScaledVector(
+          outwardDirection,
+          0.03
+        );
+    }, [
+      eyeZoneCentroid,
+      markers,
+    ]);
+
+   const axisGeometry = useMemo(() => {
       if (!markers) {
         return null;
       }

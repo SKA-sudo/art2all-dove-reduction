@@ -18,6 +18,9 @@ export default function App() {
     axisOffset: 0.35,
     verticalOffset: 0.05,
     size: 0.04,
+    zoneHeight: 0.38,
+    zoneFront: 0.11,
+    zoneBack: 0.40,
   });
 
   const [distributionMode, setDistributionMode] =
@@ -321,33 +324,6 @@ export default function App() {
           {layers.visualEmergence ? "ON" : "OFF"}
         </button>
 
-        <label
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-            padding: "4px 6px",
-            borderRadius: 4,
-            background: "rgba(0, 0, 0, 0.35)",
-            color: "#ffffff",
-            fontSize: 8,
-          }}
-        >
-          <span>Elements: {emergenceCount}</span>
-
-          <input
-            type="range"
-            min="1"
-            max="1000"
-            step="1"
-            value={emergenceCount}
-            onChange={(event) =>
-              setEmergenceCount(
-                Number(event.target.value)
-              )
-            }
-          />
-        </label>
 
         <div
           style={{
@@ -535,6 +511,102 @@ export default function App() {
       />
     </label>
 
+    <label
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        padding: "4px 6px",
+        borderRadius: 4,
+        background: "rgba(0, 0, 0, 0.35)",
+        color: "#ffffff",
+        fontSize: 8,
+      }}
+    >
+      <span>
+        Eye Zone Height:{" "}
+        {eyeExperiment.zoneHeight.toFixed(2)}
+      </span>
+
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={eyeExperiment.zoneHeight}
+        onChange={(event) =>
+          updateEyeExperiment(
+            "zoneHeight",
+            Number(event.target.value)
+          )
+        }
+      />
+    </label>
+
+    <label
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        padding: "4px 6px",
+        borderRadius: 4,
+        background: "rgba(0, 0, 0, 0.35)",
+        color: "#ffffff",
+        fontSize: 8,
+      }}
+    >
+      <span>
+        Eye Zone Front:{" "}
+        {eyeExperiment.zoneFront.toFixed(2)}
+      </span>
+
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={eyeExperiment.zoneFront}
+        onChange={(event) =>
+          updateEyeExperiment(
+            "zoneFront",
+            Number(event.target.value)
+          )
+        }
+      />
+    </label>
+
+    <label
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        padding: "4px 6px",
+        borderRadius: 4,
+        background: "rgba(0, 0, 0, 0.35)",
+        color: "#ffffff",
+        fontSize: 8,
+      }}
+    >
+      <span>
+        Eye Zone Back:{" "}
+        {eyeExperiment.zoneBack.toFixed(2)}
+      </span>
+
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={eyeExperiment.zoneBack}
+        onChange={(event) =>
+          updateEyeExperiment(
+            "zoneBack",
+            Number(event.target.value)
+          )
+        }
+      />
+    </label>
+
     <button
       type="button"
       style={panelButtonStyle}
@@ -544,6 +616,9 @@ export default function App() {
           axisOffset: 0.35,
           verticalOffset: 0.05,
           size: 0.04,
+          zoneHeight: 0.55,
+          zoneFront: 0.2,
+          zoneBack: 0.8,
         })
       }
     >
