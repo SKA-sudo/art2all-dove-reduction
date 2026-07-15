@@ -35,58 +35,110 @@ export default function BodyHeadPaperSkin({
       bodyFaces.length
     );
 
+    const bodyBounds = new THREE.Box3();
+
+    bodyFaces.forEach((face) => {
+      bodyBounds.expandByPoint(face.center);
+    });
+
+    const bodyHeight = Math.max(
+      bodyBounds.max.y - bodyBounds.min.y,
+      Number.EPSILON
+    );
+
     const nextPlacements = [];
 
     bodyFaces.forEach((face, index) => {
-      /*
-       * Erster einfacher Surface-PoC:
-       * Nur jedes vierte Face erhält ein Papier.
-       */
-      if (index % 4 !== 0) {
-        return;
-      }
+  if (index % 3 !== 0) {
+    return;
+  }
 
-      const normal =
-        face.normal instanceof THREE.Vector3
-          ? face.normal.clone().normalize()
-          : face.center
-              .clone()
-              .sub(bodyCenter)
-              .normalize();
-
-      if (
-        normal.lengthSq() <= Number.EPSILON
-      ) {
-        normal.set(0, 0, 1);
-      }
-
-      nextPlacements.push({
-        id: `body-face-paper-${index}`,
-
-        position: face.center
+  const normal =
+    face.normal instanceof THREE.Vector3
+      ? face.normal.clone().normalize()
+      : face.center
           .clone()
-          .addScaledVector(
-            normal,
-            0.008
-          ),
+          .sub(bodyCenter)
+          .normalize();
 
+  if (
+    normal.lengthSq() <= Number.EPSILON
+  ) {
+    normal.set(0, 0, 1);
+  }
+
+  const distance =
+    face.center.distanceTo(
+      bodyCenter
+    );
+
+  const size =
+    THREE.MathUtils.lerp(
+      0.045,
+      0.095,
+      1 -
+        THREE.MathUtils.clamp(
+          distance / 1.25,
+          0,
+          1
+        )
+    );
+
+  /*
+ * Ruhiger Verlauf über den Körper.
+ *
+ * Links leicht nach außen,
+ * Mitte gerade,
+ * rechts leicht nach außen.
+ */
+  const verticalProgress =
+    (face.center.y - bodyBounds.min.y) /
+    bodyHeight;
+
+  /*
+  * Drei einfache lokale Organisationszonen.
+  *
+  * Unterer Körper / Bauch
+  * Mittlerer Körper / Brust
+  * Oberer Körper / Halsansatz
+  */
+  let flow = 0;
+
+  if (verticalProgress < 0.34) {
+    flow = -10;
+  } else if (verticalProgress < 0.68) {
+    flow = 0;
+  } else {
+    flow = 10;
+  }
+
+nextPlacements.push({
+    id: `body-face-paper-${index}`,
+
+    position: face.center
+      .clone()
+      .addScaledVector(
         normal,
+        0.008
+      ),
 
-        rotation: 0,
-        flow: 0,
+    normal,
 
-        scale: [
-          0.085,
-          0.055,
-          1,
-        ],
+    rotation: 0,
+    flow,
 
-        image:
-          DRAWINGS[
-            index % DRAWINGS.length
-          ],
-      });
-    });
+    scale: [
+      size,
+      size * 0.65,
+      1,
+    ],
+
+    image:
+      DRAWINGS[
+        index % DRAWINGS.length
+      ],
+  });
+});
 
     return nextPlacements;
   }, [bodyRegion]);

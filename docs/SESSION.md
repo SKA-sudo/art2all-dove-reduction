@@ -105,32 +105,86 @@ The product remains the primary objective.
 
 
 ---
-Current Sprint
+Sprint:
+R8.0 – Semantic Paper Skin
 
-Sprint R6.4
+################################################################
+
+## Sprint Goal
+
+Transform the semantic body region into a convincing paper surface.
+
+The objective is no longer to investigate new perception hypotheses,
+but to improve the visible result step by step.
+
+Every sprint must produce a screenshot that is visually closer to
+the target image.
+
+################################################################
+
+## Current State
+
+Completed
+
+✓ Papers are placed directly on the semantic body surface.
+
+✓ Artificial paper rows have been removed.
+
+✓ Paper size now varies depending on body position.
+
+✓ Initial local paper orientation has been evaluated.
+
+Observation
+
+The largest remaining limitation is no longer paper placement,
+but paper selection.
+
+The current implementation still selects papers using mesh index
+order.
+
+This produces visible bands because mesh topology does not reflect
+visual perception.
+
+################################################################
+
+## Sprint R8.0
 
 Objective
 
-Identify and validate the Visual Organization Grammar of the
-Art2all Peace Dove.
+Replace technical mesh-index selection with spatial semantic
+selection.
 
-Current Research Focus
+Focus only on one improvement at a time.
 
-The laboratory no longer investigates isolated geometric
-properties.
+Priority
 
-The current objective is to discover the organization rules
-that transform thousands of children's drawings into one
-coherent Peace Dove.
+1. Better paper selection
+2. Better density
+3. Better overlap
+4. Head integration
+5. Wings
 
-Current Working Principles
+################################################################
 
-- Flow
-- Overlap
-- Density
+## Collaboration Rule
 
-Further organization principles will be introduced only after
-experimental validation.
+No new builders.
 
-Project First.
-Science Second.
+No new research.
+
+No new architecture.
+
+Only improve the visible dove.
+
+Each sprint:
+
+One file.
+
+One visible change.
+
+One screenshot.
+
+If a change does not visibly improve the result,
+it is reverted immediately.
+
+################################################################
