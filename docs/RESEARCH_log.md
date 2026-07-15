@@ -333,3 +333,148 @@ Project First.
 Science Second.
 
 Research serves the visual construction of the Art2all Peace Dove.
+
+################################################################
+# Research Note
+#
+# Date
+#
+# Pivot – From Paper Distribution to Paper Construction
+################################################################
+
+## Observation
+
+The previous experiments successfully validated several
+organizational rules.
+
+Validated:
+
+- Flow
+- Overlap
+- Adaptive Size
+
+These rules improve organization but they do not yet produce
+the desired visual result.
+
+The current output still resembles randomly distributed papers
+instead of a dove constructed from children's drawings.
+
+################################################################
+
+## Key Insight
+
+The target image is NOT created by distributing papers
+over a mesh.
+
+The target image is created by constructing a continuous
+paper skin on top of an existing semantic body.
+
+This changes the primary research question.
+
+Old question:
+
+"Where should the next paper be placed?"
+
+New question:
+
+"How does a continuous paper skin grow on a semantic body?"
+
+################################################################
+
+## New Construction Principle
+
+Existing Perception Engine
+
+↓
+
+Semantic Regions
+
+↓
+
+Construction Paths
+
+↓
+
+Paper Rows
+
+↓
+
+Paper Skin
+
+↓
+
+Peace Dove
+
+The Perception Engine remains unchanged.
+
+Research now shifts from
+Paper Distribution
+to
+Paper Construction.
+
+################################################################
+
+## Existing Components
+
+The current engine already provides
+
+✓ Longitudinal Axis
+
+✓ Body Region
+
+✓ Head Region
+
+✓ Outline
+
+✓ Flow
+
+✓ Surface Projection
+
+These components are no longer treated as debug output.
+
+They become construction guides.
+
+################################################################
+
+## New Development Strategy
+
+Build visible milestones.
+
+Step 1
+
+Body
+
+↓
+
+Neck
+
+↓
+
+Head
+
+Only after a convincing body has been achieved
+will wings and tail be constructed.
+
+################################################################
+
+## Success Criterion
+
+A viewer immediately recognizes
+
+"This is the body of a dove made from children's drawings."
+
+without debug visualization.
+
+################################################################
+
+## Development Rule
+
+Keep it simple.
+
+Use the existing engine.
+
+Stop building abstractions.
+
+Build the visible result.
+
+################################################################

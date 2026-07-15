@@ -16,7 +16,7 @@ import ReferenceModel from "../../core/ReferenceModel";
 import LongitudinalAxisExtractor from "../../core/perception/LongitudinalAxisExtractor";
 import HeadRegionExtractor from "../../core/perception/HeadRegionExtractor";
 import HeadRegionDebug from "./HeadRegionDebug";
-import BodyRegionDebug from "./BodyRegionDebug";
+import BodyHeadPaperSkin from "./BodyHeadPaperSkin";
 import BodySurfaceOrientationDebug
   from "./BodySurfaceOrientationDebug";
 
@@ -267,9 +267,11 @@ const headRegion =
 
 
 {layers?.bodyRegion &&
-  bodyRegion && (
-    <BodyRegionDebug
-      region={bodyRegion}
+  bodyRegion &&
+  headRegion && (
+    <BodyHeadPaperSkin
+      bodyRegion={bodyRegion}
+      headRegion={headRegion}
     />
   )}
 

@@ -33,31 +33,109 @@ const orientationMarkerGeometry =
  * Die einzelnen Organisationsregeln werden später
  * nacheinander experimentell implementiert.
  */
-function organizeCandidates(candidates, distributionMode) {
-  const sortedCandidates = [...candidates].sort(
+function organizeCandidates(
+  candidates,
+  distributionMode
+) {
+  if (!candidates.length) {
+    return [];
+  }
+
+  /*
+   * Baseline:
+   *
+   * Die bestehende Reihenfolge nach Face Area
+   * bleibt für Uniform unverändert erhalten.
+   */
+  const uniformCandidates = [...candidates].sort(
     (candidateA, candidateB) =>
       candidateB.area - candidateA.area
   );
 
-  switch (distributionMode) {
-    case "silhouette":
-      return sortedCandidates;
-
-    case "head":
-      return sortedCandidates;
-
-    case "wing":
-      return sortedCandidates;
-
-    case "body":
-      return sortedCandidates;
-
-    case "uniform":
-    default:
-      return sortedCandidates;
+  if (distributionMode !== "body") {
+    return uniformCandidates;
   }
-}
 
+  /*
+   * R6.5a – Body Density PoC
+   *
+   * Zuerst bestimmen wir den räumlichen Mittelpunkt
+   * und die Ausdehnung aller Kandidaten.
+   *
+   * Danach wird jeder Kandidat anhand seiner
+   * normalisierten Entfernung zum Mittelpunkt
+   * bewertet.
+   *
+   * Kleine Entfernung:
+   * zentraler Volumenbereich
+   *
+   * Große Entfernung:
+   * Flügelspitzen, Kopf, Schwanz und Extrembereiche
+   */
+
+  const bounds = new THREE.Box3();
+
+  candidates.forEach((candidate) => {
+    bounds.expandByPoint(candidate.position);
+  });
+
+  const center = new THREE.Vector3();
+  const size = new THREE.Vector3();
+
+  bounds.getCenter(center);
+  bounds.getSize(size);
+
+  const safeSize = new THREE.Vector3(
+    Math.max(size.x, Number.EPSILON),
+    Math.max(size.y, Number.EPSILON),
+    Math.max(size.z, Number.EPSILON)
+  );
+
+  const candidatesWithBodyDistance =
+    candidates.map((candidate) => {
+      const normalizedOffset =
+        candidate.position
+          .clone()
+          .sub(center);
+
+      normalizedOffset.set(
+        normalizedOffset.x / safeSize.x,
+        normalizedOffset.y / safeSize.y,
+        normalizedOffset.z / safeSize.z
+      );
+
+      return {
+        candidate,
+
+        bodyDistance:
+          normalizedOffset.length(),
+      };
+    });
+
+  candidatesWithBodyDistance.sort(
+    (entryA, entryB) =>
+      entryA.bodyDistance -
+      entryB.bodyDistance
+  );
+
+  /*
+   * Für den ersten Test verwenden wir die
+   * zentralsten 55 Prozent der Oberfläche.
+   *
+   * Dies ist noch keine validierte Body Region.
+   * Es ist ausschließlich ein Density-PoC.
+   */
+  const bodyPoolSize = Math.max(
+    1,
+    Math.floor(
+      candidatesWithBodyDistance.length * 0.55
+    )
+  );
+
+  return candidatesWithBodyDistance
+    .slice(0, bodyPoolSize)
+    .map(({ candidate }) => candidate);
+}
 /**
  * R5.2 – Visual Emergence Experiment
  *
@@ -194,11 +272,11 @@ function organizeCandidates(candidates, distributionMode) {
 
     if (candidates.length === 0) return [];
 
-    const organizedCandidates = organizeCandidates(
-      candidates,
-      distributionMode
+const organizedCandidates =
+    organizeCandidates(
+        candidates,
+        distributionMode
     );
-
     const sampleCount = Math.min(
       Math.max(1, count),
       organizedCandidates.length
