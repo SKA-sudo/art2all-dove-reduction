@@ -11,82 +11,6 @@ const DRAWINGS = [
   "/drawings/demo/Peace-hand.png",
 ];
 
-/**
- * Erzeugt eine virtuelle Papierreihe.
- *
- * Die Reihe wird zuerst unabhängig von den Mesh-Faces
- * konstruiert. Die Projektion auf die Körperoberfläche
- * folgt im nächsten Schritt.
- */
-function buildPaperRow({
-  center,
-  direction,
-  width,
-  count,
-  normal = new THREE.Vector3(0, 0, 1),
-  surfaceOffset = 0.008,
-}) {
-  if (
-    !(center instanceof THREE.Vector3) ||
-    !(direction instanceof THREE.Vector3) ||
-    count <= 0 ||
-    width <= 0
-  ) {
-    return [];
-  }
-
-  const rowDirection = direction.clone();
-
-  if (rowDirection.lengthSq() <= Number.EPSILON) {
-    return [];
-  }
-
-  rowDirection.normalize();
-
-  const rowNormal = normal.clone();
-
-  if (rowNormal.lengthSq() <= Number.EPSILON) {
-    rowNormal.set(0, 0, 1);
-  }
-
-  rowNormal.normalize();
-
-  return Array.from(
-    { length: count },
-    (_, index) => {
-      const progress =
-        count > 1
-          ? index / (count - 1)
-          : 0.5;
-
-      const signedOffset =
-        (progress - 0.5) * width;
-
-      const position = center
-        .clone()
-        .addScaledVector(
-          rowDirection,
-          signedOffset
-        )
-        .addScaledVector(
-          rowNormal,
-          surfaceOffset
-        );
-
-      return {
-        id: `body-test-row-${index}`,
-        position,
-        normal: rowNormal.clone(),
-        flow: 0,
-        rotation: 0,
-        scale: [0.105, 0.066, 1],
-        image:
-          DRAWINGS[index % DRAWINGS.length],
-      };
-    }
-  );
-}
-
 export default function BodyHeadPaperSkin({
   bodyRegion,
 }) {
@@ -101,10 +25,6 @@ export default function BodyHeadPaperSkin({
       return [];
     }
 
-    /*
-     * Mittelpunkt der vorhandenen semantischen
-     * Body Region bestimmen.
-     */
     const bodyCenter = new THREE.Vector3();
 
     bodyFaces.forEach((face) => {
@@ -115,40 +35,60 @@ export default function BodyHeadPaperSkin({
       bodyFaces.length
     );
 
-    /*
-     * R7.0.2:
-     *
-     * Eine einzelne virtuelle Papierreihe.
-     *
-     * Noch keine Face-Auswahl.
-     * Noch keine Oberflächenprojektion.
-     * Noch kein Kopf.
-     */
-    return buildPaperRow({
-      center: bodyCenter,
+    const nextPlacements = [];
 
+    bodyFaces.forEach((face, index) => {
       /*
-       * Erste Testreihe entlang der lokalen X-Achse.
+       * Erster einfacher Surface-PoC:
+       * Nur jedes vierte Face erhält ein Papier.
        */
-      direction: new THREE.Vector3(
-        1,
-        0,
-        0
-      ),
+      if (index % 4 !== 0) {
+        return;
+      }
 
-      /*
-       * Die Reihe zeigt zunächst zur Kameraebene.
-       */
-      normal: new THREE.Vector3(
-        0,
-        0,
-        1
-      ),
+      const normal =
+        face.normal instanceof THREE.Vector3
+          ? face.normal.clone().normalize()
+          : face.center
+              .clone()
+              .sub(bodyCenter)
+              .normalize();
 
-      width: 0.75,
-      count: 7,
-      surfaceOffset: 0.02,
+      if (
+        normal.lengthSq() <= Number.EPSILON
+      ) {
+        normal.set(0, 0, 1);
+      }
+
+      nextPlacements.push({
+        id: `body-face-paper-${index}`,
+
+        position: face.center
+          .clone()
+          .addScaledVector(
+            normal,
+            0.008
+          ),
+
+        normal,
+
+        rotation: 0,
+        flow: 0,
+
+        scale: [
+          0.085,
+          0.055,
+          1,
+        ],
+
+        image:
+          DRAWINGS[
+            index % DRAWINGS.length
+          ],
+      });
     });
+
+    return nextPlacements;
   }, [bodyRegion]);
 
   if (placements.length === 0) {
