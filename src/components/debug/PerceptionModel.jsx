@@ -17,6 +17,8 @@ import LongitudinalAxisExtractor from "../../core/perception/LongitudinalAxisExt
 import HeadRegionExtractor from "../../core/perception/HeadRegionExtractor";
 import HeadRegionDebug from "./HeadRegionDebug";
 import BodyRegionDebug from "./BodyRegionDebug";
+import BodySurfaceOrientationDebug
+  from "./BodySurfaceOrientationDebug";
 
 function createRegionPerceptionState(scene) {
   if (!scene) {
@@ -262,6 +264,11 @@ const headRegion =
       region={bodyRegion}
     />
   )}
+
+<BodySurfaceOrientationDebug
+    region={bodyRegion}
+    axis={longitudinalAxis}
+/>
 
 
 {layers?.wireframe && (

@@ -136,27 +136,21 @@ PP-011  ☐ Tail Confirmation
 PP-012  ☐ Dynamic Attention
 
 
+Sprint R6.3
+Status: Completed
 
-Sprint R6.3 – Body / Wing Boundary
-Ziel
+Results
 
-Die semantische Grenze zwischen Körper und Flügel identifizieren und visualisieren.
+✓ Axis Distance evaluated
 
-Hintergrund
+✓ Surface Orientation evaluated
 
-Mit der ersten Body Region wurde sichtbar, dass der Körper noch Bereiche der Flügel einschließt. Das bestätigt die Hypothese, dass zwischen beiden keine harte geometrische Trennung existiert, sondern eine semantische Übergangszone.
+✓ Both observations contain semantic information.
 
-Sprintziel
-Die Übergangszone zwischen Body und Wings untersuchen.
-Kriterien entwickeln, wann ein Face noch zum Körper und wann bereits zum Flügel gehört.
-Die Grenze zunächst ausschließlich visualisieren und validieren.
-Keine Optimierung der Paper-Platzierung oder weiterer Details.
-Erfolgskriterium
+✓ Neither observation alone explains the Body/Wing Boundary.
 
-Am Ende des Sprints soll die semantische Trennung zwischen:
+Decision
 
-Head
-Body
-Body/Wing Boundary
+Return focus to visual organization of children's drawings.
 
-klar sichtbar und reproduzierbar sein.
+Research continues only when it directly supports the visual construction of the Art2all Peace Dove.

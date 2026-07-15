@@ -221,55 +221,82 @@ function buildBodyRegion({
   }
 
   const facesWithRadius = centralFaces.map((face) => {
-    const relativePosition = face.center
-      .clone()
-      .sub(axisStart);
+  const relativePosition = face.center
+     .clone()
+     .sub(axisStart);
 
-    const axisDistance =
+  const axisDistance =
       relativePosition.dot(normalizedAxis);
 
-    const axisPoint = axisStart
+  const axisPoint = axisStart
       .clone()
       .addScaledVector(
         normalizedAxis,
         axisDistance
       );
 
+  const distanceToAxis =
+  face.center.distanceTo(axisPoint);
+
     return {
       face,
-      radiusSq:
-        face.center.distanceToSquared(axisPoint),
+      distanceToAxis,
     };
   });
 
-  const sortedRadii = facesWithRadius
-    .map(({ radiusSq }) => radiusSq)
-    .sort((a, b) => a - b);
+const sortedDistances = facesWithRadius
+  .map(({ distanceToAxis }) => distanceToAxis)
+  .sort((a, b) => a - b);
 
-  const radiusIndex = Math.min(
-    sortedRadii.length - 1,
-    Math.floor(
-      sortedRadii.length *
-        BODY_RADIUS_PERCENTILE
-    )
+const radiusIndex = Math.min(
+  sortedDistances.length - 1,
+  Math.floor(
+    sortedDistances.length *
+      BODY_RADIUS_PERCENTILE
+  )
+);
+
+const distanceLimit =
+  sortedDistances[radiusIndex];
+
+const maximumDistance =
+  sortedDistances[sortedDistances.length - 1];
+
+const bodyFaces = facesWithRadius
+  .filter(
+    ({ distanceToAxis }) =>
+      distanceToAxis <= distanceLimit
+  )
+  .map(({ face }) => face);
+
+const distanceObservations =
+  facesWithRadius.map(
+    ({ face, distanceToAxis }) => ({
+      face,
+      distanceToAxis,
+
+      normalizedDistance:
+        maximumDistance > Number.EPSILON
+          ? distanceToAxis / maximumDistance
+          : 0,
+    })
   );
 
-  const radiusLimitSq =
-    sortedRadii[radiusIndex];
-
-  const bodyFaces = facesWithRadius
-    .filter(
-      ({ radiusSq }) =>
-        radiusSq <= radiusLimitSq
-    )
-    .map(({ face }) => face);
-
-  return {
+    return {
     progressMin: BODY_REGION_START,
     progressMax: BODY_REGION_END,
+
     radiusPercentile:
       BODY_RADIUS_PERCENTILE,
+
+    distanceLimit,
+
     faces: bodyFaces,
+
+    experiment: {
+      type: "BODY_AXIS_DISTANCE",
+      observations: distanceObservations,
+    },
   };
 }
 
