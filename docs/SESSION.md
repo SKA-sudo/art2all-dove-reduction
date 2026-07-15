@@ -105,52 +105,32 @@ The product remains the primary objective.
 
 
 ---
-################################################################
-Perception Principle Progress
-################################################################
+Current Sprint
 
-PP-001  ✓ Hierarchical Perception
+Sprint R6.4
 
-PP-002  ✓ Distance Dependent Perception
+Objective
 
-PP-003  ✓ Semantic Meaning emerges from Relationships
+Identify and validate the Visual Organization Grammar of the
+Art2all Peace Dove.
 
-PP-004  ✓ Semantic Regions instead of Polygons
+Current Research Focus
 
-PP-005  ✓ Research discovers. Production applies.
+The laboratory no longer investigates isolated geometric
+properties.
 
----------------------------------------------
+The current objective is to discover the organization rules
+that transform thousands of children's drawings into one
+coherent Peace Dove.
 
-PP-006  ☐ Semantic Head Region
+Current Working Principles
 
-PP-007  ☐ Eye Priority
+- Flow
+- Overlap
+- Density
 
-PP-008  ☐ Beak Priority
+Further organization principles will be introduced only after
+experimental validation.
 
-PP-009  ☐ Body Relationship
-
-PP-010  ☐ Wing Salience
-
-PP-011  ☐ Tail Confirmation
-
-PP-012  ☐ Dynamic Attention
-
-
-Sprint R6.3
-Status: Completed
-
-Results
-
-✓ Axis Distance evaluated
-
-✓ Surface Orientation evaluated
-
-✓ Both observations contain semantic information.
-
-✓ Neither observation alone explains the Body/Wing Boundary.
-
-Decision
-
-Return focus to visual organization of children's drawings.
-
-Research continues only when it directly supports the visual construction of the Art2all Peace Dove.
+Project First.
+Science Second.

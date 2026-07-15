@@ -1,10 +1,8 @@
 ################################################################
-# Art2all – RESEARCH
+# Art2all – RESEARCH LOGFILE
 ################################################################
 
-Living Research Document
-
-Version: 2.0
+ Research Logfile
 
 Status: Living Document
 
@@ -215,3 +213,123 @@ Project First. Science Second.
 Research serves the product.
 
 It is not the product itself.
+
+#####################################################################
+
+
+################################################################
+Research Log
+
+Sprint R6.4
+
+Visual Organization Grammar
+
+Status
+
+Research Direction
+
+Background
+
+Sprint R6.3 demonstrated that individual geometric observations
+such as Axis Distance or Surface Orientation contain meaningful
+semantic information, but are not sufficient to explain the
+perceptual organization of the Peace Dove.
+
+This shifted the research focus away from isolated geometric
+properties towards the organization of children's drawings.
+
+Research Question
+
+Which visual organization principles transform thousands of
+independent children's drawings into one coherent Peace Dove?
+
+Observation
+
+The reference model demonstrates that perception is preserved
+not only through geometry, but through the organization of
+individual paper elements.
+
+Current observations indicate that several independent
+organization principles cooperate simultaneously.
+
+Preliminary Organization Principles
+
+Flow
+
+The children's drawings follow a common local movement.
+
+Flow does not describe identical orientation.
+
+Flow describes a shared visual direction.
+
+------------------------------------------------------------
+
+Overlap
+
+Paper overlap creates continuous feather-like structures.
+
+The overlap is not constant.
+
+It adapts to the semantic region of the dove.
+
+------------------------------------------------------------
+
+Density
+
+Visual density is not globally uniform.
+
+Each semantic region appears to possess its own characteristic
+visual density.
+
+Examples include:
+
+- Head
+- Body
+- Wing
+- Tail
+
+Density therefore represents semantic visual weight rather than
+simple element count.
+
+------------------------------------------------------------
+
+Research Hypothesis
+
+Perception of the Art2all Peace Dove emerges from the interaction
+between Semantic Observations and Visual Organization Rules.
+
+Neither semantic observations alone nor geometric placement alone
+appear sufficient.
+
+Current Working Model
+
+Reference Model
+        │
+        ▼
+Semantic Observations
+        │
+        ▼
+Visual Organization Grammar
+        │
+        ▼
+Paper Placement
+        │
+        ▼
+Art2all Peace Dove
+
+Current Status
+
+Active Research
+
+Future Work
+
+Continue identifying additional organization principles and
+validate each independently before transferring them into the
+future Organization Engine.
+
+Research Principle
+
+Project First.
+Science Second.
+
+Research serves the visual construction of the Art2all Peace Dove.
