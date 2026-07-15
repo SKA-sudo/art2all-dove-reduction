@@ -24,16 +24,28 @@ export default function App() {
   });
 
   const [distributionMode, setDistributionMode] =
-    useState("uniform");
+      useState("uniform");
 
+  const [organizationFlow, setOrganizationFlow] =
+      useState(true);
+
+  const [
+      organizationOverlap,
+      setOrganizationOverlap,
+    ] = useState(true);
+
+  const [
+     organizationAdaptiveSize,
+     setOrganizationAdaptiveSize,
+   ] = useState(false);
 
   const [showPerceptionMonitor, setShowPerceptionMonitor] =
     useState(false);
 
-    const [perceptionState, setPerceptionState] =
-  useState(null);
+  const [perceptionState, setPerceptionState] =
+    useState(null);
 
-    const [layers, setLayers] = useState({
+  const [layers, setLayers] = useState({
       referenceModel: true,
       animation: false,
       wireframe: true,
@@ -376,6 +388,53 @@ export default function App() {
             </button>
           ))}
         </div>
+        <div style={sectionTitleStyle}>
+          Visual Organization
+        </div>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(
+            organizationFlow
+          )}
+          onClick={() =>
+            setOrganizationFlow(
+              (currentValue) => !currentValue
+            )
+          }
+        >
+          Organization Flow:{" "}
+          {organizationFlow ? "ON" : "OFF"}
+        </button>
+
+        <button
+            type="button"
+            style={getToggleButtonStyle(
+              organizationOverlap
+            )}
+            onClick={() =>
+              setOrganizationOverlap(
+                (currentValue) => !currentValue
+              )
+            }
+          >
+            Organization Overlap:{" "}
+            {organizationOverlap ? "ON" : "OFF"}
+          </button>
+       <button
+            type="button"
+            style={getToggleButtonStyle(
+              organizationAdaptiveSize
+            )}
+            onClick={() =>
+              setOrganizationAdaptiveSize(
+                (currentValue) => !currentValue
+              )
+            }
+          >
+            Adaptive Size:{" "}
+            {organizationAdaptiveSize ? "ON" : "OFF"}
+         </button>
 
         <div style={sectionTitleStyle}>
           Distribution
@@ -666,15 +725,18 @@ export default function App() {
           fov: 42,
         }}
       >
-<Scene
-  displayMode={displayMode}
-  onDisplayModeChange={setDisplayMode}
-  layers={layers}
-  emergenceCount={emergenceCount}
-  distributionMode={distributionMode}
-  eyeExperiment={eyeExperiment}
-  onPerceptionStateChange={setPerceptionState}
-/>
+      <Scene
+        displayMode={displayMode}
+        onDisplayModeChange={setDisplayMode}
+        layers={layers}
+        emergenceCount={emergenceCount}
+        distributionMode={distributionMode}
+        organizationFlow={organizationFlow}
+        organizationOverlap={organizationOverlap}
+        organizationAdaptiveSize={organizationAdaptiveSize}
+        eyeExperiment={eyeExperiment}
+        onPerceptionStateChange={setPerceptionState}
+      />
 
         <EffectComposer>
           <Bloom

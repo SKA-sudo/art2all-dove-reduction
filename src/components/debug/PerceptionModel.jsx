@@ -42,14 +42,17 @@ function createRegionPerceptionState(scene) {
   };
 }
 
-export default function PerceptionModel({
-  scene,
-  layers,
-  emergenceCount,
-  distributionMode,
-  eyeExperiment,
-  onPerceptionStateChange,
-}) {
+    export default function PerceptionModel({
+      scene,
+      layers,
+      emergenceCount,
+      distributionMode,
+      organizationFlow,
+      organizationOverlap,
+      organizationAdaptiveSize,
+      eyeExperiment,
+      onPerceptionStateChange,
+    }) {
 
   const bodyCenterMeshRef = useRef();
   const bodyCenterBoxRef = useRef(new THREE.Box3());
@@ -229,9 +232,14 @@ const headRegion =
     <group>
       {layers?.visualEmergence && (
         <DebugVisualEmergence
-          scene={scene}
-          count={emergenceCount}
-          distributionMode={distributionMode}
+            scene={scene}
+            count={emergenceCount}
+            distributionMode={distributionMode}
+            organizationFlow={organizationFlow}
+            organizationOverlap={organizationOverlap}
+            organizationAdaptiveSize={
+              organizationAdaptiveSize
+        }
         />
       )}
 

@@ -7,13 +7,16 @@ import SpatialGrid from "./SpatialGrid";
 /* -------------------- SCENE -------------------- */
 
 export default function Scene({
-  displayMode,
-  onDisplayModeChange,
-  layers,
-  emergenceCount,
-  distributionMode,
-  eyeExperiment,
-  onPerceptionStateChange,
+    displayMode,
+    onDisplayModeChange,
+    layers,
+    emergenceCount,
+    distributionMode,
+    organizationFlow,
+    organizationOverlap,
+    organizationAdaptiveSize,
+    eyeExperiment,
+    onPerceptionStateChange,
 }) {
 
 
@@ -43,6 +46,9 @@ export default function Scene({
         layers={layers}
         emergenceCount={emergenceCount}
         distributionMode={distributionMode}
+        organizationFlow={organizationFlow}
+        organizationOverlap={organizationOverlap}
+        organizationAdaptiveSize={organizationAdaptiveSize}
         eyeExperiment={eyeExperiment}
         onPerceptionStateChange={
           onPerceptionStateChange

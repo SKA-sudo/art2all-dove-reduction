@@ -13,9 +13,13 @@ export default function DoveModel({
   layers,
   emergenceCount,
   distributionMode,
+  organizationFlow,
+  organizationOverlap,
+  organizationAdaptiveSize,
   eyeExperiment,
   onPerceptionStateChange,
 }) {
+
   const group = useRef();
 
   const { scene, animations } = useGLTF(
@@ -86,6 +90,11 @@ export default function DoveModel({
         layers={layers}
         emergenceCount={emergenceCount}
         distributionMode={distributionMode}
+        organizationFlow={organizationFlow}
+        organizationOverlap={organizationOverlap}
+        organizationAdaptiveSize={
+         organizationAdaptiveSize
+        }
         eyeExperiment={eyeExperiment}
         onPerceptionStateChange={
           onPerceptionStateChange

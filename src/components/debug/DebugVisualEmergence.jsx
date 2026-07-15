@@ -13,7 +13,7 @@ const PAPER_HEIGHT = 0.035;
  * eines Emergence-Papers. Diese Achse entspricht der
  * aktuell verwendeten Oberflächennormale.
  */
-const SHOW_ORIENTATION_DEBUG = true;
+const SHOW_ORIENTATION_DEBUG = false;
 const ORIENTATION_MARKER_LENGTH = 0.2;
 
 const orientationMarkerGeometry =
@@ -67,13 +67,17 @@ function organizeCandidates(candidates, distributionMode) {
  * Diese Komponente erzeugt keine Semantic Observation.
  * Sie ist ausschließlich ein reproduzierbares Wahrnehmungsexperiment.
  */
-export default function DebugVisualEmergence({
-  scene,
-  count = 25,
-  distributionMode = "uniform",
-}) {
-  const samples = useMemo(() => {
-    if (!scene || count <= 0) return [];
+    export default function DebugVisualEmergence({
+      scene,
+      count = 25,
+      distributionMode = "uniform",
+      organizationFlow = true,
+      organizationOverlap = true,
+      organizationAdaptiveSize = false,
+    }) {
+
+    const samples = useMemo(() => {
+      if (!scene || count <= 0) return [];
 
     scene.updateMatrixWorld(true);
 
@@ -225,13 +229,28 @@ export default function DebugVisualEmergence({
           key={`${distributionMode}-${count}-${index}`}
           position={sample.position}
           normal={sample.normal}
+          organizationFlow={organizationFlow}
+          organizationOverlap={organizationOverlap}
+          organizationAdaptiveSize={
+             organizationAdaptiveSize
+          }
+          distributionMode={distributionMode}
+          sampleIndex={index}
         />
       ))}
     </group>
   );
 }
 
-function EmergencePaper({ position, normal }) {
+    function EmergencePaper({
+      position,
+      normal,
+      organizationFlow,
+      organizationOverlap,
+      organizationAdaptiveSize,
+      distributionMode,
+      sampleIndex,
+    }) {
   const geometry = useMemo(() => {
     return createRoundedPlane(
       PAPER_WIDTH,
@@ -246,14 +265,175 @@ function EmergencePaper({ position, normal }) {
       return new THREE.Quaternion();
     }
 
-    const normalizedNormal =
+    const surfaceNormal =
       normal.clone().normalize();
 
-    return new THREE.Quaternion().setFromUnitVectors(
-      new THREE.Vector3(0, 0, 1),
-      normalizedNormal
+    /*
+     * Flow ON:
+     *
+     * Eine gemeinsame Referenzrichtung wird auf
+     * die lokale Tangentialebene projiziert.
+     *
+     * Dadurch folgen alle Papiere demselben
+     * visuellen Strom, bleiben aber korrekt auf
+     * der gekrümmten Oberfläche liegen.
+     */
+    if (organizationFlow) {
+      const referenceDirection =
+        new THREE.Vector3(1, 0, 0);
+
+      const tangent = referenceDirection
+        .clone()
+        .addScaledVector(
+          surfaceNormal,
+          -referenceDirection.dot(
+            surfaceNormal
+          )
+        );
+
+      /*
+       * Falls Referenzrichtung und Normale nahezu
+       * parallel sind, verwenden wir eine stabile
+       * Ersatzrichtung.
+       */
+      if (
+        tangent.lengthSq() <=
+        Number.EPSILON
+      ) {
+        tangent
+          .set(0, 1, 0)
+          .addScaledVector(
+            surfaceNormal,
+            -surfaceNormal.y
+          );
+      }
+
+      tangent.normalize();
+
+      const bitangent =
+        surfaceNormal
+          .clone()
+          .cross(tangent)
+          .normalize();
+
+      const rotationMatrix =
+        new THREE.Matrix4().makeBasis(
+          tangent,
+          bitangent,
+          surfaceNormal
+        );
+
+      return new THREE.Quaternion()
+        .setFromRotationMatrix(
+          rotationMatrix
+        );
+    }
+
+    /*
+     * Flow OFF:
+     *
+     * Das Papier folgt weiterhin der Oberfläche,
+     * erhält aber eine deterministisch zufällige
+     * Drehung um seine lokale Normale.
+     *
+     * Deterministisch bedeutet:
+     * Beim Umschalten bleiben die Vergleichsdaten
+     * reproduzierbar.
+     */
+    const surfaceQuaternion =
+      new THREE.Quaternion()
+        .setFromUnitVectors(
+          new THREE.Vector3(0, 0, 1),
+          surfaceNormal
+        );
+
+    const randomValue =
+      Math.sin(
+        (sampleIndex + 1) * 12.9898
+      ) * 43758.5453;
+
+    const normalizedRandom =
+      randomValue - Math.floor(randomValue);
+
+    const randomAngle =
+      normalizedRandom * Math.PI * 2;
+
+    const localRotation =
+      new THREE.Quaternion()
+        .setFromAxisAngle(
+          new THREE.Vector3(0, 0, 1),
+          randomAngle
+        );
+
+    return surfaceQuaternion.multiply(
+      localRotation
     );
-  }, [normal]);
+  }, [
+    normal,
+    organizationFlow,
+    sampleIndex,
+  ]);
+
+
+const overlapScale =
+  organizationOverlap ? 3.0 : 1.9;
+
+/*
+ * R6.4c – Adaptive Size Distribution PoC
+ *
+ * Die Größe wird innerhalb derselben Taube
+ * positionsabhängig verändert.
+ *
+ * Noch keine validierte semantische Region.
+ * Nur ein sichtbarer Test regionaler Gewichtung.
+ */
+
+let semanticScale = 1.0;
+
+if (organizationAdaptiveSize) {
+  const x = position.x;
+  const y = position.y;
+  const z = position.z;
+
+  /*
+   * Zentraler Bereich:
+   * größere visuelle Masse
+   */
+  if (
+    Math.abs(x) < 0.35 &&
+    y < 0.25 &&
+    y > -0.45
+  ) {
+    semanticScale = 1.5;
+  }
+
+  /*
+   * Vorderer Bereich:
+   * kleinere Elemente
+   */
+  if (z > 0.55) {
+    semanticScale = 0.65;
+  }
+
+  /*
+   * Äußere Bereiche:
+   * kleinere Elemente
+   */
+  if (Math.abs(x) > 0.65) {
+    semanticScale = 0.6;
+  }
+
+  /*
+   * Unterer Bereich:
+   * leicht kleinere Elemente
+   */
+  if (y < -0.55) {
+    semanticScale = 0.75;
+  }
+}
+
+const finalScale =
+  overlapScale * semanticScale;
 
   return (
     <group
@@ -263,10 +443,14 @@ function EmergencePaper({ position, normal }) {
     >
       <mesh
         geometry={geometry}
-        scale={[3, 3, 3]}
+        scale={[
+          finalScale,
+          finalScale,
+          finalScale,
+        ]}
         renderOrder={1200}
       >
-        <meshBasicMaterial
+      <meshBasicMaterial
           color="#ff00ff"
           side={THREE.DoubleSide}
           depthTest
