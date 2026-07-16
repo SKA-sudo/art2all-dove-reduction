@@ -340,3 +340,8 @@ Consequences
 - animated and static perception become interchangeable inputs
 
 - rendering implementation remains separated from semantic extraction
+
+
+Decision R8.1 – Semantic Regions expose surface orientation
+
+Semantic Regions must expose not only semantic positions (center) but also local surface orientation (normal). Production components must consume semantic surface information instead of reconstructing orientation independently.

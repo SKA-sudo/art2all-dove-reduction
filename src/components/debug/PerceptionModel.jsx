@@ -115,10 +115,14 @@ const runtimePerceptionState = useMemo(() => {
       .filter((faceCenter) =>
         Boolean(faceCenter?.position)
       )
-      .map((faceCenter) => ({
-        id: faceCenter.id,
-        center: faceCenter.position.clone(),
-      }));
+     .map((faceCenter) => ({
+      id: faceCenter.id,
+      center: faceCenter.position.clone(),
+      normal:
+        faceCenter.normal instanceof THREE.Vector3
+          ? faceCenter.normal.clone()
+          : null,
+    }));
 
   if (canonicalFaces.length === 0) {
     return null;

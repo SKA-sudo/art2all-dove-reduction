@@ -52,10 +52,19 @@ export function extractFaceCenters(perceptionState, options = {}) {
         .add(vc)
         .divideScalar(3);
 
+
+      const edgeAB = vb.clone().sub(va);
+      const edgeAC = vc.clone().sub(va);
+
+      const normal = new THREE.Vector3()
+        .crossVectors(edgeAB, edgeAC)
+        .normalize();
+
       faceCenters.push({
-        id: `face-center-${faceCenters.length}`,
-        position: center,
-      });
+      id: `face-center-${faceCenters.length}`,
+      position: center,
+      normal,
+    });
     }
   });
 

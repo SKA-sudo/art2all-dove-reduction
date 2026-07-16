@@ -49,96 +49,159 @@ export default function BodyHeadPaperSkin({
     const nextPlacements = [];
 
     bodyFaces.forEach((face, index) => {
-  if (index % 3 !== 0) {
-    return;
-  }
-
-  const normal =
-    face.normal instanceof THREE.Vector3
-      ? face.normal.clone().normalize()
-      : face.center
-          .clone()
-          .sub(bodyCenter)
-          .normalize();
-
-  if (
-    normal.lengthSq() <= Number.EPSILON
-  ) {
-    normal.set(0, 0, 1);
-  }
-
-  const distance =
-    face.center.distanceTo(
-      bodyCenter
-    );
-
-  const size =
-    THREE.MathUtils.lerp(
-      0.045,
-      0.095,
-      1 -
-        THREE.MathUtils.clamp(
-          distance / 1.25,
-          0,
-          1
+      if (index % 3 !== 0) {
+        return;
+      }
+  /*
+       * Lokale semantische Nachbarschaft
+       */
+      const neighbours = bodyFaces
+        .map((candidate) => ({
+          face: candidate,
+          distance:
+            candidate.center.distanceTo(
+              face.center
+            ),
+        }))
+        .sort(
+          (a, b) =>
+            a.distance - b.distance
         )
-    );
+        .slice(0, 10)
+        .map((entry) => entry.face);
 
-  /*
- * Ruhiger Verlauf über den Körper.
- *
- * Links leicht nach außen,
- * Mitte gerade,
- * rechts leicht nach außen.
- */
-  const verticalProgress =
-    (face.center.y - bodyBounds.min.y) /
-    bodyHeight;
+        /*
+       * Lokale semantische Oberfläche:
+       * Mittelpunkt und Normale aus derselben Nachbarschaft.
+       */
+      const localCenter = new THREE.Vector3();
+      const localNormal = new THREE.Vector3();
 
-  /*
-  * Drei einfache lokale Organisationszonen.
-  *
-  * Unterer Körper / Bauch
-  * Mittlerer Körper / Brust
-  * Oberer Körper / Halsansatz
-  */
-  let flow = 0;
+      neighbours.forEach((neighbour) => {
+        localCenter.add(neighbour.center);
 
-  if (verticalProgress < 0.34) {
-    flow = -10;
-  } else if (verticalProgress < 0.68) {
-    flow = 0;
-  } else {
-    flow = 10;
-  }
+        if (
+          neighbour.normal instanceof
+          THREE.Vector3
+        ) {
+          localNormal.add(
+            neighbour.normal
+          );
+        }
+      });
 
-nextPlacements.push({
-    id: `body-face-paper-${index}`,
+      localCenter.divideScalar(
+        neighbours.length
+      );
 
-    position: face.center
-      .clone()
-      .addScaledVector(
+      /*
+       * Nur teilweise zum lokalen Mittelpunkt glätten.
+       * Dadurch bleibt das vorhandene Körpervolumen erhalten.
+       */
+      const surfacePosition = face.center
+        .clone()
+        .lerp(localCenter, 0.35);
+
+      const outward = surfacePosition
+        .clone()
+        .sub(bodyCenter);
+
+      if (
+        outward.lengthSq() <=
+        Number.EPSILON
+      ) {
+        outward.set(0, 0, 1);
+      } else {
+        outward.normalize();
+      }
+
+      if (
+        localNormal.lengthSq() <=
+        Number.EPSILON
+      ) {
+        localNormal.copy(outward);
+      } else {
+        localNormal.normalize();
+      }
+
+      /*
+       * Nach außen ausrichten.
+       */
+      if (localNormal.dot(outward) < 0) {
+        localNormal.negate();
+      }
+
+      const normal = localNormal;
+
+      const distance =
+        face.center.distanceTo(
+          bodyCenter
+        );
+
+      const size =
+        THREE.MathUtils.lerp(
+          0.045,
+          0.095,
+          1 -
+            THREE.MathUtils.clamp(
+              distance / 1.25,
+              0,
+              1
+            )
+        );
+
+      /*
+       * Vertikale Position bleibt nur
+       * für die vorhandene Flow-Organisation erhalten.
+       */
+      const verticalProgress =
+        (face.center.y - bodyBounds.min.y) /
+        bodyHeight;
+
+      /*
+       * Drei einfache lokale Organisationszonen.
+       *
+       * Unterer Körper / Bauch
+       * Mittlerer Körper / Brust
+       * Oberer Körper / Halsansatz
+       */
+      let flow = 0;
+
+      if (verticalProgress < 0.34) {
+        flow = -10;
+      } else if (verticalProgress < 0.68) {
+        flow = 0;
+      } else {
+        flow = 10;
+      }
+
+      nextPlacements.push({
+        id: `body-face-paper-${index}`,
+
+        position: surfacePosition
+        .clone()
+        .addScaledVector(
+          normal,
+          0.008
+        ),
+
         normal,
-        0.008
-      ),
 
-    normal,
+        rotation: 0,
+        flow,
 
-    rotation: 0,
-    flow,
+        scale: [
+          size,
+          size * 0.65,
+          1,
+        ],
 
-    scale: [
-      size,
-      size * 0.65,
-      1,
-    ],
-
-    image:
-      DRAWINGS[
-        index % DRAWINGS.length
-      ],
-  });
-});
+        image:
+          DRAWINGS[
+            index % DRAWINGS.length
+          ],
+      });
+    });
 
     return nextPlacements;
   }, [bodyRegion]);
