@@ -283,7 +283,10 @@ const headRegion =
     region={bodyRegion}
     axis={longitudinalAxis}
 />
-
+<BodySurfaceOrientationDebug
+  region={longitudinalAxis?.tailRegion}
+  axis={longitudinalAxis}
+/>
 
 {layers?.wireframe && (
     <primitive object={perceptionScene} />

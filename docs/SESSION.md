@@ -146,45 +146,64 @@ This produces visible bands because mesh topology does not reflect
 visual perception.
 
 ################################################################
-
-## Sprint R8.0
-
-Objective
-
-Replace technical mesh-index selection with spatial semantic
-selection.
-
-Focus only on one improvement at a time.
-
-Priority
-
-1. Better paper selection
-2. Better density
-3. Better overlap
-4. Head integration
-5. Wings
-
+Sprint R8.1 – Semantic Surface Orientation
 ################################################################
 
-## Collaboration Rule
+Status:
+Completed
 
-No new builders.
+Goal
 
-No new research.
+Validate whether semantic regions can provide surface orientation
+to the Production Engine.
 
-No new architecture.
+Result
 
-Only improve the visible dove.
+The semantic pipeline was extended so that semantic regions now
+preserve local face normals in addition to semantic centers.
 
-Each sprint:
+Validated Regions
 
-One file.
+✓ Head Region
+✓ Body Region
+✓ Tail Region
 
-One visible change.
+Validated Semantic Contract
 
-One screenshot.
+Semantic Region
 
-If a change does not visibly improve the result,
-it is reverted immediately.
+↓
 
-################################################################
+faces
+
+↓
+
+center
+
+↓
+
+normal
+
+↓
+
+surface orientation
+
+Findings
+
+The previous implementation only transported semantic positions.
+
+Surface orientation had to be reconstructed inside the
+Production Engine.
+
+After exposing semantic normals through the Perception State,
+BodySurfaceOrientationDebug immediately became capable of
+visualizing semantic surface orientation.
+
+Conclusion
+
+Semantic regions are no longer point collections.
+
+They represent semantic surface information.
+
+This establishes the first direct semantic contract between
+the Perception Engine and the Production Engine.

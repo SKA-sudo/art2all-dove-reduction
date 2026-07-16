@@ -3,11 +3,13 @@
 
   import { buildHeadAxis } from "../../utils/HeadAxisBuilder";
 
-  const HEAD_REGION_COLOR = "#ff00ff";
-  const EYE_ZONE_COLOR = "#00ffff";
-  const FACE_MARKER_SIZE = 0.012;
-  const AXIS_MARKER_SIZE = 0.06;
-  const LOCAL_AXIS_LENGTH = 0.4;
+const HEAD_REGION_COLOR = "#ff00ff";
+const EYE_ZONE_COLOR = "#00ffff";
+const FACE_MARKER_SIZE = 0.012;
+const AXIS_MARKER_SIZE = 0.06;
+const LOCAL_AXIS_LENGTH = 0.4;
+const SURFACE_NORMAL_LENGTH = 0.08;
+const SURFACE_NORMAL_STEP = 8;
 
   export default function HeadRegionDebug({
     region,
@@ -235,6 +237,38 @@ const eyeZoneCentroid = useMemo(() => {
       ]);
     }, [markers, localHeadSpace]);
 
+    const surfaceNormalGeometries = useMemo(() => {
+      return faces
+        .filter(
+          (face, index) =>
+            index % SURFACE_NORMAL_STEP === 0 &&
+            face?.center instanceof THREE.Vector3 &&
+            face?.normal instanceof THREE.Vector3
+        )
+        .map((face, index) => {
+          const start = face.center.clone();
+
+          const end = face.center
+            .clone()
+            .addScaledVector(
+              face.normal.clone().normalize(),
+              SURFACE_NORMAL_LENGTH
+            );
+
+          return {
+            id:
+              face.id ??
+              `head-surface-normal-${index}`,
+            geometry:
+              new THREE.BufferGeometry().setFromPoints([
+                start,
+                end,
+              ]),
+          };
+        });
+    }, [faces]);
+
+    
     if (faces.length === 0 || !markers) {
       return null;
     }
@@ -274,6 +308,23 @@ const eyeZoneCentroid = useMemo(() => {
       </mesh>
     );
   })}
+
+  {surfaceNormalGeometries.map(
+    ({ id, geometry }) => (
+      <line
+        key={id}
+        geometry={geometry}
+        renderOrder={2100}
+      >
+        <lineBasicMaterial
+          color="orange"
+          depthTest={false}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </line>
+    )
+  )}
 
   {eyeZoneFaces.map((face, index) => (
     <mesh

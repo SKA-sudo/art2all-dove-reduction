@@ -1999,3 +1999,70 @@ This finding does not invalidate PP-007.
 
 It refines the current hypothesis and identifies
 the next required research step.
+
+################################################################
+Research Note
+Semantic Surface Orientation
+################################################################
+
+Observation
+
+Body surface experiments showed that rotating papers using
+reconstructed normals did not produce stable semantic surfaces.
+
+Hypothesis
+
+Semantic surface orientation should originate from the
+Perception Engine instead of being reconstructed inside
+the Production Engine.
+
+Experiment
+
+Face normals were propagated through
+
+RegionExtractor
+
+↓
+
+PerceptionState
+
+↓
+
+Semantic Regions
+
+↓
+
+BodySurfaceOrientationDebug
+
+Result
+
+Head Region
+
+validated
+
+Body Region
+
+validated
+
+Tail Region
+
+validated
+
+Conclusion
+
+Semantic regions represent semantic surfaces rather than
+semantic point clouds.
+
+Surface orientation becomes reusable knowledge that can be
+consumed by any future Production component.
+
+Future Work
+
+Validate the same semantic contract for
+
+- Left Wing
+
+- Right Wing
+
+before integrating semantic surface orientation into
+Paper Skin generation.

@@ -345,3 +345,49 @@ Consequences
 Decision R8.1 – Semantic Regions expose surface orientation
 
 Semantic Regions must expose not only semantic positions (center) but also local surface orientation (normal). Production components must consume semantic surface information instead of reconstructing orientation independently.
+
+
+################################################################
+Decision R8.1
+Semantic Surface Contract
+################################################################
+
+Status
+
+Accepted
+
+Motivation
+
+Semantic regions originally exposed only semantic positions.
+
+Production components therefore had to reconstruct local surface
+orientation independently.
+
+This duplicated semantic knowledge and violated the architecture
+defined by the Perception API.
+
+Decision
+
+Every semantic region shall expose semantic surface information.
+
+Minimum contract
+
+- faces
+- center
+- normal
+
+Production components consume semantic surface information.
+
+They never reconstruct semantic orientation independently.
+
+Consequences
+
+- unified semantic region interface
+
+- reusable surface information
+
+- direct connection between
+  Perception Engine and Production Engine
+
+- future semantic regions automatically become production-ready
+  once the semantic contract is fulfilled
