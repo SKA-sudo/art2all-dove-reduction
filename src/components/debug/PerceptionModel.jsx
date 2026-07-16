@@ -17,8 +17,16 @@ import LongitudinalAxisExtractor from "../../core/perception/LongitudinalAxisExt
 import HeadRegionExtractor from "../../core/perception/HeadRegionExtractor";
 import HeadRegionDebug from "./HeadRegionDebug";
 import BodyHeadPaperSkin from "./BodyHeadPaperSkin";
-import BodySurfaceOrientationDebug
-  from "./BodySurfaceOrientationDebug";
+import BodySurfaceOrientationDebug from "./BodySurfaceOrientationDebug";
+import SemanticWingPaperPrototype from "./SemanticWingPaperPrototype";
+import SemanticHeadPaperPrototype from "./SemanticHeadPaperPrototype";
+import SemanticNeckPaperPrototype from "./SemanticNeckPaperPrototype";
+import SemanticTailPaperPrototype
+  from "./SemanticTailPaperPrototype";
+import {
+  findPrimaryDoveAxis,
+  createLocalWingSpace,
+} from "../../utils/DoveSpaceBuilder";
 
 function createRegionPerceptionState(scene) {
   if (!scene) {
@@ -94,7 +102,7 @@ function createRegionPerceptionState(scene) {
   const bodyWingTransitionRegions = useMemo(() => {
     if (!scene) return [];
 
-    const perceptionState =
+  const perceptionState =
       createRegionPerceptionState(scene);
 
     return extractFaceCenters(perceptionState, {
@@ -102,7 +110,7 @@ function createRegionPerceptionState(scene) {
     });
   }, [scene]);
 
-const runtimePerceptionState = useMemo(() => {
+  const runtimePerceptionState = useMemo(() => {
   if (
     !scene ||
     bodyWingTransitionRegions.length === 0
@@ -134,9 +142,20 @@ const runtimePerceptionState = useMemo(() => {
     source: scene,
   });
 
+  const primaryAxis =
+    findPrimaryDoveAxis(canonicalFaces);
+
+  const localWingSpace =
+    createLocalWingSpace(
+      canonicalFaces,
+      primaryAxis
+    );
+
   const observation =
     referenceModel.createObservation({
       faces: canonicalFaces,
+      primaryAxis,
+      localWingSpace,
     });
 
   const longitudinalAxisExtractor =
@@ -182,7 +201,13 @@ const longitudinalAxis =
     ?.value ?? null;
 
 const bodyRegion =
-  longitudinalAxis?.bodyRegion ?? null;    
+  longitudinalAxis?.bodyRegion ?? null;
+  
+const neckRegion =
+  longitudinalAxis?.neckRegion ?? null;
+  
+const tailRegion =
+  longitudinalAxis?.tailRegion ?? null;  
 
 const headRegion =
   runtimePerceptionState?.semanticObservations
@@ -192,12 +217,17 @@ const headRegion =
         "HAS_HEAD_REGION"
     )
     ?.value ?? null;
-  
+
+    const leftWingRegion = {
+      faces:
+        runtimePerceptionState
+          ?.observation
+          ?.localWingSpace
+          ?.left ?? [],
+    };
+
    useFrame(() => {
     if (!scene || !bodyCenterMeshRef.current) return;
-
-
-    
 
     bodyCenterBoxRef.current.setFromObject(scene);
 
@@ -233,19 +263,19 @@ const headRegion =
 
  return (
   
-    <group>
-      {layers?.visualEmergence && (
-        <DebugVisualEmergence
-            scene={scene}
-            count={emergenceCount}
-            distributionMode={distributionMode}
-            organizationFlow={organizationFlow}
-            organizationOverlap={organizationOverlap}
-            organizationAdaptiveSize={
-              organizationAdaptiveSize
-        }
-        />
-      )}
+<group>
+ {layers?.visualEmergence && (
+    <DebugVisualEmergence
+       scene={scene}
+       count={emergenceCount}
+       distributionMode={distributionMode}
+       organizationFlow={organizationFlow}
+       organizationOverlap={organizationOverlap}
+       organizationAdaptiveSize={
+        organizationAdaptiveSize
+      }
+    />
+   )}
 
 {layers?.visualPriority && (
   <VisualPriorityLayer
@@ -269,6 +299,26 @@ const headRegion =
     />
   )}
 
+{layers?.headRegion &&
+  headRegion && (
+    <SemanticHeadPaperPrototype
+      region={headRegion}
+    />
+  )}
+
+  {layers?.bodyRegion &&
+  neckRegion && (
+    <SemanticNeckPaperPrototype
+      region={neckRegion}
+    />
+  )}
+
+ {layers?.bodyRegion &&
+  tailRegion && (
+    <SemanticTailPaperPrototype
+      region={tailRegion}
+    />
+  )} 
 
 {layers?.bodyRegion &&
   bodyRegion &&
@@ -283,9 +333,28 @@ const headRegion =
     region={bodyRegion}
     axis={longitudinalAxis}
 />
+
 <BodySurfaceOrientationDebug
   region={longitudinalAxis?.tailRegion}
   axis={longitudinalAxis}
+/>
+
+<SemanticWingPaperPrototype
+  wingItems={
+    runtimePerceptionState
+      ?.observation
+      ?.localWingSpace
+      ?.left ?? []
+  }
+/>
+
+<SemanticWingPaperPrototype
+  wingItems={
+    runtimePerceptionState
+      ?.observation
+      ?.localWingSpace
+      ?.right ?? []
+  }
 />
 
 {layers?.wireframe && (

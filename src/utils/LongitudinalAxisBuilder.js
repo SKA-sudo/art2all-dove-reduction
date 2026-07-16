@@ -7,6 +7,8 @@ const TAIL_REGION_START = 0.0;
 const TAIL_REGION_END = 0.08;
 const BODY_REGION_START = 0.16;
 const BODY_REGION_END = 0.84;
+const NECK_REGION_START = 0.84;
+const NECK_REGION_END = 0.92;
 const BODY_RADIUS_PERCENTILE = 0.45;
 
 export function setHeadRegion(start, end) {
@@ -81,9 +83,18 @@ const bodyRegion = buildBodyRegion({
   axisLengthSq,
 });
 
+const neckRegion = buildSemanticRegion({
+  faces: validFaces,
+  axisStart: initialTailReference.center,
+  axis: initialAxis,
+  axisLengthSq,
+  progressMin: NECK_REGION_START,
+  progressMax: NECK_REGION_END,
+});
 
 if (
   headRegion.faces.length === 0 ||
+  neckRegion.faces.length === 0 ||
   bodyRegion.faces.length === 0 ||
   tailRegion.faces.length === 0
 ) {
@@ -104,6 +115,8 @@ if (
   return {
       bodyReference,
       bodyRegion,
+
+      neckRegion,
 
       headRegion,
       headReference,
