@@ -106,38 +106,103 @@ The product remains the primary objective.
 
 ---
 
-### Milestone
+################################################################
+Sprint R4.X
+Semantic Migration – Vertical Slice
+################################################################
 
-✅ First Semantic Cluster experiments completed.
+Objective
 
-A new analysis module was introduced:
+Validate the new Perception Engine architecture by migrating one
+existing implementation completely through the semantic pipeline.
 
-- `SemanticClusterBuilder`
+This sprint does not introduce new algorithms.
 
-The builder groups Semantic Surface elements using:
+It validates the architecture.
 
-- spatial distance
-- optional local density similarity
-- transitive neighbourhood connectivity
+################################################################
+Background
+################################################################
 
-The cluster generation is currently experimental and
-does not yet represent validated semantic regions.
+The current architecture distinguishes between
 
-### Next Objective
+Engineering
 
-Clarify the smallest meaningful analytical unit of the
-Perception Engine before extending cluster generation.
+↓
 
-Research question:
+Semantic Observation
 
-What should the engine analyse first?
+↓
 
-- points
-- neighbourhoods
-- clusters
-- transitions
-- boundaries
-- relationships
+Semantic Knowledge
 
-The current Cluster Builder remains an experimental
-analysis tool.
+↓
+
+Organisation Rules
+
+↓
+
+Visual Mapping
+
+↓
+
+Production Engine
+
+The objective is to prove that existing implementations can be
+migrated into this architecture without changing their behaviour.
+
+################################################################
+Current Task
+################################################################
+
+Select one existing implementation and migrate it completely.
+
+Recommended candidate:
+
+Semantic Head Surface
+
+The implementation already works and can be validated visually.
+
+################################################################
+Implementation Goal
+################################################################
+
+The existing implementation shall
+
+• produce one well-defined Semantic Observation
+
+• integrate this observation into the Perception State
+
+• be consumed by the prototype without direct Builder access
+
+The visible result must remain unchanged.
+
+################################################################
+Success Criteria
+################################################################
+
+✓ Existing algorithm remains unchanged
+
+✓ One Semantic Observation is produced
+
+✓ Observation becomes part of the Perception State
+
+✓ Prototype consumes semantic data
+
+✓ No behavioural changes
+
+✓ Architecture validated
+
+################################################################
+Important
+################################################################
+
+This sprint is not about discovering new perception rules.
+
+This sprint is not about improving rendering.
+
+This sprint validates the migration path from existing engineering
+towards a perception-driven architecture.
+
+Only after this vertical slice is completed will additional
+algorithms be migrated.
