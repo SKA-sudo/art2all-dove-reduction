@@ -299,7 +299,7 @@ const headRegion =
     />
   )}
 
-{layers?.headRegion &&
+{layers?.headSemanticSurface &&
   headRegion && (
     <SemanticHeadPaperPrototype
       region={headRegion}
@@ -329,33 +329,41 @@ const headRegion =
     />
   )}
 
-<BodySurfaceOrientationDebug
-    region={bodyRegion}
-    axis={longitudinalAxis}
-/>
+{layers?.bodyRegion && (
+  <>
+    <BodySurfaceOrientationDebug
+      region={bodyRegion}
+      axis={longitudinalAxis}
+    />
 
-<BodySurfaceOrientationDebug
-  region={longitudinalAxis?.tailRegion}
-  axis={longitudinalAxis}
-/>
+    <BodySurfaceOrientationDebug
+      region={longitudinalAxis?.tailRegion}
+      axis={longitudinalAxis}
+    />
+  </>
+)}
 
-<SemanticWingPaperPrototype
-  wingItems={
-    runtimePerceptionState
-      ?.observation
-      ?.localWingSpace
-      ?.left ?? []
-  }
-/>
+{layers?.bodyRegion && (
+  <>
+    <SemanticWingPaperPrototype
+      wingItems={
+        runtimePerceptionState
+          ?.observation
+          ?.localWingSpace
+          ?.left ?? []
+      }
+    />
 
-<SemanticWingPaperPrototype
-  wingItems={
-    runtimePerceptionState
-      ?.observation
-      ?.localWingSpace
-      ?.right ?? []
-  }
-/>
+    <SemanticWingPaperPrototype
+      wingItems={
+        runtimePerceptionState
+          ?.observation
+          ?.localWingSpace
+          ?.right ?? []
+      }
+    />
+  </>
+)}
 
 {layers?.wireframe && (
     <primitive object={perceptionScene} />

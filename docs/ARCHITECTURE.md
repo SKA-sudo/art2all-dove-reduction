@@ -844,3 +844,26 @@ Meaning guides rendering.
 The final benchmark is never mathematical accuracy.
 
 The final benchmark is human visual perception.
+
+## Architecture
+
+Current pipeline:
+
+Semantic Region
+        ↓
+Semantic Surface
+        ↓
+Paper Consumer
+        ↓
+Paper Renderer
+
+The Semantic Surface is renderer independent.
+
+Future systems like
+
+- Light
+- Motion
+- Interaction
+- Awakening
+
+will consume the same Semantic Surface.

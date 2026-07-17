@@ -391,3 +391,22 @@ Consequences
 
 - future semantic regions automatically become production-ready
   once the semantic contract is fulfilled
+
+
+  ## Decision 0010
+
+Title:
+Semantic Surface is renderer independent.
+
+Decision:
+
+The Semantic Surface shall never contain rendering
+knowledge.
+
+It represents the semantic description of a surface.
+
+Rendering systems like Paper, Light, Motion or Interaction
+consume the Semantic Surface but never become part of it.
+
+Status:
+Accepted

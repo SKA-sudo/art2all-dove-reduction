@@ -1,7 +1,9 @@
 import { useMemo } from "react";
-import * as THREE from "three";
 
 import Paper from "../Paper";
+import {
+  createSemanticSurface,
+} from "../../core/perception/SemanticSurface";
 
 const DRAWINGS = [
   "/drawings/demo/herz.png",
@@ -12,36 +14,45 @@ const DRAWINGS = [
 ];
 
 const SAMPLE_STEP = 3;
+const SURFACE_OFFSET = 0.006;
 
 export default function SemanticHeadPaperPrototype({
   region,
 }) {
-  const placements = useMemo(() => {
-    const faces =
-      region?.faces?.filter(
-        (face) =>
-          face?.center instanceof THREE.Vector3 &&
-          face?.normal instanceof THREE.Vector3
-      ) ?? [];
+  /*
+   * Universelle semantische Oberfläche.
+   *
+   * Diese Struktur enthält keine Paper-
+   * oder Rendering-Verantwortung.
+   */
+  const semanticSurface = useMemo(() => {
+    return createSemanticSurface({
+      region,
+      regionId: "head",
+    });
+  }, [region]);
 
-    return faces
+  /*
+   * Paper ist lediglich der erste Verbraucher
+   * der universellen Semantic Surface.
+   */
+  const placements = useMemo(() => {
+    return semanticSurface.elements
       .filter(
         (_, index) =>
           index % SAMPLE_STEP === 0
       )
-      .map((face, index) => ({
-        id:
-          face.id ??
-          `semantic-head-paper-${index}`,
+      .map((surfaceElement, index) => ({
+        id: `head-paper-${surfaceElement.id}`,
 
-        position: face.center
+        position: surfaceElement.position
           .clone()
           .addScaledVector(
-            face.normal,
-            0.006
+            surfaceElement.normal,
+            SURFACE_OFFSET
           ),
 
-        normal: face.normal.clone(),
+        normal: surfaceElement.normal.clone(),
 
         scale: [
           0.045,
@@ -54,7 +65,7 @@ export default function SemanticHeadPaperPrototype({
             index % DRAWINGS.length
           ],
       }));
-  }, [region]);
+  }, [semanticSurface]);
 
   if (placements.length === 0) {
     return null;

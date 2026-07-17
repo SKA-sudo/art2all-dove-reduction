@@ -2066,3 +2066,29 @@ Validate the same semantic contract for
 
 before integrating semantic surface orientation into
 Paper Skin generation.
+
+# Note
+One of the most important findings of Sprint R8 was not a new algorithm.
+
+It was the confirmation that the overall architecture had been correct from the beginning.
+
+The missing progress was not caused by a wrong concept.
+
+It was caused by one missing semantic connection between existing architectural components.
+
+The solution emerged by trusting the architecture instead of replacing it.
+
+## Research Result
+
+The Semantic Surface proved to be more than an internal
+data structure.
+
+The different semantic densities of the regions become
+directly visible in the rendered result.
+
+The head naturally develops a finer paper granularity,
+especially around the eye and beak region,
+without introducing any dedicated eye or beak algorithm.
+
+This validates the hypothesis that semantic organization
+can directly influence visual perception.

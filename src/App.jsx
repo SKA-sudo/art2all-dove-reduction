@@ -46,19 +46,20 @@ export default function App() {
     useState(null);
 
   const [layers, setLayers] = useState({
-      referenceModel: true,
-      animation: false,
-      wireframe: true,
-      landmarks: false,
-      semanticRegions: false,
-      outline: false,
-      flow: false,
-      gesture: false,
-      visualEmergence: false,
-      visualPriority: false,
-      headRegion: false,
-      bodyRegion: false,
-    });
+  referenceModel: true,
+  animation: false,
+  wireframe: true,
+  landmarks: false,
+  semanticRegions: false,
+  outline: false,
+  flow: false,
+  gesture: false,
+  visualEmergence: false,
+  visualPriority: false,
+  headRegion: false,
+  bodyRegion: false,
+  headSemanticSurface: false,
+});
 
   const toggleLayer = (layerName) => {
     setLayers((currentLayers) => ({
@@ -76,41 +77,64 @@ export default function App() {
   };
 
   const activateEmergenceCleanView = () => {
-  setLayers({
-    referenceModel: false,
-    animation: false,
-    wireframe: false,
-    landmarks: false,
-    semanticRegions: false,
-    outline: false,
-    flow: false,
-    gesture: false,
-    visualEmergence: true,
-    visualPriority: false,
-    headRegion: false,
-    bodyRegion: false,
-  });
+    setLayers({
+      referenceModel: false,
+      animation: false,
+      wireframe: false,
+      landmarks: false,
+      semanticRegions: false,
+      outline: false,
+      flow: false,
+      gesture: false,
+      visualEmergence: true,
+      visualPriority: false,
+      headRegion: false,
+      bodyRegion: false,
+      headSemanticSurface: false,
+    });
 
-  setShowPerceptionMonitor(false);
-};
+    setShowPerceptionMonitor(false);
+  };
 
   const activateHeadRegionCleanView = () => {
-  setLayers({
-    referenceModel: false,
-    animation: false,
-    wireframe: false,
-    landmarks: false,
-    semanticRegions: false,
-    outline: false,
-    flow: false,
-    gesture: false,
-    visualEmergence: false,
-    visualPriority: false,
-    headRegion: true,
-  });
+    setLayers({
+      referenceModel: false,
+      animation: false,
+      wireframe: false,
+      landmarks: false,
+      semanticRegions: false,
+      outline: false,
+      flow: false,
+      gesture: false,
+      visualEmergence: false,
+      visualPriority: false,
+      headRegion: true,
+      bodyRegion: false,
+      headSemanticSurface: false,
+    });
 
-  setShowPerceptionMonitor(false);
-};
+    setShowPerceptionMonitor(false);
+  };
+
+  const activateHeadSemanticSurfaceCleanView = () => {
+    setLayers({
+      referenceModel: false,
+      animation: false,
+      wireframe: false,
+      landmarks: false,
+      semanticRegions: false,
+      outline: false,
+      flow: false,
+      gesture: false,
+      visualEmergence: false,
+      visualPriority: false,
+      headRegion: false,
+      bodyRegion: false,
+      headSemanticSurface: true,
+    });
+
+    setShowPerceptionMonitor(false);
+  };
 
   const panelButtonStyle = {
     minHeight: 20,
@@ -227,6 +251,16 @@ export default function App() {
           onClick={activateHeadRegionCleanView}
         >
           Head Region Clean View
+        </button>
+
+        <button
+          type="button"
+          style={getToggleButtonStyle(
+            layers.headSemanticSurface
+          )}
+          onClick={activateHeadSemanticSurfaceCleanView}
+        >
+          Head Surface Test
         </button>
 
         <button
