@@ -2120,3 +2120,102 @@ rather than semantic importance alone.
 
 Further metrics will be required to distinguish
 geometric properties from perceptual semantics.
+
+### Research Result
+
+The first cluster experiments produced the following results.
+
+#### Spatial distance only
+
+Using spatial proximity alone did not produce stable
+semantic structures.
+
+Small distance thresholds created a large number of
+fragmented clusters.
+
+Larger distance thresholds caused a rapid transition
+towards one dominant connected cluster.
+
+Observed transition:
+
+- `maxDistance 0.0040`
+  - 660 clusters
+  - largest cluster: 14.1 %
+
+- `maxDistance 0.0060`
+  - 304 clusters
+  - largest cluster: 55.6 %
+
+- `maxDistance 0.0100`
+  - 56 clusters
+  - largest cluster: 93.6 %
+
+This confirms that spatial proximity alone describes
+geometric connectivity, but is insufficient for stable
+semantic clustering.
+
+#### Spatial distance and density similarity
+
+A second condition was added:
+
+- spatial distance
+- maximum difference in Local Neighbour Density
+
+The spatial threshold remained constant at:
+
+- `maxDistance: 0.006`
+
+Observed results:
+
+- density difference 20
+  - 617 clusters
+  - largest cluster: 19.8 %
+
+- density difference 40
+  - 383 clusters
+  - largest cluster: 36.0 %
+
+- density difference 60
+  - 323 clusters
+  - largest cluster: 54.0 %
+
+- density difference 80
+  - 312 clusters
+  - largest cluster: 54.7 %
+
+- density difference 120
+  - 304 clusters
+  - largest cluster: 55.6 %
+
+The density condition therefore has a measurable
+influence on spatial connectivity.
+
+A strict density threshold can significantly separate
+the dominant connected surface network.
+
+### Current Interpretation
+
+The experiments establish:
+
+1. Spatial proximity alone is insufficient for semantic
+   cluster formation.
+
+2. Local Neighbour Density provides a measurable
+   additional separation criterion.
+
+3. The resulting clusters must not yet be interpreted as
+   semantic structures.
+
+4. It remains an open architectural question whether
+   clusters are the correct smallest unit of perception.
+
+Possible alternatives include:
+
+- individual Surface Elements
+- element relationships
+- local transitions
+- boundaries
+- connected regions
+
+Further implementation is paused until this abstraction
+has been evaluated conceptually.

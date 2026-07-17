@@ -436,3 +436,24 @@ Only validated metrics may later become inputs for
 
 Status
 Accepted
+
+## Decision 0012
+
+Title
+
+Semantic Clusters remain experimental.
+
+Decision
+
+Clusters generated from spatial distance and surface
+metrics shall not yet be treated as semantic regions.
+
+The current Semantic Cluster Builder is an experimental
+analysis module.
+
+Before cluster results influence rendering, behaviour or
+semantic interpretation, the project must clarify the
+smallest meaningful analytical unit of perception.
+
+Status
+Accepted

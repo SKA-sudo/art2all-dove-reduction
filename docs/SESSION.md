@@ -106,36 +106,38 @@ The product remains the primary objective.
 
 ---
 
-
 ### Milestone
 
-✅ Semantic Surface Metrics introduced.
+✅ First Semantic Cluster experiments completed.
 
-The Perception Engine is now able to analyse
-a Semantic Surface independently from any renderer.
+A new analysis module was introduced:
 
-The first implemented metric is:
+- `SemanticClusterBuilder`
 
-- Local Neighbour Density
+The builder groups Semantic Surface elements using:
 
-The metric measures the average distance to the
-nearest semantic neighbours and derives a local
-density value.
+- spatial distance
+- optional local density similarity
+- transitive neighbourhood connectivity
 
-The result can be visualized directly on the
-Semantic Surface using a dedicated debug renderer.
-
-This establishes the first analysis layer of the
-Perception Engine.
+The cluster generation is currently experimental and
+does not yet represent validated semantic regions.
 
 ### Next Objective
 
-Document Local Neighbour Density as the first
-official Semantic Surface Metric.
+Clarify the smallest meaningful analytical unit of the
+Perception Engine before extending cluster generation.
 
-Introduce additional independent metrics
-(e.g. Curvature or Normal Variation) and compare
-their spatial behaviour against Local Neighbour Density.
+Research question:
 
-Only after multiple metrics have been validated
-will they become inputs for Paper generation.
+What should the engine analyse first?
+
+- points
+- neighbourhoods
+- clusters
+- transitions
+- boundaries
+- relationships
+
+The current Cluster Builder remains an experimental
+analysis tool.

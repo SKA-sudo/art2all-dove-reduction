@@ -7,8 +7,11 @@ import {
 import {
   computeSemanticSurfaceMetrics,
 } from "../../core/perception/SemanticSurfaceMetrics";
-import SemanticSurfaceMetricsDebug from "./SemanticSurfaceMetricsDebug";
+import {
+  buildSemanticClusters,
+} from "../../core/perception/SemanticClusterBuilder";
 
+import SemanticSurfaceMetricsDebug from "./SemanticSurfaceMetricsDebug";
 
 const DRAWINGS = [
   "/drawings/demo/herz.png",
@@ -30,58 +33,94 @@ export default function SemanticHeadPaperPrototype({
    * Diese Struktur enthält keine Paper-
    * oder Rendering-Verantwortung.
    */
-const semanticSurface = useMemo(() => {
-  const surface = createSemanticSurface({
-    region,
-    regionId: "head",
-  });
-
-  const surfaceWithMetrics =
-    computeSemanticSurfaceMetrics(surface, {
-      neighbourCount: 6,
+  const semanticSurface = useMemo(() => {
+    const surface = createSemanticSurface({
+      region,
+      regionId: "head",
     });
 
-const densityValues =
-  surfaceWithMetrics.elements
-    .map((element) => element.metrics.localDensity)
-    .filter(Number.isFinite)
-    .sort((a, b) => a - b);
+    return computeSemanticSurfaceMetrics(
+      surface,
+      {
+        neighbourCount: 6,
+      }
+    );
+  }, [region]);
 
-const densitySum = densityValues.reduce(
-  (sum, value) => sum + value,
-  0
+  /*
+   * Erste rein räumliche Clusterbildung.
+   *
+   * Noch keine semantische Bewertung.
+   */
+  const clusterExperiments = useMemo(() => {
+  const densityThresholds = [
+    20,
+    40,
+    60,
+    80,
+    120,
+    200,
+  ];
+
+  return densityThresholds.map(
+    (maxDensityDifference) => {
+      const experimentClusters =
+        buildSemanticClusters(
+          semanticSurface,
+          {
+            maxDistance: 0.006,
+            maxDensityDifference,
+          }
+        );
+
+      const sortedClusters = [
+        ...experimentClusters,
+      ].sort(
+        (a, b) =>
+          b.elementCount - a.elementCount
+      );
+
+      const largestCluster =
+        sortedClusters[0] ?? null;
+
+      return {
+        maxDensityDifference,
+        clusters: experimentClusters,
+        clusterCount:
+          experimentClusters.length,
+        largestClusterSize:
+          largestCluster?.elementCount ?? 0,
+        largestClusterShare:
+          semanticSurface.elements.length > 0
+            ? (
+                (largestCluster?.elementCount ?? 0) /
+                semanticSurface.elements.length
+              ) * 100
+            : 0,
+      };
+    }
+  );
+}, [semanticSurface]);
+
+console.table(
+  clusterExperiments.map(
+    (experiment) => ({
+      maxDistance: "0.0060",
+
+      maxDensityDifference:
+        experiment.maxDensityDifference,
+
+      clusterCount:
+        experiment.clusterCount,
+
+      largestCluster:
+        experiment.largestClusterSize,
+
+      largestClusterShare:
+        `${experiment.largestClusterShare.toFixed(1)} %`,
+    })
+  )
 );
-
-const densityAverage =
-  densityValues.length > 0
-    ? densitySum / densityValues.length
-    : 0;
-
-const densityMedian =
-  densityValues.length === 0
-    ? 0
-    : densityValues.length % 2 === 0
-      ? (
-          densityValues[densityValues.length / 2 - 1] +
-          densityValues[densityValues.length / 2]
-        ) / 2
-      : densityValues[
-          Math.floor(densityValues.length / 2)
-        ];
-
-console.table({
-  region: surfaceWithMetrics.regionId,
-  elementCount: densityValues.length,
-  minimumDensity: densityValues[0]?.toFixed(4) ?? "0",
-  maximumDensity:
-    densityValues[densityValues.length - 1]?.toFixed(4) ?? "0",
-  averageDensity: densityAverage.toFixed(4),
-  medianDensity: densityMedian.toFixed(4),
-});
-  
-
-  return surfaceWithMetrics;
-}, [region]);
 
   /*
    * Paper ist lediglich der erste Verbraucher
@@ -118,25 +157,25 @@ console.table({
       }));
   }, [semanticSurface]);
 
-  if (placements.length === 0) {
+  if (semanticSurface.elements.length === 0) {
     return null;
   }
 
   return (
-  <group>
-  {/*
-{placements.map((paper) => (
-  <Paper
-    key={paper.id}
-    {...paper}
-  />
-))}
-*/}
+    <group>
+      {/*
+      {placements.map((paper) => (
+        <Paper
+          key={paper.id}
+          {...paper}
+        />
+      ))}
+      */}
 
-    <SemanticSurfaceMetricsDebug
-      semanticSurface={semanticSurface}
-      pointSize={0.018}
-    />
-  </group>
+      <SemanticSurfaceMetricsDebug
+        semanticSurface={semanticSurface}
+        pointSize={0.018}
+      />
+    </group>
   );
 }
