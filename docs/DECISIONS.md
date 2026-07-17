@@ -410,3 +410,29 @@ consume the Semantic Surface but never become part of it.
 
 Status:
 Accepted
+
+## Decision 0011
+
+Title
+
+Semantic Surface Analysis precedes Semantic Behaviour.
+
+Decision
+
+Semantic Surface properties shall first be measured,
+visualized and validated before they influence any
+rendering or behavioural systems.
+
+Metrics are observational by default.
+
+Only validated metrics may later become inputs for
+
+- Paper placement
+- Paper size
+- Motion
+- Light
+- Interaction
+- Awakening
+
+Status
+Accepted

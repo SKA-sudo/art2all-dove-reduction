@@ -107,20 +107,35 @@ The product remains the primary objective.
 ---
 
 
-## Sprint R9.0 — Semantic Surface Consolidation
+### Milestone
 
-### Status
-In Progress
+✅ Semantic Surface Metrics introduced.
 
-### New Milestone
-✅ Universal Semantic Surface introduced.
+The Perception Engine is now able to analyse
+a Semantic Surface independently from any renderer.
 
-The first semantic region (Head) has been migrated from a
-region-specific Paper implementation to a universal
-Semantic Surface.
+The first implemented metric is:
 
-The Semantic Surface itself contains no rendering logic.
-It only describes the semantic surface of a region.
+- Local Neighbour Density
 
-Paper rendering is now the first consumer of the Semantic
-Surface instead of being part of the semantic model.
+The metric measures the average distance to the
+nearest semantic neighbours and derives a local
+density value.
+
+The result can be visualized directly on the
+Semantic Surface using a dedicated debug renderer.
+
+This establishes the first analysis layer of the
+Perception Engine.
+
+### Next Objective
+
+Document Local Neighbour Density as the first
+official Semantic Surface Metric.
+
+Introduce additional independent metrics
+(e.g. Curvature or Normal Variation) and compare
+their spatial behaviour against Local Neighbour Density.
+
+Only after multiple metrics have been validated
+will they become inputs for Paper generation.

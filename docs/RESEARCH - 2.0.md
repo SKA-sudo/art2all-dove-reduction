@@ -2092,3 +2092,31 @@ without introducing any dedicated eye or beak algorithm.
 
 This validates the hypothesis that semantic organization
 can directly influence visual perception.
+
+### Research Result
+
+The Local Neighbour Density visualization revealed
+stable spatial density clusters.
+
+Observed characteristics:
+
+- symmetric clusters around both eyes
+- continuous high-density region along the beak
+- structured transition towards the neck
+
+The visualization demonstrates that semantic
+surfaces can be analysed independently from the
+Paper renderer.
+
+Current interpretation:
+
+The metric appears to describe a combination of
+
+- local mesh topology
+- neighbourhood structure
+- local surface geometry
+
+rather than semantic importance alone.
+
+Further metrics will be required to distinguish
+geometric properties from perceptual semantics.
