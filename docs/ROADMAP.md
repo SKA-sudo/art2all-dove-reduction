@@ -7,8 +7,6 @@ Version: 1.0
 
 Status: Living Document
 
-Letzte Aktualisierung: 25.06.2026
-
 Autor:
 Stephan Kästner
 mit Unterstützung von ChatGPT
@@ -17,171 +15,150 @@ mit Unterstützung von ChatGPT
 ################################################################
 ################################################################
 
-# Entwicklungsprozess
 
-
-
-PoC 01 ✅
-
-Pipeline validiert
-PoC 02
-
-Anchor Detection
-PoC 03
-
-Guide Silhouette
-PoC 04
-
-Primary Paper Fields
-
-
-Vision
-
-↓
-
-Wahrnehmung
-
-↓
-
-Wirkung
-
-↓
-
-Machbarkeitsanalyse
-(Prototyp)
-
-↓
-
-Erkenntnis
-
-↓
-
-Algorithmus
-
-↓
-
-Implementierung
-
-↓
-
-Optimierung
-
---
-
-# Entwicklungs-Kompass
-
-1.
-Wahrnehmung
-
-↓
-
-2.
-Wirkung
-
-↓
-
-3.
-Machbarkeitsanalyse
-
-↓
-
-4.
-Erkenntnis
-
-↓
-
-5.
-Algorithmus
-
-↓
-
-6.
-Code
-
-
-
-## New Roadmap
-
-# Phase 1 
+Phase 1
 Semantic Migration
-- bestehende Algorithmen.
 
-Builder
+Existing Engineering
 
-↓
+        ↓
 
 Semantic Observation
 
-Das machen wir gerade.
+Goal
 
-# Phase 2
+Every existing algorithm produces one
+truthful Semantic Observation.
+
+
+############################################
+
+Phase 2
 Semantic Knowledge
-Aus einzelnen Observations entsteht Wissen.
 
-- WholeDove
-- HAS_BODY_CENTER
-- HAS_PRIMARY_GESTURE
-- HAS_OUTLINE
-..
-- LeftWing
-HAS_WING_FINGER_CURVES
-...
-- PaperField
-HAS_RELATIONSHIP_FORCES
+Semantic Observations
 
-# Phase 3
-Nicht mehr:
+        ↓
 
-Builder
+Semantic Knowledge
 
-↓
+Goal
 
-Renderer
+Individual observations become reusable
+semantic knowledge.
 
-sondern
+Examples
 
-Semantic Observation
+Whole Dove
 
-↓
+HAS_PRIMARY_GESTURE
 
-Visual Rule
+HAS_OUTLINE
 
-Das ist etwas völlig anderes.
+HAS_BODY_CENTER
 
-Beispiel:
+HAS_HEAD
+
+HAS_LEFT_WING
 
 HAS_WING_FINGER_CURVES
 
-↓
 
-Zeichne 5 Führungsbahnen
+############################################
 
-oder
+Phase 3
+Organisation Rules
 
-HAS_RELATIONSHIP_FORCES
+Semantic Knowledge
 
-↓
+        ↓
 
-Paper reagieren auf Nachbarn
+Organisation Rules
 
-oder
+Goal
+
+Describe how semantic knowledge is organised
+under different perceptual conditions.
+
+Organisation depends on
+
+• Density
+
+• Motion
+
+• Semantic Region
+
+• Perception State
+
+• Visual Priority
+
+No algorithms.
+
+Only validated organisation behaviour.
+
+
+############################################
+
+Phase 4
+Visual Mapping
+
+Organisation Rules
+
+        ↓
+
+Visual Mapping
+
+Goal
+
+Transform organisation rules into visual
+behaviour.
+
+Examples
 
 HAS_PRIMARY_GESTURE
 
 ↓
 
-Grundrichtung der Federbänder
-Plötzlich verschwindet der Builder
-Die Builder sind gar nicht das Endziel.
-Sie waren notwendig, um die Regeln zu entdecken.
-Später könnte die Engine viel eher so aussehen:
+Primary paper direction
 
-Semantic Knowledge
+
+HAS_WING_FINGER_CURVES
 
 ↓
+
+Paper row organisation
+
+
+HAS_RELATIONSHIP_FORCES
+
+↓
+
+Neighbour interaction
+
+
+HAS_OUTLINE
+
+↓
+
+Silhouette preservation
+
+
+############################################
+
+Phase 5
+Production Engine
 
 Visual Mapping
 
-↓
+        ↓
 
 Rendering
+
+Goal
+
+Generate the final artwork.
+
+Rendering no longer contains perceptual
+knowledge.
+
+It consumes validated visual mappings.

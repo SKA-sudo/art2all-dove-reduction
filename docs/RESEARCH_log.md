@@ -478,3 +478,9 @@ Stop building abstractions.
 Build the visible result.
 
 ################################################################
+
+Observation R9.1
+
+Local surface normals are sufficient to orient individual papers relative to the mesh surface.
+
+They are insufficient to organize multiple papers into a coherent perceptual structure.

@@ -1,15 +1,22 @@
 import { useMemo } from "react";
 
 import Paper from "../Paper";
+
 import {
   createSemanticSurface,
 } from "../../core/perception/SemanticSurface";
+
 import {
   computeSemanticSurfaceMetrics,
 } from "../../core/perception/SemanticSurfaceMetrics";
+
 import {
   buildSemanticClusters,
 } from "../../core/perception/SemanticClusterBuilder";
+
+import {
+  createSemanticSurfacePaperPlacements,
+} from "../../core/perception/adapters/SemanticSurfacePaperAdapter";
 
 import SemanticSurfaceMetricsDebug from "./SemanticSurfaceMetricsDebug";
 
@@ -48,134 +55,141 @@ export default function SemanticHeadPaperPrototype({
   }, [region]);
 
   /*
-   * Erste rein räumliche Clusterbildung.
+   * Experimentelle Clusteranalyse.
    *
-   * Noch keine semantische Bewertung.
+   * Die Ergebnisse bleiben rein beobachtend
+   * und beeinflussen die Paper-Platzierung nicht.
    */
   const clusterExperiments = useMemo(() => {
-  const densityThresholds = [
-    20,
-    40,
-    60,
-    80,
-    120,
-    200,
-  ];
+    const densityThresholds = [
+      20,
+      40,
+      60,
+      80,
+      120,
+      200,
+    ];
 
-  return densityThresholds.map(
-    (maxDensityDifference) => {
-      const experimentClusters =
-        buildSemanticClusters(
-          semanticSurface,
-          {
-            maxDistance: 0.006,
-            maxDensityDifference,
-          }
+    return densityThresholds.map(
+      (maxDensityDifference) => {
+        const experimentClusters =
+          buildSemanticClusters(
+            semanticSurface,
+            {
+              maxDistance: 0.006,
+              maxDensityDifference,
+            }
+          );
+
+        const sortedClusters = [
+          ...experimentClusters,
+        ].sort(
+          (a, b) =>
+            b.elementCount -
+            a.elementCount
         );
 
-      const sortedClusters = [
-        ...experimentClusters,
-      ].sort(
-        (a, b) =>
-          b.elementCount - a.elementCount
-      );
+        const largestCluster =
+          sortedClusters[0] ?? null;
 
-      const largestCluster =
-        sortedClusters[0] ?? null;
+        return {
+          maxDensityDifference,
 
-      return {
-        maxDensityDifference,
-        clusters: experimentClusters,
-        clusterCount:
-          experimentClusters.length,
-        largestClusterSize:
-          largestCluster?.elementCount ?? 0,
-        largestClusterShare:
-          semanticSurface.elements.length > 0
-            ? (
-                (largestCluster?.elementCount ?? 0) /
-                semanticSurface.elements.length
-              ) * 100
-            : 0,
-      };
-    }
-  );
-}, [semanticSurface]);
+          clusterCount:
+            experimentClusters.length,
 
-console.table(
-  clusterExperiments.map(
-    (experiment) => ({
-      maxDistance: "0.0060",
+          largestClusterSize:
+            largestCluster?.elementCount ??
+            0,
 
-      maxDensityDifference:
-        experiment.maxDensityDifference,
-
-      clusterCount:
-        experiment.clusterCount,
-
-      largestCluster:
-        experiment.largestClusterSize,
-
-      largestClusterShare:
-        `${experiment.largestClusterShare.toFixed(1)} %`,
-    })
-  )
-);
-
-  /*
-   * Paper ist lediglich der erste Verbraucher
-   * der universellen Semantic Surface.
-   */
-  const placements = useMemo(() => {
-    return semanticSurface.elements
-      .filter(
-        (_, index) =>
-          index % SAMPLE_STEP === 0
-      )
-      .map((surfaceElement, index) => ({
-        id: `head-paper-${surfaceElement.id}`,
-
-        position: surfaceElement.position
-          .clone()
-          .addScaledVector(
-            surfaceElement.normal,
-            SURFACE_OFFSET
-          ),
-
-        normal: surfaceElement.normal.clone(),
-
-        scale: [
-          0.045,
-          0.032,
-          1,
-        ],
-
-        image:
-          DRAWINGS[
-            index % DRAWINGS.length
-          ],
-      }));
+          largestClusterShare:
+            semanticSurface.elements.length >
+            0
+              ? (
+                  (largestCluster?.elementCount ??
+                    0) /
+                  semanticSurface.elements
+                    .length
+                ) * 100
+              : 0,
+        };
+      }
+    );
   }, [semanticSurface]);
 
-  if (semanticSurface.elements.length === 0) {
+  console.table(
+    clusterExperiments.map(
+      (experiment) => ({
+        maxDistance: "0.0060",
+
+        maxDensityDifference:
+          experiment.maxDensityDifference,
+
+        clusterCount:
+          experiment.clusterCount,
+
+        largestCluster:
+          experiment.largestClusterSize,
+
+        largestClusterShare:
+          `${experiment.largestClusterShare.toFixed(
+            1
+          )} %`,
+      })
+    )
+  );
+
+  /*
+   * Der Adapter übersetzt die Semantic Surface
+   * in renderer-neutrale Paper-Placement-Daten.
+   */
+  const placements = useMemo(() => {
+    return createSemanticSurfacePaperPlacements(
+      semanticSurface,
+      {
+        drawings: DRAWINGS,
+        sampleStep: 100,
+        surfaceOffset: 0.012,
+        scale: [
+          0.12,
+          0.08,
+          1,
+        ],
+        idPrefix: "head-paper",
+      }
+    );
+  }, [semanticSurface]);
+console.log(
+  "[SemanticHeadPaperPrototype]",
+  {
+    surfaceElements:
+      semanticSurface.elements.length,
+    placements: placements.length,
+    firstPlacement:
+      placements[0] ?? null,
+  }
+);
+  if (
+    semanticSurface.elements.length === 0
+  ) {
     return null;
   }
 
   return (
     <group>
-      {/*
       {placements.map((paper) => (
         <Paper
           key={paper.id}
           {...paper}
         />
       ))}
-      */}
 
+      {/*
       <SemanticSurfaceMetricsDebug
         semanticSurface={semanticSurface}
         pointSize={0.018}
       />
+      */}
     </group>
   );
 }

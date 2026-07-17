@@ -867,3 +867,42 @@ Future systems like
 - Awakening
 
 will consume the same Semantic Surface.
+
+
+## Entwicklungs-Kompass
+
+
+Vision
+
+↓
+
+Wahrnehmung
+
+↓
+
+Beobachtung
+
+↓
+
+Semantic Observation
+
+↓
+
+Semantic Knowledge
+
+↓
+
+Organisation Rules
+
+↓
+
+Visual Mapping
+
+↓
+
+Implementierung
+
+↓
+
+Optimierung
+
