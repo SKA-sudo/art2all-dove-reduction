@@ -906,3 +906,118 @@ Implementierung
 
 Optimierung
 
+---
+
+# Perception Architecture Rules
+
+The Perception Engine follows a strict separation of responsibilities.
+
+Every semantic processing stage must belong to exactly one architectural layer.
+
+## 1. Extractors
+
+Extractors observe.
+
+Responsibilities:
+
+- consume observations or semantic observations
+- derive new semantic observations
+- never perform rendering
+- never create React components
+- never know paper placement
+- remain deterministic and reproducible
+
+Example:
+
+Observation
+
+↓
+
+HAS_HEAD_REGION
+
+↓
+
+HAS_HEAD_SURFACE
+
+---
+
+## 2. Semantic Observations
+
+Semantic Observations are the canonical language of perception.
+
+Rules:
+
+- every observation represents exactly one semantic fact
+- observations are immutable after creation
+- observations may depend on previous observations
+- observations never contain rendering logic
+
+Examples:
+
+HAS_LONGITUDINAL_AXIS
+
+HAS_HEAD_REGION
+
+HAS_HEAD_SURFACE
+
+---
+
+## 3. Adapters
+
+Adapters translate.
+
+Responsibilities:
+
+- transform semantic structures into renderer-neutral data
+- never create semantic observations
+- never perform perception
+- never depend on React
+
+Example:
+
+Semantic Surface
+
+↓
+
+Paper Placements
+
+---
+
+## 4. Rendering Prototypes
+
+Prototype components visualize perception.
+
+Responsibilities:
+
+- consume semantic observations
+- consume adapter output
+- render only
+- never derive new semantic knowledge
+
+React components must never perform semantic analysis.
+
+---
+
+## Design Principle
+
+Semantic knowledge always flows in one direction.
+
+Observation
+
+↓
+
+Extractor
+
+↓
+
+Semantic Observation
+
+↓
+
+Adapter
+
+↓
+
+Renderer
+
+No architectural layer may bypass the previous one.

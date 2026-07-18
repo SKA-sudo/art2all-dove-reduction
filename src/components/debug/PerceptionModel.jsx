@@ -28,6 +28,10 @@ import {
   createLocalWingSpace,
 } from "../../utils/DoveSpaceBuilder";
 import HeadSurfaceExtractor from "../../core/perception/HeadSurfaceExtractor";
+import NeckRegionExtractor from "../../core/perception/NeckRegionExtractor";  
+import WingRegionExtractor from "../../core/perception/WingRegionExtractor";
+import BodyRegionExtractor from "../../core/perception/BodyRegionExtractor";
+import TailRegionExtractor from "../../core/perception/TailRegionExtractor";
 
 
 function createRegionPerceptionState(scene) {
@@ -120,7 +124,7 @@ function createRegionPerceptionState(scene) {
     return null;
   }
 
-  const canonicalFaces =
+const canonicalFaces =
     bodyWingTransitionRegions
       .filter((faceCenter) =>
         Boolean(faceCenter?.position)
@@ -138,36 +142,55 @@ function createRegionPerceptionState(scene) {
     return null;
   }
 
-  const referenceModel = new ReferenceModel({
+const referenceModel = new ReferenceModel({
     id: "runtime-dove-reference",
     type: "glb",
     source: scene,
   });
 
-  const primaryAxis =
+const primaryAxis =
     findPrimaryDoveAxis(canonicalFaces);
 
-  const localWingSpace =
+const localWingSpace =
     createLocalWingSpace(
       canonicalFaces,
       primaryAxis
     );
 
-  const observation =
+const observation =
     referenceModel.createObservation({
       faces: canonicalFaces,
       primaryAxis,
       localWingSpace,
     });
 
-  const longitudinalAxisExtractor =
+const longitudinalAxisExtractor =
     new LongitudinalAxisExtractor();
 
-  const headRegionExtractor =
+const headRegionExtractor =
   new HeadRegionExtractor();
 
 const headSurfaceExtractor =
   new HeadSurfaceExtractor();
+
+const neckRegionExtractor =
+  new NeckRegionExtractor();  
+
+const leftWingRegionExtractor =
+  new WingRegionExtractor({
+    side: "left",
+  });
+
+const rightWingRegionExtractor =
+  new WingRegionExtractor({
+    side: "right",
+  });
+
+const bodyRegionExtractor =
+  new BodyRegionExtractor();
+
+const tailRegionExtractor =
+  new TailRegionExtractor();
 
 const longitudinalAxisObservation =
   longitudinalAxisExtractor.extract(
@@ -184,18 +207,48 @@ const headSurfaceObservation =
     headRegionObservation
   );
 
+const neckRegionObservation =
+  neckRegionExtractor.extract(
+    longitudinalAxisObservation
+  );
+
+const leftWingRegionObservation =
+  leftWingRegionExtractor.extract(
+    observation
+  );
+
+const rightWingRegionObservation =
+  rightWingRegionExtractor.extract(
+    observation
+  );
+  
+const bodyRegionObservation =
+  bodyRegionExtractor.extract(
+    longitudinalAxisObservation
+  );
+
+const tailRegionObservation =
+  tailRegionExtractor.extract(
+    longitudinalAxisObservation
+  );  
+
 const semanticObservations = [
   longitudinalAxisObservation,
   headRegionObservation,
   headSurfaceObservation,
+  neckRegionObservation,
+  bodyRegionObservation,
+  tailRegionObservation,
+  leftWingRegionObservation,
+  rightWingRegionObservation,
 ].filter(Boolean);
 
-console.table(
+/*console.table(
   semanticObservations.map((observation) => ({
     predicate: observation.predicate,
     subject: observation.subject,
   }))
-);
+);*/
   return observation.createPerceptionState({
     semanticObservations,
   });
@@ -224,13 +277,34 @@ const longitudinalAxis =
     ?.value ?? null;
 
 const bodyRegion =
-  longitudinalAxis?.bodyRegion ?? null;
-  
+  runtimePerceptionState
+    ?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_BODY_REGION"
+    )
+    ?.value ?? null;
+
 const neckRegion =
-  longitudinalAxis?.neckRegion ?? null;
-  
+  runtimePerceptionState
+    ?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_NECK_REGION"
+    )
+    ?.value ?? null;
+
 const tailRegion =
-  longitudinalAxis?.tailRegion ?? null;  
+  runtimePerceptionState
+    ?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_TAIL_REGION"
+    )
+    ?.value ?? null;
 
 const headRegion =
   runtimePerceptionState?.semanticObservations
@@ -249,13 +323,25 @@ const headSurface =
     )
     ?.value ?? null;
 
-const leftWingRegion = {
-      faces:
-        runtimePerceptionState
-          ?.observation
-          ?.localWingSpace
-          ?.left ?? [],
-    };
+const leftWingRegion =
+  runtimePerceptionState
+    ?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_LEFT_WING_REGION"
+    )
+    ?.value ?? null;
+
+const rightWingRegion =
+  runtimePerceptionState
+    ?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_RIGHT_WING_REGION"
+    )
+    ?.value ?? null;
 
    useFrame(() => {
     if (!scene || !bodyCenterMeshRef.current) return;
@@ -376,23 +462,13 @@ const leftWingRegion = {
 
 {layers?.bodyRegion && (
   <>
-    <SemanticWingPaperPrototype
-      wingItems={
-        runtimePerceptionState
-          ?.observation
-          ?.localWingSpace
-          ?.left ?? []
-      }
-    />
+<SemanticWingPaperPrototype
+  wingItems={leftWingRegion?.faces ?? []}
+/>
 
-    <SemanticWingPaperPrototype
-      wingItems={
-        runtimePerceptionState
-          ?.observation
-          ?.localWingSpace
-          ?.right ?? []
-      }
-    />
+<SemanticWingPaperPrototype
+  wingItems={rightWingRegion?.faces ?? []}
+/>
   </>
 )}
 
