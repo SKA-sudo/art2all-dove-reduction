@@ -2219,3 +2219,53 @@ Possible alternatives include:
 
 Further implementation is paused until this abstraction
 has been evaluated conceptually.
+
+## New Research Hypothesis: Visual Fields Background
+
+During the implementation of the first semantic landmarks (Beak), a fundamental limitation became visible.
+
+The current perception pipeline derives semantic structures directly from geometry.
+
+Geometry
+    ↓
+Semantic Region
+    ↓
+Landmark
+
+The Beak PoC demonstrated that this approach is insufficient.
+
+New Hypothesis
+
+Semantic regions may not emerge directly from geometry.
+
+Instead they may emerge from a small number of fundamental visual fields.
+
+Geometry
+      ↓
+Visual Fields
+      ↓
+Semantic Regions
+      ↓
+Subregions
+      ↓
+Landmarks
+
+Initial candidate visual fields:
+
+Direction
+Curvature
+Visibility
+Symmetry
+Density
+Continuity
+First Validation
+
+A first Direction Field was successfully implemented and visualized.
+
+Result:
+
+Every face receives a normalized direction score.
+The field can be visualized independently of semantic extractors.
+This establishes the first implementation of a Visual Field within the Perception Engine.
+
+This represents a shift from extractor-driven perception toward field-driven perception.

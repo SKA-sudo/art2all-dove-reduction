@@ -32,6 +32,10 @@ import NeckRegionExtractor from "../../core/perception/NeckRegionExtractor";
 import WingRegionExtractor from "../../core/perception/WingRegionExtractor";
 import BodyRegionExtractor from "../../core/perception/BodyRegionExtractor";
 import TailRegionExtractor from "../../core/perception/TailRegionExtractor";
+import { DirectionFieldExtractor } from "../../core/perception/extractors/DirectionFieldExtractor";
+import BeakExtractor from "../../core/perception/extractors/BeakExtractor";
+import BeakDebug from "./BeakDebug";
+import DirectionFieldDebug from "./DirectionFieldDebug";
 
 
 function createRegionPerceptionState(scene) {
@@ -173,6 +177,10 @@ const headRegionExtractor =
 const headSurfaceExtractor =
   new HeadSurfaceExtractor();
 
+const beakExtractor =
+  new BeakExtractor();  
+
+
 const neckRegionExtractor =
   new NeckRegionExtractor();  
 
@@ -192,10 +200,19 @@ const bodyRegionExtractor =
 const tailRegionExtractor =
   new TailRegionExtractor();
 
+const directionFieldExtractor = 
+  new DirectionFieldExtractor();  
+
 const longitudinalAxisObservation =
   longitudinalAxisExtractor.extract(
     observation
   );
+
+const directionFieldObservation =
+  directionFieldExtractor.extract({
+    faces: canonicalFaces,
+    longitudinalAxisObservation,
+  }); 
 
 const headRegionObservation =
   headRegionExtractor.extract(
@@ -206,6 +223,12 @@ const headSurfaceObservation =
   headSurfaceExtractor.extract(
     headRegionObservation
   );
+
+const beakObservation =
+  beakExtractor.extract({
+    headRegionObservation,
+    longitudinalAxisObservation,
+  });  
 
 const neckRegionObservation =
   neckRegionExtractor.extract(
@@ -234,8 +257,10 @@ const tailRegionObservation =
 
 const semanticObservations = [
   longitudinalAxisObservation,
+  directionFieldObservation,
   headRegionObservation,
   headSurfaceObservation,
+  beakObservation,
   neckRegionObservation,
   bodyRegionObservation,
   tailRegionObservation,
@@ -322,6 +347,24 @@ const headSurface =
         "HAS_HEAD_SURFACE"
     )
     ?.value ?? null;
+
+const beak =
+  runtimePerceptionState?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_BEAK"
+    )
+    ?.value ?? null;    
+
+const directionField =
+  runtimePerceptionState?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_DIRECTION_FIELD"
+    )
+    ?.value ?? null;    
 
 const leftWingRegion =
   runtimePerceptionState
@@ -414,6 +457,15 @@ const rightWingRegion =
       region={headRegion}
       eyeExperiment={eyeExperiment}
     />
+  )}
+{directionField && (
+  <DirectionFieldDebug
+    directionField={directionField}
+  />
+)}
+{layers?.headRegion &&
+  beak && (
+    <BeakDebug beak={beak} />
   )}
 
 {layers?.headSemanticSurface &&

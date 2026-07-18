@@ -107,102 +107,11 @@ The product remains the primary objective.
 ---
 
 ################################################################
-Sprint R4.X
-Semantic Migration – Vertical Slice
+Next Sprint Objective
 ################################################################
 
-Objective
+Build a Visual Field Analyzer.
 
-Validate the new Perception Engine architecture by migrating one
-existing implementation completely through the semantic pipeline.
+The analyzer should allow exploration of field distributions (histograms, thresholds, clustering) before introducing additional semantic extractors.
 
-This sprint does not introduce new algorithms.
-
-It validates the architecture.
-
-################################################################
-Background
-################################################################
-
-The current architecture distinguishes between
-
-Engineering
-
-↓
-
-Semantic Observation
-
-↓
-
-Semantic Knowledge
-
-↓
-
-Organisation Rules
-
-↓
-
-Visual Mapping
-
-↓
-
-Production Engine
-
-The objective is to prove that existing implementations can be
-migrated into this architecture without changing their behaviour.
-
-################################################################
-Current Task
-################################################################
-
-Select one existing implementation and migrate it completely.
-
-Recommended candidate:
-
-Semantic Head Surface
-
-The implementation already works and can be validated visually.
-
-################################################################
-Implementation Goal
-################################################################
-
-The existing implementation shall
-
-• produce one well-defined Semantic Observation
-
-• integrate this observation into the Perception State
-
-• be consumed by the prototype without direct Builder access
-
-The visible result must remain unchanged.
-
-################################################################
-Success Criteria
-################################################################
-
-✓ Existing algorithm remains unchanged
-
-✓ One Semantic Observation is produced
-
-✓ Observation becomes part of the Perception State
-
-✓ Prototype consumes semantic data
-
-✓ No behavioural changes
-
-✓ Architecture validated
-
-################################################################
-Important
-################################################################
-
-This sprint is not about discovering new perception rules.
-
-This sprint is not about improving rendering.
-
-This sprint validates the migration path from existing engineering
-towards a perception-driven architecture.
-
-Only after this vertical slice is completed will additional
-algorithms be migrated.
+No new semantic extractor should be implemented during this sprint unless its required visual fields have first been identified.

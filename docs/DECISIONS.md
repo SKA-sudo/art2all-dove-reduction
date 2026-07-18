@@ -457,3 +457,56 @@ smallest meaningful analytical unit of perception.
 
 Status
 Accepted
+
+
+## Decision 0013 — Visual Fields precede Semantic Extraction
+
+Status: Accepted for Research
+
+Future semantic extractors should not be introduced without first identifying the visual information they require.
+
+The preferred research order becomes:
+
+Geometry
+      ↓
+Visual Field
+      ↓
+Semantic Region
+      ↓
+Subregion
+      ↓
+Landmark
+
+Extractors become consumers of visual fields rather than direct interpreters of geometry.
+
+SESSION.md
+Sprint R6 — Visual Field Research
+Status
+
+READY
+
+Goal
+
+Investigate whether semantic structures emerge from combinations of visual fields rather than direct geometric analysis.
+
+Current Progress
+
+Completed
+
+✅ Direction Field implemented.
+✅ Direction Field visualized.
+✅ First proof that visual fields can exist independently from semantic extractors.
+Current Hypothesis
+
+The Direction Field alone is probably insufficient to define semantic regions.
+
+The next objective is to determine whether combinations of visual fields create stable semantic structures.
+
+Potential future fields:
+
+Direction
+Curvature
+Visibility
+Symmetry
+Density
+Continuity
