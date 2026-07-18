@@ -34,9 +34,12 @@ export default function PerceptionEngineDebug({
         <div>No Semantic Observations</div>
       )}
 
-      {observations.map((observation) => (
-        <div
-          key={observation.id}
+      {observations.map((observation, index) => (
+      <div
+        key={
+          observation.id ??
+          `${observation.predicate}-${observation.subject}-${index}`
+        }
           style={{
             marginBottom: 8,
             borderBottom:

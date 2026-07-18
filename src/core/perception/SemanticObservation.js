@@ -7,7 +7,9 @@ export default class SemanticObservation {
     source,
     confidence = 1.0,
   }) {
-    this.id = id;
+    this.id =
+      id ??
+      crypto.randomUUID();
     this.subject = subject;
     this.predicate = predicate;
     this.value = value;
