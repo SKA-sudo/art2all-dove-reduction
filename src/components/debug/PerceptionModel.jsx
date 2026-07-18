@@ -27,6 +27,8 @@ import {
   findPrimaryDoveAxis,
   createLocalWingSpace,
 } from "../../utils/DoveSpaceBuilder";
+import HeadSurfaceExtractor from "../../core/perception/HeadSurfaceExtractor";
+
 
 function createRegionPerceptionState(scene) {
   if (!scene) {
@@ -162,17 +164,38 @@ function createRegionPerceptionState(scene) {
     new LongitudinalAxisExtractor();
 
   const headRegionExtractor =
-    new HeadRegionExtractor();
+  new HeadRegionExtractor();
 
-  const semanticObservations = [
-    longitudinalAxisExtractor.extract(
-      observation
-    ),
-    headRegionExtractor.extract(
-      observation
-    ),
-  ];
+const headSurfaceExtractor =
+  new HeadSurfaceExtractor();
 
+const longitudinalAxisObservation =
+  longitudinalAxisExtractor.extract(
+    observation
+  );
+
+const headRegionObservation =
+  headRegionExtractor.extract(
+    observation
+  );
+
+const headSurfaceObservation =
+  headSurfaceExtractor.extract(
+    headRegionObservation
+  );
+
+const semanticObservations = [
+  longitudinalAxisObservation,
+  headRegionObservation,
+  headSurfaceObservation,
+].filter(Boolean);
+
+console.table(
+  semanticObservations.map((observation) => ({
+    predicate: observation.predicate,
+    subject: observation.subject,
+  }))
+);
   return observation.createPerceptionState({
     semanticObservations,
   });
@@ -217,8 +240,16 @@ const headRegion =
         "HAS_HEAD_REGION"
     )
     ?.value ?? null;
+const headSurface =
+  runtimePerceptionState?.semanticObservations
+    ?.find(
+      (semanticObservation) =>
+        semanticObservation.predicate ===
+        "HAS_HEAD_SURFACE"
+    )
+    ?.value ?? null;
 
-    const leftWingRegion = {
+const leftWingRegion = {
       faces:
         runtimePerceptionState
           ?.observation
@@ -300,9 +331,9 @@ const headRegion =
   )}
 
 {layers?.headSemanticSurface &&
-  headRegion && (
+  headSurface && (
     <SemanticHeadPaperPrototype
-      region={headRegion}
+      semanticSurface={headSurface}
     />
   )}
 

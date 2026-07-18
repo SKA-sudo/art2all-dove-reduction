@@ -3,14 +3,6 @@ import { useMemo } from "react";
 import Paper from "../Paper";
 
 import {
-  createSemanticSurface,
-} from "../../core/perception/SemanticSurface";
-
-import {
-  computeSemanticSurfaceMetrics,
-} from "../../core/perception/SemanticSurfaceMetrics";
-
-import {
   buildSemanticClusters,
 } from "../../core/perception/SemanticClusterBuilder";
 
@@ -28,31 +20,15 @@ const DRAWINGS = [
   "/drawings/demo/Peace-hand.png",
 ];
 
-const SAMPLE_STEP = 3;
-const SURFACE_OFFSET = 0.006;
-
 export default function SemanticHeadPaperPrototype({
-  region,
+  semanticSurface,
 }) {
-  /*
-   * Universelle semantische Oberfläche.
-   *
-   * Diese Struktur enthält keine Paper-
-   * oder Rendering-Verantwortung.
-   */
-  const semanticSurface = useMemo(() => {
-    const surface = createSemanticSurface({
-      region,
-      regionId: "head",
-    });
-
-    return computeSemanticSurfaceMetrics(
-      surface,
-      {
-        neighbourCount: 6,
-      }
-    );
-  }, [region]);
+  if (
+    !semanticSurface ||
+    !Array.isArray(semanticSurface.elements)
+  ) {
+    return null;
+  }
 
   /*
    * Experimentelle Clusteranalyse.
