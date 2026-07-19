@@ -68,6 +68,8 @@ import HeadConnectedToNeckInference
   from "../../core/perception/HeadConnectedToNeckInference";
 import NeckConnectedToBodyInference
   from "../../core/perception/NeckConnectedToBodyInference";
+import SemanticValidator
+  from "../../core/perception/SemanticValidator";  
 
 
 function createRegionPerceptionState(scene) {
@@ -323,10 +325,24 @@ const inferenceEngine =
     ],
   });
 
+
+
+/*test*/
 const inferredObservations =
   inferenceEngine.infer(
     semanticObservations
   );
+
+const semanticValidator =
+  new SemanticValidator();
+
+const validationObservations =
+  semanticValidator.validate([
+    ...semanticObservations,
+    ...inferredObservations,
+  ]);
+
+console.table(validationObservations);
 
 const perceptionRuleEngine =
   new PerceptionRuleEngine();
@@ -336,8 +352,6 @@ const ruleResults =
     semanticObservations
   );
 
-console.table(ruleResults);
-
 /*console.table(
   semanticObservations.map((observation) => ({
     predicate: observation.predicate,
@@ -346,8 +360,9 @@ console.table(ruleResults);
 );*/
 return observation.createPerceptionState({
   semanticObservations: [
-    ...semanticObservations,
-    ...inferredObservations,
+  ...semanticObservations,
+  ...inferredObservations,
+  ...validationObservations,
   ],
 });
 }, [scene, bodyWingTransitionRegions]);
