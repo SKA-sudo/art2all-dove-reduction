@@ -2269,3 +2269,94 @@ The field can be visualized independently of semantic extractors.
 This establishes the first implementation of a Visual Field within the Perception Engine.
 
 This represents a shift from extractor-driven perception toward field-driven perception.
+
+
+## Experiment  – Direction Field vs. Visual Salience
+Objective
+
+Evaluate whether the position of a surface element along the longitudinal axis corresponds to its visual importance during object perception.
+
+Hypothesis
+
+A normalized Direction Field (tail → head) represents the visual prominence of the flying dove.
+
+Method
+
+Pipeline:
+
+Longitudinal Axis
+        ↓
+Direction Field
+        ↓
+Visual Field Analyzer
+
+Each face was projected onto the longitudinal axis.
+
+The resulting scalar values were normalized to the interval:
+
+[-1 ... +1]
+
+Visualization:
+
+Red  →  Tail
+White → Center
+Blue → Head
+Result
+
+The Direction Field was technically validated.
+
+Samples: 9339
+
+Minimum: -1.000
+Maximum:  1.000
+
+Finite samples: 9339
+
+The generated field correctly represents the geometric position of every face along the longitudinal axis.
+
+Observation
+
+Although mathematically correct, the resulting field does not correspond to human visual perception.
+
+During visual observation of a flying dove:
+
+the tail feathers form one of the strongest perceptual structures,
+the wing silhouette dominates large parts of perception,
+the head is important but does not solely dominate perception.
+
+The generated linear gradient therefore fails to represent perceptual significance.
+
+Conclusion
+
+The Direction Field is not a perceptual field.
+
+It is a geometric coordinate system.
+
+It successfully answers:
+
+Where is this surface element located along the longitudinal axis?
+
+It does not answer:
+
+How visually important is this surface element?
+
+Research Decision
+
+The concepts
+
+Direction
+
+and
+
+Visual Salience
+
+must be treated as independent semantic properties.
+
+A future Perception Engine therefore requires an additional semantic layer capable of modelling perceptual importance independently of geometric position.
+
+Status
+✔ Longitudinal Axis validated
+
+✔ Direction Field validated
+
+✘ Direction Field as perceptual salience rejected

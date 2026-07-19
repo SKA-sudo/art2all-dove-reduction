@@ -35,7 +35,7 @@ import TailRegionExtractor from "../../core/perception/TailRegionExtractor";
 import { DirectionFieldExtractor } from "../../core/perception/extractors/DirectionFieldExtractor";
 import BeakExtractor from "../../core/perception/extractors/BeakExtractor";
 import BeakDebug from "./BeakDebug";
-import DirectionFieldDebug from "./DirectionFieldDebug";
+import VisualFieldAnalyzerDebug from "./VisualFieldAnalyzerDebug";
 
 
 function createRegionPerceptionState(scene) {
@@ -459,8 +459,11 @@ const rightWingRegion =
     />
   )}
 {directionField && (
-  <DirectionFieldDebug
-    directionField={directionField}
+  <VisualFieldAnalyzerDebug
+    fieldValues={directionField}
+    binCount={10}
+    showSamples
+    showPanel
   />
 )}
 {layers?.headRegion &&
