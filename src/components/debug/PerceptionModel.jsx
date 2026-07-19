@@ -46,6 +46,28 @@ import BeakComponentInference
   from "../../core/perception/BeakComponentInference";  
 import BeakBelongsToHeadInference
   from "../../core/perception/BeakBelongsToHeadInference";  
+import BodyComponentInference
+  from "../../core/perception/BodyComponentInference";  
+import HeadConnectedToBodyInference
+  from "../../core/perception/HeadConnectedToBodyInference";
+import LeftWingComponentInference
+  from "../../core/perception/LeftWingComponentInference";
+import RightWingComponentInference
+  from "../../core/perception/RightWingComponentInference";  
+import LeftWingConnectedToBodyInference
+  from "../../core/perception/LeftWingConnectedToBodyInference";
+import RightWingConnectedToBodyInference
+  from "../../core/perception/RightWingConnectedToBodyInference";  
+import TailComponentInference
+  from "../../core/perception/TailComponentInference";
+import TailConnectedToBodyInference
+  from "../../core/perception/TailConnectedToBodyInference";
+import NeckComponentInference
+  from "../../core/perception/NeckComponentInference";
+import HeadConnectedToNeckInference
+  from "../../core/perception/HeadConnectedToNeckInference";
+import NeckConnectedToBodyInference
+  from "../../core/perception/NeckConnectedToBodyInference";
 
 
 function createRegionPerceptionState(scene) {
@@ -281,9 +303,23 @@ const semanticObservations = [
 const inferenceEngine =
   new InferenceEngine({
     rules: [
-      HeadComponentInference,
-      BeakComponentInference,
-      BeakBelongsToHeadInference,      
+  HeadComponentInference,
+  BeakComponentInference,
+  BodyComponentInference,
+
+  LeftWingComponentInference,
+  RightWingComponentInference,
+  TailComponentInference,
+  NeckComponentInference,
+  BeakBelongsToHeadInference,
+  HeadConnectedToBodyInference,
+
+  HeadConnectedToNeckInference,
+  NeckConnectedToBodyInference,
+
+  LeftWingConnectedToBodyInference,
+  RightWingConnectedToBodyInference,
+  TailConnectedToBodyInference,
     ],
   });
 

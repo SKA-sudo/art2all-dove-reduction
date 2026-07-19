@@ -2446,3 +2446,39 @@ This represents the first validated semantic reasoning layer above geometric per
 ### Next Research Question
 
 Can higher-order semantic structures emerge from combinations of semantic relationships rather than from additional handcrafted rules?
+# Research Result — Semantic Knowledge Graph
+
+## Hypothesis
+
+Semantic understanding emerges by iteratively deriving new semantic knowledge from previously validated semantic observations.
+
+## Experiment
+
+Implemented an iterative semantic inference engine.
+
+The engine repeatedly evaluates inference rules until no further semantic observations can be produced.
+
+Validated inference hierarchy:
+
+Geometry
+→ Semantic Regions
+→ Semantic Components
+→ Semantic Relationships
+
+## Result
+
+The hypothesis was confirmed.
+
+The engine successfully constructs a connected semantic knowledge graph describing the internal semantic structure of the reference object.
+
+The inference process is deterministic, iterative and independent of rule order.
+
+## Scientific Significance
+
+This represents the first validated semantic reasoning layer of the Perception Engine.
+
+The engine has progressed beyond geometric perception and is now capable of building structured semantic knowledge.
+
+## Next Research Question
+
+Can larger semantic structures emerge from graph topology and semantic relationships without introducing object-specific recognition rules?
