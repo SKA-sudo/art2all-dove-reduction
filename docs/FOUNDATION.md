@@ -818,3 +818,5 @@ They analyse an existing Perception State.
 
 This keeps perception generation and semantic interpretation separated and
 allows future extractors to remain independent from rendering details.
+
+The Reduction Laboratory does not search for more information. It searches for the smallest amount of semantic information required to preserve stable perception.

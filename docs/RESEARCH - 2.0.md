@@ -2360,3 +2360,89 @@ Status
 ✔ Direction Field validated
 
 ✘ Direction Field as perceptual salience rejected
+
+
+| Observation       | Klasse        | Wahrnehmungsbeitrag | Status    |
+| ----------------- | ------------- | ------------------- | --------- |
+| Longitudinal Axis | Foundational  | indirekt            | ✅         |
+| Direction Field   | Foundational  | indirekt            | ✅         |
+| Primary Gesture   | Perceptual    | sehr hoch           | Hypothese |
+| Wing Outline      | Perceptual    | sehr hoch           | Hypothese |
+| Head Region       | Perceptual    | mittel              | offen     |
+| Tail Region       | Perceptual    | hoch                | offen     |
+| Body Region       | Foundational? | offen               | offen     |
+
+Observation	        Foundation	Perception
+Longitudinal Axis	⭐⭐⭐⭐⭐	☆☆☆☆☆
+Direction Field	        ⭐⭐⭐⭐☆    ☆☆☆☆☆
+Primary Gesture	        ⭐⭐☆☆☆	   ⭐⭐⭐⭐⭐
+Wing Outline    	⭐⭐☆☆☆	   ⭐⭐⭐⭐⭐
+Tail Region     	⭐☆☆☆☆	    ⭐⭐⭐⭐☆
+Head Region	        ⭐☆☆☆☆	    ⭐⭐⭐☆☆
+
+| Observation       | KEEP AS    |
+| ----------------- | ---------- |
+| Longitudinal Axis | Foundation |
+| Direction Field   | Foundation |
+| Primary Gesture   | Perceptual |
+| Wing Outline      | Perceptual |
+
+# Eine Semantic Observation ist kein geometrisches Merkmal. Sie ist eine Information, deren Vorhandensein oder Fehlen die menschliche Wahrnehmung messbar verändert.
+
+# Research Decision
+
+The Direction Field is a geometric observation.
+
+It answers:
+
+"Where is this surface element located?"
+
+It does NOT answer:
+
+"How visually important is this surface element?"
+
+Direction and Visual Salience are independent semantic properties.
+
+## Research Result — Semantic Inference
+
+### Hypothesis
+
+Semantic understanding does not emerge from isolated observations.
+
+It emerges by iteratively deriving new semantic knowledge from previously discovered semantic observations.
+
+### Experiment
+
+Implemented an iterative inference engine.
+
+The engine repeatedly evaluates inference rules until no additional semantic observations can be produced.
+
+Validated chain:
+
+Observation
+→ Component
+→ Relationship
+
+Example:
+
+HAS_HEAD_REGION
+→ HAS_HEAD_COMPONENT
+
+HAS_BEAK
+→ HAS_BEAK_COMPONENT
+
+HAS_HEAD_COMPONENT
++ HAS_BEAK_COMPONENT
+→ BEAK_BELONGS_TO_HEAD
+
+### Result
+
+Hypothesis confirmed.
+
+The Perception Engine is capable of constructing semantic knowledge incrementally.
+
+This represents the first validated semantic reasoning layer above geometric perception.
+
+### Next Research Question
+
+Can higher-order semantic structures emerge from combinations of semantic relationships rather than from additional handcrafted rules?

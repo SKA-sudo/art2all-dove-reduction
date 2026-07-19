@@ -36,6 +36,16 @@ import { DirectionFieldExtractor } from "../../core/perception/extractors/Direct
 import BeakExtractor from "../../core/perception/extractors/BeakExtractor";
 import BeakDebug from "./BeakDebug";
 import VisualFieldAnalyzerDebug from "./VisualFieldAnalyzerDebug";
+import PerceptionRuleEngine
+  from "../../core/perception/PerceptionRuleEngine";
+import InferenceEngine
+  from "../../core/perception/InferenceEngine";
+import HeadComponentInference
+  from "../../core/perception/HeadComponentInference";  
+import BeakComponentInference
+  from "../../core/perception/BeakComponentInference";  
+import BeakBelongsToHeadInference
+  from "../../core/perception/BeakBelongsToHeadInference";  
 
 
 function createRegionPerceptionState(scene) {
@@ -268,15 +278,42 @@ const semanticObservations = [
   rightWingRegionObservation,
 ].filter(Boolean);
 
+const inferenceEngine =
+  new InferenceEngine({
+    rules: [
+      HeadComponentInference,
+      BeakComponentInference,
+      BeakBelongsToHeadInference,      
+    ],
+  });
+
+const inferredObservations =
+  inferenceEngine.infer(
+    semanticObservations
+  );
+
+const perceptionRuleEngine =
+  new PerceptionRuleEngine();
+
+const ruleResults =
+  perceptionRuleEngine.evaluate(
+    semanticObservations
+  );
+
+console.table(ruleResults);
+
 /*console.table(
   semanticObservations.map((observation) => ({
     predicate: observation.predicate,
     subject: observation.subject,
   }))
 );*/
-  return observation.createPerceptionState({
-    semanticObservations,
-  });
+return observation.createPerceptionState({
+  semanticObservations: [
+    ...semanticObservations,
+    ...inferredObservations,
+  ],
+});
 }, [scene, bodyWingTransitionRegions]);
 
 

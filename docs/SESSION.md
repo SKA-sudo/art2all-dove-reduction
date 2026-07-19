@@ -107,11 +107,79 @@ The product remains the primary objective.
 ---
 
 ################################################################
-Next Sprint Objective
+# CURRENT SPRINT
 ################################################################
 
-Build a Visual Field Analyzer.
+Sprint:
+Semantic Perception Rules
 
-The analyzer should allow exploration of field distributions (histograms, thresholds, clustering) before introducing additional semantic extractors.
+Objective:
 
-No new semantic extractor should be implemented during this sprint unless its required visual fields have first been identified.
+Identify the minimum set of Semantic Observations required
+to preserve stable perception of the Peace Dove.
+
+The goal is NOT to develop additional algorithms.
+
+The goal is to experimentally validate which semantic
+information is actually required for perception.
+
+Every new Semantic Observation must justify its existence
+through reproducible experiments.
+
+Questions to answer:
+
+- Which observations are indispensable?
+- Which observations are redundant?
+- Which observations increase perception confidence?
+- Which observations have no measurable impact?
+
+Current Pipeline
+
+Mesh
+    ↓
+Semantic Observations
+    ↓
+Perception Rules
+    ↓
+Experiments
+    ↓
+Research Decision
+
+Success Criteria
+
+✔ Every perception rule is experimentally validated.
+
+✔ No new observation is introduced without evidence.
+
+✔ The Perception Engine grows only from validated research.
+
+### ✅ Semantic Inference Engine validated
+
+This sprint successfully validated the first semantic inference pipeline.
+
+The engine is now able to derive new semantic observations from existing observations until no further knowledge can be inferred.
+
+Validated inference chain:
+
+Semantic Observation
+→ Semantic Component
+→ Semantic Relationship
+
+Validated examples:
+
+HAS_HEAD_REGION
+→ HAS_HEAD_COMPONENT
+
+HAS_BEAK
+→ HAS_BEAK_COMPONENT
+
+HAS_HEAD_COMPONENT
++ HAS_BEAK_COMPONENT
+→ BEAK_BELONGS_TO_HEAD
+
+The inference process is iterative and independent of rule order.
+
+Result:
+
+The Perception Engine no longer stores isolated observations.
+It incrementally constructs a semantic knowledge graph.
