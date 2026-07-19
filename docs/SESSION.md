@@ -107,59 +107,75 @@ The product remains the primary objective.
 ---
 
 ################################################################
-## ✅ Sprint Complete — Semantic Knowledge Graph v1
+################################################################
+# Sprint R5.1 – Semantic Validation Framework
+################################################################
 
-### Objective
+Status:
+Ready
 
-Validate whether semantic knowledge can be constructed incrementally from previously discovered semantic observations.
+Goal:
+Transform the Semantic Validator into a reusable validation framework
+for the Perception Engine.
 
-### Result
+Problem:
+The first semantic validator has been successfully validated.
+Future validation rules should no longer be hardcoded inside
+SemanticValidator.js.
 
-The experiment was successful.
+Scope:
 
-The Perception Engine now performs iterative semantic inference and constructs a semantic knowledge graph independent of rule order.
+✔ Introduce rule-based validation.
+✔ Create the first reusable validation rule.
+✔ Validate complete dove structures.
+✔ Keep the validator independent from PerceptionModel.
 
-Validated semantic hierarchy:
+Tasks:
 
-Geometry
-→ Semantic Regions
-→ Semantic Components
-→ Semantic Relationships
+1.
+Create Validation Rule interface.
 
-### Validated Components
+2.
+Move HEAD_STRUCTURE_VALID
+into its own validation rule.
 
-- Head
-- Neck
-- Body
-- Left Wing
-- Right Wing
-- Tail
-- Beak
+3.
+Implement DOVE_STRUCTURE_VALID.
 
-### Validated Relationships
+4.
+Refactor SemanticValidator
+to iterate over validation rules.
 
-- Beak belongs to Head
-- Head connected to Neck
-- Neck connected to Body
-- Left Wing connected to Body
-- Right Wing connected to Body
-- Tail connected to Body
+5.
+Validate output using console.table().
 
-### Validated Semantic Graph
+Out of Scope:
 
-            BEAK
-              │
-             HEAD
-              │
-             NECK
-              │
-             BODY
-      ┌───────┼────────┐
-      │       │        │
- LEFT_WING   TAIL  RIGHT_WING
+✖ No new Extractors
+✖ No new Inference Rules
+✖ No Builder implementation
+✖ No rendering changes
 
-### Conclusion
+Definition of Done:
 
-The Perception Engine no longer stores isolated observations.
+✔ Validation is fully rule based.
 
-It incrementally constructs a connected semantic knowledge graph representing the perceived structure of the dove.
+✔ SemanticValidator contains no
+hardcoded semantic knowledge.
+
+✔ HEAD_STRUCTURE_VALID is produced
+by a validation rule.
+
+✔ DOVE_STRUCTURE_VALID is successfully inferred.
+
+✔ Architecture remains:
+
+Extractors
+    ↓
+Inference Rules
+    ↓
+Semantic Knowledge Graph
+    ↓
+Validation Rules
+    ↓
+Validated Knowledge Graph
