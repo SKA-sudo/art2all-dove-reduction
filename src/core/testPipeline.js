@@ -11,7 +11,9 @@ import FlowExtractor from "./perception/FlowExtractor";
 import RelationshipForcesExtractor from "./perception/RelationshipForcesExtractor";
 import WingFingerCurvesExtractor from "./perception/WingFingerCurvesExtractor";
 
+
 console.log("PERCEPTION PIPELINE TEST START");
+
 
 const reference = new ReferenceModel({
   id: "dove-reference",
@@ -85,6 +87,7 @@ console.log(
   )
 );
 
+
 const perceptionState = observation.createPerceptionState({
   semanticObservations,
 });
@@ -101,6 +104,11 @@ semanticObservations.forEach((observation) => {
     `(confidence: ${observation.confidence})`
   );
 });
+
+
+
+
+
 console.log("PerceptionState:", perceptionState);
 
 console.log("PERCEPTION PIPELINE TEST END");

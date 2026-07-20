@@ -107,75 +107,26 @@ The product remains the primary objective.
 ---
 
 ################################################################
-################################################################
-# Sprint R5.1 – Semantic Validation Framework
-################################################################
+### Sprint R5.1 — Declarative Semantic Validation
+Status: COMPLETED
 
-Status:
-Ready
+Achievements
 
-Goal:
-Transform the Semantic Validator into a reusable validation framework
-for the Perception Engine.
+- SemanticValidator converted into a generic validation engine.
+- Semantic knowledge extracted into declarative validation rules.
+- Validation rules now describe knowledge instead of executable logic.
+- Hierarchical semantic validation successfully demonstrated.
+- Positive and negative validation paths verified.
 
-Problem:
-The first semantic validator has been successfully validated.
-Future validation rules should no longer be hardcoded inside
-SemanticValidator.js.
+Architecture
 
-Scope:
-
-✔ Introduce rule-based validation.
-✔ Create the first reusable validation rule.
-✔ Validate complete dove structures.
-✔ Keep the validator independent from PerceptionModel.
-
-Tasks:
-
-1.
-Create Validation Rule interface.
-
-2.
-Move HEAD_STRUCTURE_VALID
-into its own validation rule.
-
-3.
-Implement DOVE_STRUCTURE_VALID.
-
-4.
-Refactor SemanticValidator
-to iterate over validation rules.
-
-5.
-Validate output using console.table().
-
-Out of Scope:
-
-✖ No new Extractors
-✖ No new Inference Rules
-✖ No Builder implementation
-✖ No rendering changes
-
-Definition of Done:
-
-✔ Validation is fully rule based.
-
-✔ SemanticValidator contains no
-hardcoded semantic knowledge.
-
-✔ HEAD_STRUCTURE_VALID is produced
-by a validation rule.
-
-✔ DOVE_STRUCTURE_VALID is successfully inferred.
-
-✔ Architecture remains:
-
-Extractors
-    ↓
-Inference Rules
-    ↓
-Semantic Knowledge Graph
+Observations
     ↓
 Validation Rules
     ↓
 Validated Knowledge Graph
+
+Result
+
+The perception engine now validates semantic knowledge using declarative rules.
+This establishes the foundation for a scalable knowledge-driven perception architecture.

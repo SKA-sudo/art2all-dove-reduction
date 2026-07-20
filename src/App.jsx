@@ -6,6 +6,7 @@ import Scene from "./components/Scene";
 
 import PerceptionEngineDebug from "./components/perception/PerceptionEngineDebug";
 // import HeadRegionControl from "./components/debug/HeadRegionControl";
+import "./core/testPipeline";
 
 /* -------------------- APP -------------------- */
 
