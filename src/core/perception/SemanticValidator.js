@@ -1,6 +1,7 @@
 import HeadStructureValidationRule from "./rules/HeadStructureValidationRule";
 import DoveStructureValidationRule from "./DoveStructureValidator";
 
+
 export default class SemanticValidator {
   constructor(
     rules = [
@@ -13,10 +14,17 @@ export default class SemanticValidator {
 
   validate(observations = []) {
     const knownPredicates = new Set(
-      observations
-        .map((observation) => observation?.predicate)
-        .filter(Boolean)
-    );
+  observations
+    .filter(
+      (observation) =>
+        observation?.predicate &&
+        Boolean(observation.value)
+    )
+    .map(
+      (observation) =>
+        observation.predicate
+    )
+);
 
     const validationObservations = [];
 

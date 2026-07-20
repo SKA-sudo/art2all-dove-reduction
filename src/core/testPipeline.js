@@ -10,6 +10,9 @@ import FaceCenterExtractor from "./perception/FaceCenterExtractor";
 import FlowExtractor from "./perception/FlowExtractor";
 import RelationshipForcesExtractor from "./perception/RelationshipForcesExtractor";
 import WingFingerCurvesExtractor from "./perception/WingFingerCurvesExtractor";
+import HeadComponentExtractor from "./perception/HeadComponentExtractor";
+import NeckComponentExtractor from "./perception/NeckComponentExtractor";
+import SemanticValidator from "./perception/SemanticValidator";
 
 
 console.log("PERCEPTION PIPELINE TEST START");
@@ -22,16 +25,47 @@ const reference = new ReferenceModel({
 });
 
 const testFaces = [
+  // Tail region
   {
-    center: new THREE.Vector3(0, 0, -2),
+    center: new THREE.Vector3(0, 0, -2.0),
     normal: new THREE.Vector3(0, 0, 1),
   },
+
   {
-    center: new THREE.Vector3(0, 0, 0),
+    center: new THREE.Vector3(0, 0, -1.8),
     normal: new THREE.Vector3(0, 0, 1),
   },
+
+  // Body region
   {
-    center: new THREE.Vector3(0, 0, 2),
+    center: new THREE.Vector3(0, 0, -1.0),
+    normal: new THREE.Vector3(0, 0, 1),
+  },
+
+  {
+    center: new THREE.Vector3(0, 0, 0.0),
+    normal: new THREE.Vector3(0, 0, 1),
+  },
+
+  {
+    center: new THREE.Vector3(0, 0, 1.0),
+    normal: new THREE.Vector3(0, 0, 1),
+  },
+
+  // Neck region
+  {
+    center: new THREE.Vector3(0, 0, 1.5),
+    normal: new THREE.Vector3(0, 0, 1),
+  },
+
+  // Head region
+  {
+    center: new THREE.Vector3(0, 0, 1.8),
+    normal: new THREE.Vector3(0, 0, 1),
+  },
+
+  {
+    center: new THREE.Vector3(0, 0, 2.0),
     normal: new THREE.Vector3(0, 0, 1),
   },
 ];
@@ -62,7 +96,9 @@ const extractors = [
   new FaceCenterExtractor(),
   new BodyCenterExtractor(),
   new LongitudinalAxisExtractor(),
+  new HeadComponentExtractor(),
   new GestureExtractor(),
+  new NeckComponentExtractor(),
   new OutlineExtractor(),
   new FlowExtractor(),
   new RelationshipForcesExtractor(),
@@ -79,6 +115,38 @@ const semanticObservations = extractors.map((extractor) =>
   extractor.extract(observation)
 );
 
+
+semanticObservations.forEach(
+  (semanticObservation, index) => {
+    console.log(index, {
+      predicate:
+        semanticObservation?.predicate,
+
+      subject:
+        semanticObservation?.subject,
+
+      source:
+        semanticObservation?.source,
+
+      value:
+        semanticObservation?.value,
+
+      confidence:
+        semanticObservation?.confidence,
+    });
+  }
+);
+
+const semanticValidator = new SemanticValidator();
+
+const validationObservations =
+  semanticValidator.validate(semanticObservations);
+
+const allSemanticObservations = [
+  ...semanticObservations,
+  ...validationObservations,
+];
+
 console.log(
   "Semantic predicates:",
   semanticObservations.map(
@@ -89,7 +157,7 @@ console.log(
 
 
 const perceptionState = observation.createPerceptionState({
-  semanticObservations,
+  semanticObservations: allSemanticObservations,
 });
 
 console.log("ReferenceModel:", reference);
@@ -97,11 +165,11 @@ console.log("Observation:", observation);
 console.log("Extractors:", extractors);
 console.log("Semantic Observations");
 
-semanticObservations.forEach((observation) => {
+allSemanticObservations.forEach((observation) => {
   console.log(
     `${observation.subject} ${observation.predicate}`,
     observation.value,
-    `(confidence: ${observation.confidence})`
+    `(confidence: ${observation.confidence ?? "-"})`
   );
 });
 
