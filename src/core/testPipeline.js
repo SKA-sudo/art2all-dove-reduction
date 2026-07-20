@@ -20,6 +20,11 @@ import LeftWingComponentExtractor from "./perception/LeftWingComponentExtractor"
 import RightWingComponentExtractor from "./perception/RightWingComponentExtractor";
 import LeftWingBodyRelationshipExtractor from "./perception/LeftWingBodyRelationshipExtractor";
 import RightWingBodyRelationshipExtractor from "./perception/RightWingBodyRelationshipExtractor";
+import TailComponentExtractor from "./perception/TailComponentExtractor";
+import TailBodyRelationshipExtractor from "./perception/TailBodyRelationshipExtractor";
+import BeakComponentExtractor from "./perception/BeakComponentExtractor";
+import BeakHeadRelationshipExtractor from "./perception/BeakHeadRelationshipExtractor";
+import SemanticGraphBuilder from "./perception/SemanticGraphBuilder";
 
 console.log("PERCEPTION PIPELINE TEST START");
 
@@ -103,9 +108,11 @@ const componentExtractors = [
   new BodyCenterExtractor(),
   new LongitudinalAxisExtractor(),
   new HeadComponentExtractor(),
+  new BeakComponentExtractor(),
   new GestureExtractor(),
   new NeckComponentExtractor(),
   new BodyComponentExtractor(),
+  new TailComponentExtractor(),
   new LeftWingComponentExtractor(),
   new RightWingComponentExtractor(),
   new OutlineExtractor(),
@@ -124,7 +131,12 @@ const relationshipExtractors = [
   new NeckBodyRelationshipExtractor(),
   new LeftWingBodyRelationshipExtractor(),
   new RightWingBodyRelationshipExtractor(),
+  new TailBodyRelationshipExtractor(),
+  new BeakHeadRelationshipExtractor(),
 ];
+
+const semanticGraphBuilder =
+  new SemanticGraphBuilder();
 
 console.log("FaceCenterExtractor:", FaceCenterExtractor);
 
@@ -171,6 +183,48 @@ semanticObservations.forEach(
         semanticObservation?.confidence,
     });
   }
+);
+
+
+const semanticKnowledgeObservations =
+  semanticObservations.filter(
+    (semanticObservation) => {
+      const predicate =
+        semanticObservation?.predicate;
+
+      const isComponent =
+        predicate?.startsWith("HAS_") &&
+        predicate?.endsWith("_COMPONENT");
+
+      const isRelationship =
+        semanticObservation?.value?.from &&
+        semanticObservation?.value?.to;
+
+      return isComponent || isRelationship;
+    }
+  );
+
+const semanticGraph =
+  semanticGraphBuilder.build(
+    semanticKnowledgeObservations
+  );
+
+console.log(
+  "===== SEMANTIC KNOWLEDGE GRAPH ====="
+);
+
+console.log(
+  "NODES",
+  semanticGraph.nodes
+);
+
+console.log(
+  "EDGES",
+  semanticGraph.edges
+);
+
+console.log(
+  "===================================="
 );
 
 const semanticValidator = new SemanticValidator();
