@@ -91,7 +91,7 @@ const observation = reference.createObservation({
   },
 });
 
-const extractors = [
+const componentExtractors = [
   new IdentityExtractor(),
   new FaceCenterExtractor(),
   new BodyCenterExtractor(),
@@ -99,7 +99,6 @@ const extractors = [
   new HeadComponentExtractor(),
   new GestureExtractor(),
   new NeckComponentExtractor(),
-  new HeadNeckRelationshipExtractor(),
   new OutlineExtractor(),
   new FlowExtractor(),
   new RelationshipForcesExtractor(),
@@ -110,12 +109,36 @@ const extractors = [
     side: "right",
   }),
 ];
+
+const relationshipExtractors = [
+  new HeadNeckRelationshipExtractor(),
+];
+
 console.log("FaceCenterExtractor:", FaceCenterExtractor);
-console.log("Extractors count:", extractors.length);
-const semanticObservations = extractors.map((extractor) =>
-  extractor.extract(observation)
+
+console.log(
+  "Component extractors count:",
+  componentExtractors.length
 );
 
+console.log(
+  "Relationship extractors count:",
+  relationshipExtractors.length
+);
+
+
+const semanticObservations =
+  componentExtractors.map((extractor) =>
+    extractor.extract(observation)
+  );
+const relationshipObservations =
+  relationshipExtractors.map((extractor) =>
+    extractor.extract(semanticObservations)
+  );
+
+semanticObservations.push(
+  ...relationshipObservations
+);
 
 semanticObservations.forEach(
   (semanticObservation, index) => {
@@ -163,7 +186,18 @@ const perceptionState = observation.createPerceptionState({
 
 console.log("ReferenceModel:", reference);
 console.log("Observation:", observation);
-console.log("Extractors:", extractors);
+
+console.log(
+  "Component Extractors:",
+  componentExtractors
+);
+
+console.log(
+  "Relationship Extractors:",
+  relationshipExtractors
+);
+
+
 console.log("Semantic Observations");
 
 allSemanticObservations.forEach((observation) => {
