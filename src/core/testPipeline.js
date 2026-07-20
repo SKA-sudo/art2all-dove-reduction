@@ -14,6 +14,12 @@ import HeadComponentExtractor from "./perception/HeadComponentExtractor";
 import NeckComponentExtractor from "./perception/NeckComponentExtractor";
 import SemanticValidator from "./perception/SemanticValidator";
 import HeadNeckRelationshipExtractor from "./perception/HeadNeckRelationshipExtractor";
+import BodyComponentExtractor from "./perception/BodyComponentExtractor";
+import NeckBodyRelationshipExtractor from "./perception/NeckBodyRelationshipExtractor";
+import LeftWingComponentExtractor from "./perception/LeftWingComponentExtractor";
+import RightWingComponentExtractor from "./perception/RightWingComponentExtractor";
+import LeftWingBodyRelationshipExtractor from "./perception/LeftWingBodyRelationshipExtractor";
+import RightWingBodyRelationshipExtractor from "./perception/RightWingBodyRelationshipExtractor";
 
 console.log("PERCEPTION PIPELINE TEST START");
 
@@ -99,6 +105,9 @@ const componentExtractors = [
   new HeadComponentExtractor(),
   new GestureExtractor(),
   new NeckComponentExtractor(),
+  new BodyComponentExtractor(),
+  new LeftWingComponentExtractor(),
+  new RightWingComponentExtractor(),
   new OutlineExtractor(),
   new FlowExtractor(),
   new RelationshipForcesExtractor(),
@@ -112,6 +121,9 @@ const componentExtractors = [
 
 const relationshipExtractors = [
   new HeadNeckRelationshipExtractor(),
+  new NeckBodyRelationshipExtractor(),
+  new LeftWingBodyRelationshipExtractor(),
+  new RightWingBodyRelationshipExtractor(),
 ];
 
 console.log("FaceCenterExtractor:", FaceCenterExtractor);

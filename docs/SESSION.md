@@ -107,26 +107,50 @@ The product remains the primary objective.
 ---
 
 ################################################################
-### Sprint R5.1 — Declarative Semantic Validation
-Status: COMPLETED
+### Semantic Knowledge Graph Progress
 
-Achievements
+#### Completed
 
-- SemanticValidator converted into a generic validation engine.
-- Semantic knowledge extracted into declarative validation rules.
-- Validation rules now describe knowledge instead of executable logic.
-- Hierarchical semantic validation successfully demonstrated.
-- Positive and negative validation paths verified.
+The perception pipeline is now cleanly separated into two independent stages:
 
-Architecture
+* Component Extractors
+* Relationship Extractors
 
-Observations
-    ↓
-Validation Rules
-    ↓
-Validated Knowledge Graph
+This separation allows semantic relationships to be added without modifying the component extraction pipeline.
 
-Result
+#### Implemented Components
 
-The perception engine now validates semantic knowledge using declarative rules.
-This establishes the foundation for a scalable knowledge-driven perception architecture.
+* HAS_HEAD_COMPONENT
+* HAS_NECK_COMPONENT
+* HAS_BODY_COMPONENT
+
+#### Implemented Relationships
+
+* HEAD_CONNECTED_TO_NECK
+* NECK_CONNECTED_TO_BODY
+
+#### Current Semantic Knowledge Graph
+
+```text
+HEAD_COMPONENT
+      │
+HEAD_CONNECTED_TO_NECK
+      │
+NECK_COMPONENT
+      │
+NECK_CONNECTED_TO_BODY
+      │
+BODY_COMPONENT
+```
+
+#### Next Step
+
+Implement semantic wing components:
+
+* HAS_LEFT_WING_COMPONENT
+* HAS_RIGHT_WING_COMPONENT
+
+followed by the corresponding relationships:
+
+* LEFT_WING_CONNECTED_TO_BODY
+* RIGHT_WING_CONNECTED_TO_BODY
