@@ -13,7 +13,7 @@ import WingFingerCurvesExtractor from "./perception/WingFingerCurvesExtractor";
 import HeadComponentExtractor from "./perception/HeadComponentExtractor";
 import NeckComponentExtractor from "./perception/NeckComponentExtractor";
 import SemanticValidator from "./perception/SemanticValidator";
-
+import HeadNeckRelationshipExtractor from "./perception/HeadNeckRelationshipExtractor";
 
 console.log("PERCEPTION PIPELINE TEST START");
 
@@ -99,6 +99,7 @@ const extractors = [
   new HeadComponentExtractor(),
   new GestureExtractor(),
   new NeckComponentExtractor(),
+  new HeadNeckRelationshipExtractor(),
   new OutlineExtractor(),
   new FlowExtractor(),
   new RelationshipForcesExtractor(),
