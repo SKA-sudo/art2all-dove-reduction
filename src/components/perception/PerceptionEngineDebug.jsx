@@ -1,5 +1,6 @@
 export default function PerceptionEngineDebug({
-  perceptionState,
+    perceptionState,
+    semanticGraph,
 }) {
   const observations =
     perceptionState?.semanticObservations ?? [];
@@ -35,11 +36,11 @@ export default function PerceptionEngineDebug({
       )}
 
       {observations.map((observation, index) => (
-      <div
-        key={
-          observation.id ??
-          `${observation.predicate}-${observation.subject}-${index}`
-        }
+        <div
+          key={
+            observation.id ??
+            `${observation.predicate}-${observation.subject}-${index}`
+          }
           style={{
             marginBottom: 8,
             borderBottom:
@@ -65,11 +66,9 @@ export default function PerceptionEngineDebug({
             Source: {observation.source}
           </div>
 
-          {observation.value?.faceCount !==
-            undefined && (
+          {observation.value?.faceCount !== undefined && (
             <div>
-              Faces:{" "}
-              {observation.value.faceCount}
+              Faces: {observation.value.faceCount}
             </div>
           )}
 
@@ -77,25 +76,19 @@ export default function PerceptionEngineDebug({
             <div>
               Coverage:{" "}
               {(
-                (observation.value.faces.length /
-                  9339) *
+                (observation.value.faces.length / 9339) *
                 100
               ).toFixed(1)}
               %
             </div>
           )}
 
-          {observation.value?.progressMin !==
-            undefined && (
+          {observation.value?.progressMin !== undefined && (
             <div>
               Range:{" "}
-              {observation.value.progressMin.toFixed(
-                2
-              )}
+              {observation.value.progressMin.toFixed(2)}
               {" - "}
-              {observation.value.progressMax.toFixed(
-                2
-              )}
+              {observation.value.progressMax.toFixed(2)}
             </div>
           )}
 
@@ -106,8 +99,7 @@ export default function PerceptionEngineDebug({
           </div>
 
           <div>
-            Confidence:{" "}
-            {observation.confidence}
+            Confidence: {observation.confidence}
           </div>
 
           <div
@@ -123,9 +115,9 @@ export default function PerceptionEngineDebug({
               ? "VALIDATED"
               : "DISCOVERED"}
           </div>
+
           <div>
-            Progress:
-            {" "}
+            Progress:{" "}
             {observation.value?.progressMin !== undefined
               ? `${(
                   observation.value.progressMin * 100
@@ -136,6 +128,61 @@ export default function PerceptionEngineDebug({
           </div>
         </div>
       ))}
+
+      {semanticGraph && (
+        <>
+          <hr />
+
+          <div
+            style={{
+              fontWeight: "bold",
+              marginTop: 10,
+              marginBottom: 6,
+            }}
+          >
+            Semantic Graph
+          </div>
+
+          <div>
+            <strong>Nodes:</strong>
+          </div>
+
+          {semanticGraph.nodes.map((node) => (
+            <div
+              key={node.id}
+              style={{
+                paddingLeft: 10,
+                fontSize: 11,
+              }}
+            >
+              • {node.id}
+            </div>
+          ))}
+
+          <div
+            style={{
+              marginTop: 10,
+            }}
+          >
+            <strong>Edges:</strong>
+          </div>
+
+          {semanticGraph.edges.map((edge) => (
+            <div
+              key={edge.id}
+              style={{
+                paddingLeft: 10,
+                fontSize: 11,
+              }}
+            >
+              {edge.from}
+              {" → "}
+              {edge.to}
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 }
+      

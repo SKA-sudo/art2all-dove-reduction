@@ -1,0 +1,91 @@
+.semantic-graph-debug {
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  color: #e8edf2;
+  background: #11171d;
+  border: 1px solid #2e3a44;
+  border-radius: 14px;
+}
+
+.semantic-graph-debug__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.semantic-graph-debug__header h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.semantic-graph-debug__header p {
+  margin: 0;
+  color: #9ba8b4;
+}
+
+.semantic-graph-debug__metrics {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.semantic-graph-debug__metrics span {
+  padding: 6px 10px;
+  color: #bcefd0;
+  background: #193326;
+  border: 1px solid #2d6543;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.semantic-graph-debug__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 420px;
+  background: #0b1015;
+  border: 1px solid #26323c;
+  border-radius: 10px;
+}
+
+.semantic-graph-debug__node {
+  fill: #183326;
+  stroke: #55c981;
+  stroke-width: 2;
+}
+
+.semantic-graph-debug__node-label {
+  fill: #eef7f1;
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.semantic-graph-debug__edge {
+  stroke: #81909d;
+  stroke-width: 2;
+}
+
+.semantic-graph-debug__arrow {
+  fill: #81909d;
+}
+
+.semantic-graph-debug__edge-label {
+  fill: #aab5bf;
+  font-family: monospace;
+  font-size: 10px;
+}
+
+@media (max-width: 700px) {
+  .semantic-graph-debug {
+    padding: 14px;
+  }
+
+  .semantic-graph-debug__header {
+    flex-direction: column;
+  }
+}

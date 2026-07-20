@@ -5,8 +5,11 @@ import { useState } from "react";
 import Scene from "./components/Scene";
 
 import PerceptionEngineDebug from "./components/perception/PerceptionEngineDebug";
-// import HeadRegionControl from "./components/debug/HeadRegionControl";
-import "./core/testPipeline";
+import { semanticGraph } from "./core/testPipeline";
+
+import "./App.css";
+
+
 
 /* -------------------- APP -------------------- */
 
@@ -197,7 +200,8 @@ export default function App() {
     >
       {showPerceptionMonitor && (
         <PerceptionEngineDebug
-          perceptionState={perceptionState}
+            perceptionState={perceptionState}
+            semanticGraph={semanticGraph}
         />
       )}
 

@@ -282,4 +282,9 @@ console.log("PerceptionState:", perceptionState);
 
 console.log("PERCEPTION PIPELINE TEST END");
 
+export {
+  semanticGraph,
+  perceptionState,
+};
+
 export default perceptionState;

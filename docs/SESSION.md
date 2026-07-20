@@ -107,50 +107,64 @@ The product remains the primary objective.
 ---
 
 ################################################################
-### Semantic Knowledge Graph Progress
+Sprint R5.2 – Semantic Graph Validation
 
-#### Completed
+Status: READY
 
-The perception pipeline is now cleanly separated into two independent stages:
+Ziel
 
-* Component Extractors
-* Relationship Extractors
+Den bereits erzeugten Semantic Knowledge Graph vollständig validieren und für die nächste Visualisierungsstufe vorbereiten.
 
-This separation allows semantic relationships to be added without modifying the component extraction pipeline.
+Keine neue Architektur.
 
-#### Implemented Components
+Keine neuen Extractoren.
 
-* HAS_HEAD_COMPONENT
-* HAS_NECK_COMPONENT
-* HAS_BODY_COMPONENT
+Keine neuen Algorithmen.
 
-#### Implemented Relationships
+Ausgangslage
 
-* HEAD_CONNECTED_TO_NECK
-* NECK_CONNECTED_TO_BODY
+Bereits vorhanden:
 
-#### Current Semantic Knowledge Graph
+✅ Component Extractors
+✅ Relationship Extractors
+✅ Semantic Observations
+✅ Semantic Graph Builder
+✅ Perception Monitor
+✅ Projekt läuft wieder fehlerfrei
+Sprintziel
 
-```text
-HEAD_COMPONENT
-      │
-HEAD_CONNECTED_TO_NECK
-      │
-NECK_COMPONENT
-      │
-NECK_CONNECTED_TO_BODY
-      │
-BODY_COMPONENT
-```
+Nachweisen, dass der Semantic Graph vollständig und konsistent ist.
 
-#### Next Step
+Validieren:
 
-Implement semantic wing components:
+Anzahl der Nodes
+Anzahl der Edges
+Predicate-Namen
+Verbindungen
+Confidence
+Graph-Konsistenz
 
-* HAS_LEFT_WING_COMPONENT
-* HAS_RIGHT_WING_COMPONENT
+Der Perception Monitor dient dabei als erste Diagnoseoberfläche.
 
-followed by the corresponding relationships:
+Definition of Done
 
-* LEFT_WING_CONNECTED_TO_BODY
-* RIGHT_WING_CONNECTED_TO_BODY
+Der Sprint ist abgeschlossen, wenn:
+
+✅ alle erwarteten Komponenten im Graph erscheinen
+✅ alle erwarteten Beziehungen erscheinen
+✅ keine doppelten Nodes existieren
+✅ keine ungültigen Kanten existieren
+✅ der Monitor den Graph korrekt anzeigt
+✅ die Graphstruktur dokumentiert wurde
+Nicht Bestandteil dieses Sprints
+❌ SVG
+❌ Canvas-Visualisierung
+❌ Force Layout
+❌ Animation
+❌ Reasoning
+❌ neue Wahrnehmungsregeln
+Ziel nach diesem Sprint
+
+Der Semantic Graph ist als stabile Wissensrepräsentation validiert.
+
+Erst danach beginnt Sprint R5.3 – Semantic Graph Visualization, in dem wir den Graphen grafisch darstellen.
