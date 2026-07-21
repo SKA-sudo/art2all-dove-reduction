@@ -1,3 +1,5 @@
+import SemanticGraphVisualization from "./SemanticGraphVisualization";
+
 export default function PerceptionEngineDebug({
   perceptionState,
   semanticGraph,
@@ -215,8 +217,7 @@ export default function PerceptionEngineDebug({
       }
     </div>
 
-    {semanticGraphValidation.errors.length >
-      0 && (
+    {semanticGraphValidation.errors.length > 0 && (
       <div style={{ marginTop: 8 }}>
         <strong>Validation Errors:</strong>
 
@@ -238,35 +239,37 @@ export default function PerceptionEngineDebug({
       </div>
     )}
 
-    {semanticGraphValidation.warnings
-          .length > 0 && (
-          <div style={{ marginTop: 8 }}>
-            <strong>Warnings:</strong>
+    {semanticGraphValidation.warnings.length > 0 && (
+      <div style={{ marginTop: 8 }}>
+        <strong>Warnings:</strong>
 
-            {semanticGraphValidation.warnings.map(
-              (warning, index) => (
-                <div
-                  key={`${warning.type}-${index}`}
-                  style={{
-                    marginTop: 4,
-                    paddingLeft: 8,
-                    color: "#ffcc66",
-                    fontSize: 11,
-                  }}
-                >
-                  • {warning.message}
-                </div>
-              )
-            )}
-          </div>
+        {semanticGraphValidation.warnings.map(
+          (warning, index) => (
+            <div
+              key={`${warning.type}-${index}`}
+              style={{
+                marginTop: 4,
+                paddingLeft: 8,
+                color: "#ffcc66",
+                fontSize: 11,
+              }}
+            >
+              • {warning.message}
+            </div>
+          )
         )}
       </div>
     )}
+  </div>
+)}
 
-          <div>
-            <strong>Nodes:</strong>
-          </div>
+<SemanticGraphVisualization
+  semanticGraph={semanticGraph}
+/>
 
+<div>
+  <strong>Nodes:</strong>
+</div>
           {semanticGraph.nodes.map((node) => (
             <div
               key={node.id}
