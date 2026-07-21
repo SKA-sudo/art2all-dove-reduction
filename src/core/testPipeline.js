@@ -26,6 +26,8 @@ import BeakComponentExtractor from "./perception/BeakComponentExtractor";
 import BeakHeadRelationshipExtractor from "./perception/BeakHeadRelationshipExtractor";
 import SemanticGraphBuilder from "./perception/SemanticGraphBuilder";
 import SemanticGraphValidator from "./perception/SemanticGraphValidator";
+import SemanticSurfaceFactory from "./perception/SemanticSurfaceFactory";
+
 
 console.log("PERCEPTION PIPELINE TEST START");
 
@@ -142,6 +144,9 @@ const semanticGraphBuilder =
 const semanticGraphValidator =
   new SemanticGraphValidator();  
 
+const semanticSurfaceFactory =
+  new SemanticSurfaceFactory();
+
 console.log("FaceCenterExtractor:", FaceCenterExtractor);
 
 console.log(
@@ -213,6 +218,28 @@ const semanticGraph =
     semanticKnowledgeObservations
   );
 
+const semanticSurfaces =
+  semanticSurfaceFactory.build(
+    semanticGraph
+  );
+
+console.table(
+  semanticGraph.nodes.map((node) => ({
+    id: node.id,
+    type: node.type,
+    predicate: node.predicate,
+  }))
+);
+
+console.log(semanticSurfaces);
+
+console.table(
+  semanticGraph.nodes.map((node) => ({
+    id: node.id,
+    type: node.type,
+    value: node.value,
+  }))
+);
 
  const expectedNodeIds = [
   "WholeDove",
@@ -287,6 +314,28 @@ console.log(
 console.log(
   "===================================="
 );
+console.log(
+  "===== SEMANTIC SURFACES ====="
+);
+
+console.log(
+  "SURFACES",
+  semanticSurfaces
+);
+
+semanticSurfaces.forEach(
+  (semanticSurface) => {
+    console.log(
+      semanticSurface.regionId,
+      semanticSurface.elements.length
+    );
+  }
+);
+
+console.log(
+  "============================="
+);
+
 
 const semanticValidator = new SemanticValidator();
 
@@ -345,6 +394,7 @@ console.log("PERCEPTION PIPELINE TEST END");
 
 export {
   semanticGraph,
+  semanticSurfaces,
   semanticGraphValidation,
   perceptionState,
 };

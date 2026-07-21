@@ -69,7 +69,12 @@ import HeadConnectedToNeckInference
 import NeckConnectedToBodyInference
   from "../../core/perception/NeckConnectedToBodyInference";
 import SemanticValidator
-  from "../../core/perception/SemanticValidator";  
+  from "../../core/perception/SemanticValidator";
+import SemanticGraphBuilder
+  from "../../core/perception/SemanticGraphBuilder";
+
+import SemanticSurfaceFactory
+  from "../../core/perception/SemanticSurfaceFactory";    
 
 
 function createRegionPerceptionState(scene) {
@@ -342,6 +347,12 @@ const validationObservations =
     ...inferredObservations,
   ]);
 
+const completeSemanticObservations = [
+  ...semanticObservations,
+  ...inferredObservations,
+  ...validationObservations,
+];
+
 console.table(validationObservations);
 
 const perceptionRuleEngine =
@@ -359,12 +370,10 @@ const ruleResults =
   }))
 );*/
 return observation.createPerceptionState({
-  semanticObservations: [
-  ...semanticObservations,
-  ...inferredObservations,
-  ...validationObservations,
-  ],
+  semanticObservations:
+    completeSemanticObservations,
 });
+
 }, [scene, bodyWingTransitionRegions]);
 
 
@@ -379,6 +388,56 @@ useEffect(() => {
   onPerceptionStateChange,
 ]);
 
+const semanticGraph = useMemo(() => {
+  const semanticObservations =
+    runtimePerceptionState
+      ?.semanticObservations;
+
+  if (
+    !Array.isArray(semanticObservations) ||
+    semanticObservations.length === 0
+  ) {
+    return {
+      nodes: [],
+      edges: [],
+    };
+  }
+
+  const semanticGraphBuilder =
+    new SemanticGraphBuilder();
+
+  return semanticGraphBuilder.build(
+    semanticObservations
+  );
+}, [runtimePerceptionState]);
+
+const semanticSurfaces = useMemo(() => {
+  const semanticSurfaceFactory =
+    new SemanticSurfaceFactory();
+
+  return semanticSurfaceFactory.build(
+    semanticGraph
+  );
+}, [semanticGraph]);
+
+useEffect(() => {
+  console.log("Semantic Surfaces");
+  console.table(semanticSurfaces);
+}, [semanticSurfaces]);
+
+const leftWingSemanticSurface =
+  semanticSurfaces.find(
+    (semanticSurface) =>
+      semanticSurface.regionId ===
+      "LEFT_WING_COMPONENT"
+  ) ?? null;
+
+const rightWingSemanticSurface =
+  semanticSurfaces.find(
+    (semanticSurface) =>
+      semanticSurface.regionId ===
+      "RIGHT_WING_COMPONENT"
+  ) ?? null;
 
 const longitudinalAxis =
   runtimePerceptionState?.semanticObservations
@@ -606,11 +665,11 @@ const rightWingRegion =
 {layers?.bodyRegion && (
   <>
 <SemanticWingPaperPrototype
-  wingItems={leftWingRegion?.faces ?? []}
+  semanticSurface={leftWingSemanticSurface}
 />
 
 <SemanticWingPaperPrototype
-  wingItems={rightWingRegion?.faces ?? []}
+  semanticSurface={rightWingSemanticSurface}
 />
   </>
 )}

@@ -20,6 +20,26 @@ mit Unterstützung von ChatGPT
 ################################################################
 # AI_START (MANDATORY)
 ################################################################
+Primary Goal
+
+Build the Art2all Peace Dove.
+
+Research is only performed when it directly enables the next
+production milestone.
+
+Current Production Pipeline
+
+Perception
+↓
+Semantic Graph
+↓
+Semantic Surface
+↓
+Paper Placement
+↓
+Peace Dove
+
+
 
 Before proposing any architecture, implementation or research,
 the following documents MUST be read in this exact order:
@@ -32,8 +52,18 @@ the following documents MUST be read in this exact order:
 5. ../art2all-dove-reduction/docs/PERCEPTION_ENGINE.md
 
 
-After reading, the assistant must:
+Before implementing anything:
 
+1. Does this move the Peace Dove forward?
+2. Does an implementation already exist?
+3. Would this create duplicate architecture?
+4. If unsure, inspect the repository first.
+
+Temporary / Legacy
+
+- Experimental PoCs are allowed.
+- Replace them only after the production path works.
+- Do not introduce parallel architectures.
 - confirm the active repository
 - confirm the active branch
 - summarize the current sprint objective
@@ -45,6 +75,17 @@ It never overrides the global project documentation.
 
 If a new idea conflicts with FOUNDATION, RESEARCH or DECISIONS, the documented decision takes precedence until explicitly changed
 
+# Architecture Rule
+
+Prefer extending the current production pipeline over creating
+new builders, adapters or data models.
+
+Before introducing a new component, inspect existing
+implementations and reuse them whenever possible
+
+###########################################
+## Current Sprint Goal
+###########################################
 ---
 
 ### AI Collaboration Rule
