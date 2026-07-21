@@ -1,6 +1,7 @@
 export default function PerceptionEngineDebug({
-    perceptionState,
-    semanticGraph,
+  perceptionState,
+  semanticGraph,
+  semanticGraphValidation,
 }) {
   const observations =
     perceptionState?.semanticObservations ?? [];
@@ -142,6 +143,125 @@ export default function PerceptionEngineDebug({
           >
             Semantic Graph
           </div>
+{semanticGraphValidation && (
+  <div
+    style={{
+      marginBottom: 10,
+      padding: 8,
+      border: `1px solid ${
+        semanticGraphValidation.valid
+          ? "rgba(102, 255, 153, 0.6)"
+          : "rgba(255, 102, 102, 0.7)"
+      }`,
+      borderRadius: 4,
+      background:
+        semanticGraphValidation.valid
+          ? "rgba(102, 255, 153, 0.08)"
+          : "rgba(255, 102, 102, 0.08)",
+    }}
+  >
+    <div
+      style={{
+        marginBottom: 6,
+        color: semanticGraphValidation.valid
+          ? "#66ff99"
+          : "#ff6666",
+        fontWeight: "bold",
+      }}
+    >
+      Graph Status:{" "}
+      {semanticGraphValidation.valid
+        ? "VALID"
+        : "INVALID"}
+    </div>
+
+    <div>
+      Nodes:{" "}
+      {
+        semanticGraphValidation.summary
+          .nodeCount
+      }
+    </div>
+
+    <div>
+      Unique Nodes:{" "}
+      {
+        semanticGraphValidation.summary
+          .uniqueNodeCount
+      }
+    </div>
+
+    <div>
+      Edges:{" "}
+      {
+        semanticGraphValidation.summary
+          .edgeCount
+      }
+    </div>
+
+    <div>
+      Errors:{" "}
+      {
+        semanticGraphValidation.summary
+          .errorCount
+      }
+    </div>
+
+    <div>
+      Warnings:{" "}
+      {
+        semanticGraphValidation.summary
+          .warningCount
+      }
+    </div>
+
+    {semanticGraphValidation.errors.length >
+      0 && (
+      <div style={{ marginTop: 8 }}>
+        <strong>Validation Errors:</strong>
+
+        {semanticGraphValidation.errors.map(
+          (error, index) => (
+            <div
+              key={`${error.type}-${index}`}
+              style={{
+                marginTop: 4,
+                paddingLeft: 8,
+                color: "#ff9999",
+                fontSize: 11,
+              }}
+            >
+              • {error.message}
+            </div>
+          )
+        )}
+      </div>
+    )}
+
+    {semanticGraphValidation.warnings
+          .length > 0 && (
+          <div style={{ marginTop: 8 }}>
+            <strong>Warnings:</strong>
+
+            {semanticGraphValidation.warnings.map(
+              (warning, index) => (
+                <div
+                  key={`${warning.type}-${index}`}
+                  style={{
+                    marginTop: 4,
+                    paddingLeft: 8,
+                    color: "#ffcc66",
+                    fontSize: 11,
+                  }}
+                >
+                  • {warning.message}
+                </div>
+              )
+            )}
+          </div>
+        )}
+      </div>
+    )}
 
           <div>
             <strong>Nodes:</strong>

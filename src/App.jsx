@@ -5,7 +5,10 @@ import { useState } from "react";
 import Scene from "./components/Scene";
 
 import PerceptionEngineDebug from "./components/perception/PerceptionEngineDebug";
-import { semanticGraph } from "./core/testPipeline";
+import {
+  semanticGraph,
+  semanticGraphValidation,
+} from "./core/testPipeline";
 
 import "./App.css";
 
@@ -202,6 +205,7 @@ export default function App() {
         <PerceptionEngineDebug
             perceptionState={perceptionState}
             semanticGraph={semanticGraph}
+            semanticGraphValidation={semanticGraphValidation}
         />
       )}
 

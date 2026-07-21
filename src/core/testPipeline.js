@@ -25,6 +25,7 @@ import TailBodyRelationshipExtractor from "./perception/TailBodyRelationshipExtr
 import BeakComponentExtractor from "./perception/BeakComponentExtractor";
 import BeakHeadRelationshipExtractor from "./perception/BeakHeadRelationshipExtractor";
 import SemanticGraphBuilder from "./perception/SemanticGraphBuilder";
+import SemanticGraphValidator from "./perception/SemanticGraphValidator";
 
 console.log("PERCEPTION PIPELINE TEST START");
 
@@ -138,6 +139,9 @@ const relationshipExtractors = [
 const semanticGraphBuilder =
   new SemanticGraphBuilder();
 
+const semanticGraphValidator =
+  new SemanticGraphValidator();  
+
 console.log("FaceCenterExtractor:", FaceCenterExtractor);
 
 console.log(
@@ -209,6 +213,63 @@ const semanticGraph =
     semanticKnowledgeObservations
   );
 
+
+ const expectedNodeIds = [
+  "WholeDove",
+  "HEAD_COMPONENT",
+  "BEAK_COMPONENT",
+  "NECK_COMPONENT",
+  "BODY_COMPONENT",
+  "TAIL_COMPONENT",
+  "LEFT_WING_COMPONENT",
+  "RIGHT_WING_COMPONENT",
+];
+
+const expectedEdgePredicates = [
+  "HEAD_CONNECTED_TO_NECK",
+  "NECK_CONNECTED_TO_BODY",
+  "LEFT_WING_CONNECTED_TO_BODY",
+  "RIGHT_WING_CONNECTED_TO_BODY",
+  "TAIL_CONNECTED_TO_BODY",
+  "BEAK_BELONGS_TO_HEAD",
+];
+
+const semanticGraphValidation =
+  semanticGraphValidator.validate(
+    semanticGraph,
+    {
+      expectedNodeIds,
+      expectedEdgePredicates,
+    }
+  );
+
+console.log(
+  "===== SEMANTIC GRAPH VALIDATION ====="
+);
+
+console.log(
+  "VALID",
+  semanticGraphValidation.valid
+);
+
+console.log(
+  "SUMMARY",
+  semanticGraphValidation.summary
+);
+
+console.log(
+  "ERRORS",
+  semanticGraphValidation.errors
+);
+
+console.log(
+  "WARNINGS",
+  semanticGraphValidation.warnings
+);
+
+console.log(
+  "====================================="
+); 
 console.log(
   "===== SEMANTIC KNOWLEDGE GRAPH ====="
 );
@@ -284,6 +345,7 @@ console.log("PERCEPTION PIPELINE TEST END");
 
 export {
   semanticGraph,
+  semanticGraphValidation,
   perceptionState,
 };
 
