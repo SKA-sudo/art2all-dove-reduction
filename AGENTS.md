@@ -27,6 +27,18 @@ Read documentation in this order:
 1. art2all-dove-reduction/docs/FOUNDATION.md
 2. art2all-dove-reduction/docs/SESSION.md
 3. art2all-dove-reduction/docs/PERCEPTION_ENGINE.md
+4. art2all-dove-reduction/docs/DEVELOPMENT_STRATEGY.md
+5. art2all-dove-reduction/docs/ARCHITECTURE.md
+6. art2all-dove-reduction/docs/DECISIONS.md
+7. art2all-dove-reduction/docs/RESEARCH - 2.0.md
+8. art2all-dove-reduction/docs/validation/*.md 
+
+After reading:
+
+- summarize completed validations
+- summarize running validations
+- identify rejected validations
+- avoid repeating completed experiments
 
 Rules:
 
