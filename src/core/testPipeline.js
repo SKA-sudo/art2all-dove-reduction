@@ -27,6 +27,7 @@ import BeakHeadRelationshipExtractor from "./perception/BeakHeadRelationshipExtr
 import SemanticGraphBuilder from "./perception/SemanticGraphBuilder";
 import SemanticGraphValidator from "./perception/SemanticGraphValidator";
 import SemanticSurfaceFactory from "./perception/SemanticSurfaceFactory";
+import SemanticSurfaceBuilder from "./perception/SemanticSurfaceBuilder";
 
 
 console.log("PERCEPTION PIPELINE TEST START");
@@ -385,9 +386,6 @@ allSemanticObservations.forEach((observation) => {
 });
 
 
-
-
-
 console.log("PerceptionState:", perceptionState);
 
 console.log("PERCEPTION PIPELINE TEST END");
@@ -398,5 +396,25 @@ export {
   semanticGraphValidation,
   perceptionState,
 };
+
+const semanticSurfaceBuilder =
+  new SemanticSurfaceBuilder();
+
+export const semanticSurface =
+  semanticSurfaceBuilder.build(
+    semanticGraph
+  );
+
+console.log("===== SEMANTIC SURFACE =====");
+console.log(semanticSurface);
+console.log("============================");
+
+semanticSurface.components.map((component) => ({
+  id: component.id,
+  faceCount: component.faces.length,
+  center: component.center,
+  bounds: component.bounds,
+  neighbours: component.neighbours,
+}));
 
 export default perceptionState;

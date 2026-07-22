@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 import PerceptionModel from "./debug/PerceptionModel";
+import DebugSemanticSurface from "./debug/DebugSemanticSurface";
 
 const DOVE_SCALE = 28;
 const DOVE_POSITION = [0, 6, 0];
@@ -18,6 +19,7 @@ export default function DoveModel({
   organizationAdaptiveSize,
   eyeExperiment,
   onPerceptionStateChange,
+  semanticSurface,
 }) {
 
   const group = useRef();
@@ -85,6 +87,12 @@ export default function DoveModel({
       )}
 
       {/* Wahrnehmungsmodell */}
+
+      {layers.semanticSurface && (
+          <DebugSemanticSurface
+            semanticSurface={semanticSurface}
+          />
+        )}
       <PerceptionModel
         scene={scene}
         layers={layers}

@@ -17,6 +17,7 @@ export default function Scene({
     organizationAdaptiveSize,
     eyeExperiment,
     onPerceptionStateChange,
+    semanticSurface,
 }) {
 
 
@@ -53,6 +54,7 @@ export default function Scene({
         onPerceptionStateChange={
           onPerceptionStateChange
         }
+        semanticSurface={semanticSurface}
       />
     </>
   );

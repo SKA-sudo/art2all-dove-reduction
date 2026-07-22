@@ -8,6 +8,7 @@ import PerceptionEngineDebug from "./components/perception/PerceptionEngineDebug
 import {
   semanticGraph,
   semanticGraphValidation,
+  semanticSurface,
 } from "./core/testPipeline";
 
 import "./App.css";
@@ -66,6 +67,7 @@ export default function App() {
   headRegion: false,
   bodyRegion: false,
   headSemanticSurface: false,
+  semanticSurface: false,
 });
 
   const toggleLayer = (layerName) => {
@@ -206,6 +208,7 @@ export default function App() {
             perceptionState={perceptionState}
             semanticGraph={semanticGraph}
             semanticGraphValidation={semanticGraphValidation}
+             semanticSurface={semanticSurface}
         />
       )}
 
@@ -298,7 +301,16 @@ export default function App() {
         <div style={sectionTitleStyle}>
           Reference and perception
         </div>
-
+        <button
+          type="button"
+          style={getToggleButtonStyle(
+            layers.semanticSurface
+          )}
+          onClick={() => toggleLayer("semanticSurface")}
+        >
+          Semantic Surface:{" "}
+          {layers.semanticSurface ? "ON" : "OFF"}
+        </button>
         <button
           type="button"
           style={getToggleButtonStyle(
@@ -779,6 +791,7 @@ export default function App() {
         organizationAdaptiveSize={organizationAdaptiveSize}
         eyeExperiment={eyeExperiment}
         onPerceptionStateChange={setPerceptionState}
+        semanticSurface={semanticSurface}
       />
 
         <EffectComposer>

@@ -148,64 +148,102 @@ The product remains the primary objective.
 ---
 
 ################################################################
-Sprint R5.2 – Semantic Graph Validation
+################################################################
+Sprint R5.3 – Semantic Surface
+################################################################
 
-Status: READY
+Status:
+✅ COMPLETED
 
-Ziel
+Objective
+---------
 
-Den bereits erzeugten Semantic Knowledge Graph vollständig validieren und für die nächste Visualisierungsstufe vorbereiten.
+Transform the Semantic Graph into a semantic surface representation
+that can be rendered independently from the underlying mesh.
 
-Keine neue Architektur.
+Result
+------
 
-Keine neuen Extractoren.
+The Semantic Surface Builder has been successfully implemented.
 
-Keine neuen Algorithmen.
+The builder transforms semantic graph components into semantic
+surface components while preserving:
 
-Ausgangslage
+- semantic identity
+- spatial organization
+- neighbourhood relationships
+- associated surface elements
 
-Bereits vorhanden:
+A dedicated DebugSemanticSurface renderer was implemented and
+integrated into the Perception Laboratory.
 
-✅ Component Extractors
-✅ Relationship Extractors
-✅ Semantic Observations
-✅ Semantic Graph Builder
-✅ Perception Monitor
-✅ Projekt läuft wieder fehlerfrei
-Sprintziel
+The visualization confirms that semantic regions can now be rendered
+independently from the original mesh processing pipeline.
 
-Nachweisen, dass der Semantic Graph vollständig und konsistent ist.
+Pipeline
+--------
 
-Validieren:
+Perception
 
-Anzahl der Nodes
-Anzahl der Edges
-Predicate-Namen
-Verbindungen
-Confidence
-Graph-Konsistenz
+↓
 
-Der Perception Monitor dient dabei als erste Diagnoseoberfläche.
+Semantic Observations
 
-Definition of Done
+↓
 
-Der Sprint ist abgeschlossen, wenn:
+Semantic Graph
 
-✅ alle erwarteten Komponenten im Graph erscheinen
-✅ alle erwarteten Beziehungen erscheinen
-✅ keine doppelten Nodes existieren
-✅ keine ungültigen Kanten existieren
-✅ der Monitor den Graph korrekt anzeigt
-✅ die Graphstruktur dokumentiert wurde
-Nicht Bestandteil dieses Sprints
-❌ SVG
-❌ Canvas-Visualisierung
-❌ Force Layout
-❌ Animation
-❌ Reasoning
-❌ neue Wahrnehmungsregeln
-Ziel nach diesem Sprint
+↓
 
-Der Semantic Graph ist als stabile Wissensrepräsentation validiert.
+Semantic Surface
 
-Erst danach beginnt Sprint R5.3 – Semantic Graph Visualization, in dem wir den Graphen grafisch darstellen.
+↓
+
+Debug Visualization
+
+Validated
+---------
+
+✔ Semantic Graph successfully transformed into Semantic Surface
+
+✔ Semantic Surface rendered inside the Perception Laboratory
+
+✔ Surface components preserve semantic structure
+
+✔ Rendering is independent from mesh extraction logic
+
+Research Outcome
+----------------
+
+This sprint introduces a new abstraction layer.
+
+The system no longer operates only on geometric mesh faces.
+
+Instead, semantic components now exist as explicit semantic surfaces
+which can be analysed, visualised and processed independently.
+
+This represents an important architectural step towards a
+Perception Engine that operates on meaningful structures instead of
+raw geometry.
+
+Next Sprint
+-----------
+
+Sprint R5.4 – Perceptual Surface
+
+Goal:
+
+Investigate how semantic surfaces merge into perceptual surfaces and
+which regions are actually required for stable object recognition.
+
+Target pipeline:
+
+Semantic Surface
+
+↓
+
+Perceptual Surface
+
+↓
+
+Visual Recognition
