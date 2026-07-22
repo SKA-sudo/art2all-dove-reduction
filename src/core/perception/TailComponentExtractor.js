@@ -6,6 +6,7 @@ export default class TailComponentExtractor {
     id = "tail-component-extractor",
   } = {}) {
     this.id = id;
+
     this.adapter =
       new LongitudinalAxisAdapter();
   }
@@ -18,6 +19,9 @@ export default class TailComponentExtractor {
 
     const tailRegion =
       longitudinalAxis?.tailRegion ?? null;
+
+    const tailReference =
+      longitudinalAxis?.tailReference ?? null;
 
     const hasTailComponent =
       Array.isArray(tailRegion?.faces) &&
@@ -32,9 +36,23 @@ export default class TailComponentExtractor {
 
       value: hasTailComponent
         ? {
+            faces: tailRegion.faces,
+
+            center:
+              tailRegion.center ??
+              tailRegion.centroid ??
+              tailReference ??
+              null,
+
+            bounds:
+              tailRegion.bounds ??
+              tailRegion.boundingBox ??
+              null,
+
             region: tailRegion,
-            reference:
-              longitudinalAxis.tailReference,
+
+            reference: tailReference,
+
             faceCount:
               tailRegion.faces.length,
           }

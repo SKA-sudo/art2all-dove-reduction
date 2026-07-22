@@ -6,6 +6,7 @@ export default class BodyComponentExtractor {
     id = "body-component-extractor",
   } = {}) {
     this.id = id;
+
     this.adapter =
       new LongitudinalAxisAdapter();
   }
@@ -18,6 +19,9 @@ export default class BodyComponentExtractor {
 
     const bodyRegion =
       longitudinalAxis?.bodyRegion ?? null;
+
+    const bodyReference =
+      longitudinalAxis?.bodyReference ?? null;
 
     const hasBodyComponent =
       Array.isArray(bodyRegion?.faces) &&
@@ -32,9 +36,23 @@ export default class BodyComponentExtractor {
 
       value: hasBodyComponent
         ? {
+            faces: bodyRegion.faces,
+
+            center:
+              bodyRegion.center ??
+              bodyRegion.centroid ??
+              bodyReference ??
+              null,
+
+            bounds:
+              bodyRegion.bounds ??
+              bodyRegion.boundingBox ??
+              null,
+
             region: bodyRegion,
-            reference:
-              longitudinalAxis.bodyReference,
+
+            reference: bodyReference,
+
             faceCount:
               bodyRegion.faces.length,
           }

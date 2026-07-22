@@ -6,6 +6,7 @@ export default class HeadComponentExtractor {
     id = "head-component-extractor",
   } = {}) {
     this.id = id;
+
     this.adapter =
       new LongitudinalAxisAdapter();
   }
@@ -32,9 +33,23 @@ export default class HeadComponentExtractor {
 
       value: hasHeadComponent
         ? {
+            faces: headRegion.faces,
+
+            center:
+              headRegion.center ??
+              headRegion.centroid ??
+              null,
+
+            bounds:
+              headRegion.bounds ??
+              headRegion.boundingBox ??
+              null,
+
             region: headRegion,
+
             reference:
               longitudinalAxis.headReference,
+
             faceCount:
               headRegion.faces.length,
           }

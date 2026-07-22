@@ -14,7 +14,7 @@ export default class NeckComponentExtractor {
   extract(observation) {
     const longitudinalAxis =
       this.adapter.extract({
-        faces: observation.faces,
+        faces: observation?.faces,
       });
 
     const region =
@@ -32,9 +32,25 @@ export default class NeckComponentExtractor {
 
     const value = hasNeckComponent
       ? {
+          faces: region.faces,
+
+          center:
+            region.center ??
+            region.centroid ??
+            reference ??
+            null,
+
+          bounds:
+            region.bounds ??
+            region.boundingBox ??
+            null,
+
           region,
+
           reference,
-          faceCount: region.faces.length,
+
+          faceCount:
+            region.faces.length,
         }
       : null;
 
@@ -49,7 +65,8 @@ export default class NeckComponentExtractor {
 
       source: this.id,
 
-      confidence: value ? 1.0 : 0.0,
+      confidence:
+        value ? 1.0 : 0.0,
     });
   }
 }

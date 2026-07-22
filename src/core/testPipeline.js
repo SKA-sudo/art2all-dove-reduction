@@ -1,43 +1,53 @@
+import * as THREE from "three";
+
 import ReferenceModel from "./ReferenceModel";
+
 import IdentityExtractor from "./perception/IdentityExtractor";
 import BodyCenterExtractor from "./perception/BodyCenterExtractor";
 import GestureExtractor from "./perception/GestureExtractor";
 import LongitudinalAxisExtractor from "./perception/LongitudinalAxisExtractor";
-
-import * as THREE from "three";
 import OutlineExtractor from "./perception/OutlineExtractor";
 import FaceCenterExtractor from "./perception/FaceCenterExtractor";
 import FlowExtractor from "./perception/FlowExtractor";
 import RelationshipForcesExtractor from "./perception/RelationshipForcesExtractor";
 import WingFingerCurvesExtractor from "./perception/WingFingerCurvesExtractor";
+
 import HeadComponentExtractor from "./perception/HeadComponentExtractor";
 import NeckComponentExtractor from "./perception/NeckComponentExtractor";
-import SemanticValidator from "./perception/SemanticValidator";
-import HeadNeckRelationshipExtractor from "./perception/HeadNeckRelationshipExtractor";
 import BodyComponentExtractor from "./perception/BodyComponentExtractor";
-import NeckBodyRelationshipExtractor from "./perception/NeckBodyRelationshipExtractor";
 import LeftWingComponentExtractor from "./perception/LeftWingComponentExtractor";
 import RightWingComponentExtractor from "./perception/RightWingComponentExtractor";
+import TailComponentExtractor from "./perception/TailComponentExtractor";
+import BeakComponentExtractor from "./perception/BeakComponentExtractor";
+
+import HeadNeckRelationshipExtractor from "./perception/HeadNeckRelationshipExtractor";
+import NeckBodyRelationshipExtractor from "./perception/NeckBodyRelationshipExtractor";
 import LeftWingBodyRelationshipExtractor from "./perception/LeftWingBodyRelationshipExtractor";
 import RightWingBodyRelationshipExtractor from "./perception/RightWingBodyRelationshipExtractor";
-import TailComponentExtractor from "./perception/TailComponentExtractor";
 import TailBodyRelationshipExtractor from "./perception/TailBodyRelationshipExtractor";
-import BeakComponentExtractor from "./perception/BeakComponentExtractor";
 import BeakHeadRelationshipExtractor from "./perception/BeakHeadRelationshipExtractor";
+
+import SemanticValidator from "./perception/SemanticValidator";
 import SemanticGraphBuilder from "./perception/SemanticGraphBuilder";
 import SemanticGraphValidator from "./perception/SemanticGraphValidator";
-import SemanticSurfaceFactory from "./perception/SemanticSurfaceFactory";
 import SemanticSurfaceBuilder from "./perception/SemanticSurfaceBuilder";
-
+import SemanticSurfaceValidator from "./perception/SemanticSurfaceValidator";
 
 console.log("PERCEPTION PIPELINE TEST START");
 
+/* ============================================================
+   REFERENCE MODEL
+   ============================================================ */
 
 const reference = new ReferenceModel({
   id: "dove-reference",
   type: "glb",
   source: null,
 });
+
+/* ============================================================
+   TEST GEOMETRY
+   ============================================================ */
 
 const testFaces = [
   // Tail region
@@ -85,6 +95,10 @@ const testFaces = [
   },
 ];
 
+/* ============================================================
+   OBSERVATION
+   ============================================================ */
+
 const observation = reference.createObservation({
   faces: testFaces,
 
@@ -94,10 +108,21 @@ const observation = reference.createObservation({
   },
 
   primaryAxis: {
-    leftShoulder: { center: testFaces[0].center },
-    leftWingTip: { center: testFaces[1].center },
-    rightShoulder: { center: testFaces[0].center },
-    rightWingTip: { center: testFaces[2].center },
+    leftShoulder: {
+      center: testFaces[0].center,
+    },
+
+    leftWingTip: {
+      center: testFaces[1].center,
+    },
+
+    rightShoulder: {
+      center: testFaces[0].center,
+    },
+
+    rightWingTip: {
+      center: testFaces[2].center,
+    },
   },
 
   localWingSpace: {
@@ -106,11 +131,16 @@ const observation = reference.createObservation({
   },
 });
 
+/* ============================================================
+   COMPONENT EXTRACTORS
+   ============================================================ */
+
 const componentExtractors = [
   new IdentityExtractor(),
   new FaceCenterExtractor(),
   new BodyCenterExtractor(),
   new LongitudinalAxisExtractor(),
+
   new HeadComponentExtractor(),
   new BeakComponentExtractor(),
   new GestureExtractor(),
@@ -119,16 +149,23 @@ const componentExtractors = [
   new TailComponentExtractor(),
   new LeftWingComponentExtractor(),
   new RightWingComponentExtractor(),
+
   new OutlineExtractor(),
   new FlowExtractor(),
   new RelationshipForcesExtractor(),
+
   new WingFingerCurvesExtractor({
     side: "left",
   }),
+
   new WingFingerCurvesExtractor({
     side: "right",
   }),
 ];
+
+/* ============================================================
+   RELATIONSHIP EXTRACTORS
+   ============================================================ */
 
 const relationshipExtractors = [
   new HeadNeckRelationshipExtractor(),
@@ -139,16 +176,33 @@ const relationshipExtractors = [
   new BeakHeadRelationshipExtractor(),
 ];
 
+/* ============================================================
+   BUILDERS AND VALIDATORS
+   ============================================================ */
+
 const semanticGraphBuilder =
   new SemanticGraphBuilder();
 
 const semanticGraphValidator =
-  new SemanticGraphValidator();  
+  new SemanticGraphValidator();
 
-const semanticSurfaceFactory =
-  new SemanticSurfaceFactory();
+const semanticSurfaceBuilder =
+  new SemanticSurfaceBuilder();
 
-console.log("FaceCenterExtractor:", FaceCenterExtractor);
+const semanticSurfaceValidator =
+  new SemanticSurfaceValidator();
+
+const semanticValidator =
+  new SemanticValidator();
+
+/* ============================================================
+   PIPELINE INFORMATION
+   ============================================================ */
+
+console.log(
+  "FaceCenterExtractor:",
+  FaceCenterExtractor
+);
 
 console.log(
   "Component extractors count:",
@@ -160,11 +214,15 @@ console.log(
   relationshipExtractors.length
 );
 
+/* ============================================================
+   SEMANTIC OBSERVATIONS
+   ============================================================ */
 
 const semanticObservations =
   componentExtractors.map((extractor) =>
     extractor.extract(observation)
   );
+
 const relationshipObservations =
   relationshipExtractors.map((extractor) =>
     extractor.extract(semanticObservations)
@@ -195,6 +253,9 @@ semanticObservations.forEach(
   }
 );
 
+/* ============================================================
+   SEMANTIC KNOWLEDGE OBSERVATIONS
+   ============================================================ */
 
 const semanticKnowledgeObservations =
   semanticObservations.filter(
@@ -207,21 +268,25 @@ const semanticKnowledgeObservations =
         predicate?.endsWith("_COMPONENT");
 
       const isRelationship =
-        semanticObservation?.value?.from &&
-        semanticObservation?.value?.to;
+        Boolean(
+          semanticObservation?.value?.from &&
+          semanticObservation?.value?.to
+        );
 
-      return isComponent || isRelationship;
+      return (
+        isComponent ||
+        isRelationship
+      );
     }
   );
+
+/* ============================================================
+   SEMANTIC GRAPH
+   ============================================================ */
 
 const semanticGraph =
   semanticGraphBuilder.build(
     semanticKnowledgeObservations
-  );
-
-const semanticSurfaces =
-  semanticSurfaceFactory.build(
-    semanticGraph
   );
 
 console.table(
@@ -232,8 +297,6 @@ console.table(
   }))
 );
 
-console.log(semanticSurfaces);
-
 console.table(
   semanticGraph.nodes.map((node) => ({
     id: node.id,
@@ -242,7 +305,11 @@ console.table(
   }))
 );
 
- const expectedNodeIds = [
+/* ============================================================
+   SEMANTIC GRAPH VALIDATION
+   ============================================================ */
+
+const expectedNodeIds = [
   "WholeDove",
   "HEAD_COMPONENT",
   "BEAK_COMPONENT",
@@ -297,7 +364,8 @@ console.log(
 
 console.log(
   "====================================="
-); 
+);
+
 console.log(
   "===== SEMANTIC KNOWLEDGE GRAPH ====="
 );
@@ -315,33 +383,119 @@ console.log(
 console.log(
   "===================================="
 );
-console.log(
-  "===== SEMANTIC SURFACES ====="
-);
+
+/* ============================================================
+   SEMANTIC SURFACE
+   ============================================================ */
+
+const semanticSurface =
+  semanticSurfaceBuilder.build(
+    semanticGraph
+  );
 
 console.log(
-  "SURFACES",
-  semanticSurfaces
-);
-
-semanticSurfaces.forEach(
-  (semanticSurface) => {
-    console.log(
-      semanticSurface.regionId,
-      semanticSurface.elements.length
-    );
-  }
+  "===== SEMANTIC SURFACE ====="
 );
 
 console.log(
-  "============================="
+  semanticSurface
 );
 
+console.table(
+  semanticSurface.components.map(
+    (component) => ({
+      id: component.id,
 
-const semanticValidator = new SemanticValidator();
+      type: component.type,
+
+      faceCount:
+        component.faces.length,
+
+      neighbourCount:
+        component.neighbours.length,
+
+      relationshipCount:
+        component.relationships.length,
+
+      center:
+        component.center,
+
+      bounds:
+        component.bounds,
+    })
+  )
+);
+
+console.log(
+  "============================"
+);
+
+/* ============================================================
+   SEMANTIC SURFACE VALIDATION V1
+   ============================================================ */
+
+const semanticSurfaceValidation =
+  semanticSurfaceValidator.validateStructure(
+    semanticGraph,
+    semanticSurface
+  );
+
+console.log(
+  "===== SEMANTIC SURFACE VALIDATION V1 ====="
+);
+
+console.log(
+  "VALID",
+  semanticSurfaceValidation.valid
+);
+
+console.log(
+  "SUMMARY",
+  semanticSurfaceValidation.summary
+);
+
+console.log(
+  "COMPONENTS",
+  semanticSurfaceValidation.components
+);
+
+const failedSurfaceChecks =
+  semanticSurfaceValidation.components.map(
+    (component) => ({
+      id: component.id,
+
+      failedChecks: Object.entries(
+        component.checks
+      )
+        .filter(([, passed]) => !passed)
+        .map(([checkName]) => checkName),
+
+      graphFaceCount:
+        component.counts.graphFaceCount,
+
+      surfaceFaceCount:
+        component.counts.surfaceFaceCount,
+    })
+  );
+
+console.log(
+  "===== FAILED SEMANTIC SURFACE CHECKS ====="
+);
+
+console.table(failedSurfaceChecks);
+
+console.log(
+  "=========================================="
+);
+
+/* ============================================================
+   GENERAL SEMANTIC VALIDATION
+   ============================================================ */
 
 const validationObservations =
-  semanticValidator.validate(semanticObservations);
+  semanticValidator.validate(
+    semanticObservations
+  );
 
 const allSemanticObservations = [
   ...semanticObservations,
@@ -356,13 +510,25 @@ console.log(
   )
 );
 
+/* ============================================================
+   PERCEPTION STATE
+   ============================================================ */
 
-const perceptionState = observation.createPerceptionState({
-  semanticObservations: allSemanticObservations,
-});
+const perceptionState =
+  observation.createPerceptionState({
+    semanticObservations:
+      allSemanticObservations,
+  });
 
-console.log("ReferenceModel:", reference);
-console.log("Observation:", observation);
+console.log(
+  "ReferenceModel:",
+  reference
+);
+
+console.log(
+  "Observation:",
+  observation
+);
 
 console.log(
   "Component Extractors:",
@@ -374,47 +540,44 @@ console.log(
   relationshipExtractors
 );
 
+console.log(
+  "Semantic Observations"
+);
 
-console.log("Semantic Observations");
+allSemanticObservations.forEach(
+  (semanticObservation) => {
+    console.log(
+      `${semanticObservation.subject} ${semanticObservation.predicate}`,
 
-allSemanticObservations.forEach((observation) => {
-  console.log(
-    `${observation.subject} ${observation.predicate}`,
-    observation.value,
-    `(confidence: ${observation.confidence ?? "-"})`
-  );
-});
+      semanticObservation.value,
 
+      `(confidence: ${
+        semanticObservation.confidence ??
+        "-"
+      })`
+    );
+  }
+);
 
-console.log("PerceptionState:", perceptionState);
+console.log(
+  "PerceptionState:",
+  perceptionState
+);
 
-console.log("PERCEPTION PIPELINE TEST END");
+console.log(
+  "PERCEPTION PIPELINE TEST END"
+);
+
+/* ============================================================
+   EXPORTS
+   ============================================================ */
 
 export {
   semanticGraph,
-  semanticSurfaces,
   semanticGraphValidation,
+  semanticSurface,
+  semanticSurfaceValidation,
   perceptionState,
 };
-
-const semanticSurfaceBuilder =
-  new SemanticSurfaceBuilder();
-
-export const semanticSurface =
-  semanticSurfaceBuilder.build(
-    semanticGraph
-  );
-
-console.log("===== SEMANTIC SURFACE =====");
-console.log(semanticSurface);
-console.log("============================");
-
-semanticSurface.components.map((component) => ({
-  id: component.id,
-  faceCount: component.faces.length,
-  center: component.center,
-  bounds: component.bounds,
-  neighbours: component.neighbours,
-}));
 
 export default perceptionState;
