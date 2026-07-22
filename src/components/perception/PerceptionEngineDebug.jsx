@@ -38,99 +38,145 @@ export default function PerceptionEngineDebug({
         <div>No Semantic Observations</div>
       )}
 
-      {observations.map((observation, index) => (
-        <div
-          key={
-            observation.id ??
-            `${observation.predicate}-${observation.subject}-${index}`
-          }
-          style={{
-            marginBottom: 8,
-            borderBottom:
-              "1px solid rgba(255,255,255,.15)",
-            paddingBottom: 8,
-          }}
-        >
-          <div
-            style={{
-              color: "#7fd4ff",
-              fontWeight: "bold",
-              marginBottom: 4,
-            }}
-          >
-            {observation.predicate}
+      {observations.map((observation, index) => {
+  const isRelationship =
+    typeof observation.value?.from === "string" &&
+    typeof observation.value?.to === "string";
+
+  const hasConfidence =
+    typeof observation.confidence === "number";
+
+  return (
+    <div
+      key={
+        observation.id ??
+        `${observation.predicate}-${observation.subject}-${index}`
+      }
+      style={{
+        marginBottom: 8,
+        borderBottom:
+          "1px solid rgba(255,255,255,.15)",
+        paddingBottom: 8,
+      }}
+    >
+      <div
+        style={{
+          color: "#7fd4ff",
+          fontWeight: "bold",
+          marginBottom: 4,
+        }}
+      >
+        {observation.predicate ??
+          "UNKNOWN_PREDICATE"}
+      </div>
+
+      {isRelationship ? (
+        <>
+          <div>
+            From: {observation.value.from}
           </div>
 
           <div>
-            Subject: {observation.subject}
+            To: {observation.value.to}
           </div>
-
-          <div>
-            Source: {observation.source}
-          </div>
-
-          {observation.value?.faceCount !== undefined && (
-            <div>
-              Faces: {observation.value.faceCount}
-            </div>
-          )}
-
-          {observation.value?.faces && (
-            <div>
-              Coverage:{" "}
-              {(
-                (observation.value.faces.length / 9339) *
-                100
-              ).toFixed(1)}
-              %
-            </div>
-          )}
-
-          {observation.value?.progressMin !== undefined && (
-            <div>
-              Range:{" "}
-              {observation.value.progressMin.toFixed(2)}
-              {" - "}
-              {observation.value.progressMax.toFixed(2)}
-            </div>
-          )}
-
-          <div>
-            Type:{" "}
-            {observation.value?.constructor?.name ??
-              "Semantic Region"}
-          </div>
-
-          <div>
-            Confidence: {observation.confidence}
-          </div>
-
-          <div
-            style={{
-              color:
-                observation.confidence >= 1
-                  ? "#66ff99"
-                  : "#ffcc66",
-            }}
-          >
-            Status:{" "}
-            {observation.confidence >= 1
-              ? "VALIDATED"
-              : "DISCOVERED"}
-          </div>
-
-          <div>
-            Progress:{" "}
-            {observation.value?.progressMin !== undefined
-              ? `${(
-                  observation.value.progressMin * 100
-                ).toFixed(0)}% - ${(
-                  observation.value.progressMax * 100
-                ).toFixed(0)}%`
-              : "-"}
-          </div>
+        </>
+      ) : (
+        <div>
+          Subject:{" "}
+          {observation.subject ?? "UNKNOWN"}
         </div>
-      ))}
+      )}
+
+      <div>
+        Source:{" "}
+        {observation.source ?? "UNKNOWN"}
+      </div>
+
+      {!isRelationship &&
+        observation.value?.faceCount !== undefined && (
+          <div>
+            Faces: {observation.value.faceCount}
+          </div>
+        )}
+
+      {!isRelationship &&
+        Array.isArray(observation.value?.faces) && (
+          <div>
+            Coverage:{" "}
+            {(
+              (observation.value.faces.length /
+                9339) *
+              100
+            ).toFixed(1)}
+            %
+          </div>
+        )}
+
+      {!isRelationship &&
+        observation.value?.progressMin !==
+          undefined && (
+          <div>
+            Range:{" "}
+            {observation.value.progressMin.toFixed(
+              2
+            )}
+            {" - "}
+            {observation.value.progressMax.toFixed(
+              2
+            )}
+          </div>
+        )}
+
+      <div>
+        Type:{" "}
+        {isRelationship
+          ? "Semantic Relationship"
+          : observation.value?.constructor?.name ??
+            "Semantic Region"}
+      </div>
+
+      <div>
+        Confidence:{" "}
+        {hasConfidence
+          ? observation.confidence.toFixed(2)
+          : "MISSING"}
+      </div>
+
+      <div
+        style={{
+          color: hasConfidence
+            ? observation.confidence >= 1
+              ? "#66ff99"
+              : "#ffcc66"
+            : "#ff6666",
+        }}
+      >
+        Status:{" "}
+        {!hasConfidence
+          ? "INCOMPLETE"
+          : observation.confidence >= 1
+            ? "VALIDATED"
+            : "DISCOVERED"}
+      </div>
+
+      {!isRelationship && (
+        <div>
+          Progress:{" "}
+          {observation.value?.progressMin !==
+          undefined
+            ? `${(
+                observation.value.progressMin *
+                100
+              ).toFixed(0)}% - ${(
+                observation.value.progressMax *
+                100
+              ).toFixed(0)}%`
+            : "-"}
+        </div>
+      )}
+    </div>
+  );
+})}
 
       {semanticGraph && (
         <>
@@ -290,19 +336,73 @@ export default function PerceptionEngineDebug({
             <strong>Edges:</strong>
           </div>
 
-          {semanticGraph.edges.map((edge) => (
-            <div
-              key={edge.id}
-              style={{
-                paddingLeft: 10,
-                fontSize: 11,
-              }}
-            >
-              {edge.from}
-              {" → "}
-              {edge.to}
-            </div>
-          ))}
+          {semanticGraph.edges.length === 0 && (
+  <div
+    style={{
+      paddingLeft: 10,
+      fontSize: 11,
+      color: "#ffcc66",
+    }}
+  >
+    No Semantic Edges
+  </div>
+)}
+
+{semanticGraph.edges.map((edge) => (
+  <div
+    key={edge.id}
+    style={{
+      marginTop: 6,
+      marginLeft: 10,
+      paddingBottom: 6,
+      borderBottom:
+        "1px solid rgba(255,255,255,.12)",
+      fontSize: 11,
+    }}
+  >
+    <div
+      style={{
+        color: "#7fd4ff",
+        fontWeight: "bold",
+      }}
+    >
+      {edge.predicate ?? "UNKNOWN_PREDICATE"}
+    </div>
+
+    <div>
+      From: {edge.from ?? "UNKNOWN"}
+    </div>
+
+    <div>
+      To: {edge.to ?? "UNKNOWN"}
+    </div>
+
+    <div>
+      Confidence:{" "}
+      {typeof edge.confidence === "number"
+        ? edge.confidence.toFixed(2)
+        : "MISSING"}
+    </div>
+
+    <div>
+      Source: {edge.source ?? "UNKNOWN"}
+    </div>
+
+    <div
+      style={{
+        color:
+          typeof edge.confidence === "number"
+            ? "#66ff99"
+            : "#ff6666",
+      }}
+    >
+      Status:{" "}
+      {typeof edge.confidence === "number"
+        ? "COMPLETE"
+        : "INCOMPLETE"}
+    </div>
+  </div>
+))}
         </>
       )}
     </div>
